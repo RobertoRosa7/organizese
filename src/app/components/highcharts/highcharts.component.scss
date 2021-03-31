@@ -1,0 +1,17 @@
+@import "../../../styles.scss";
+
+.highcharts {
+  .date {
+    display: flex;
+    justify-content: space-between;
+    max-width: 650px;
+    margin-left: auto;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    .buttons button {
+      @include custom-button-icon-width-text;
+    }
+  }
+}

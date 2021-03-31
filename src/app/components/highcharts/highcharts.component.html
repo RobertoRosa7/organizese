@@ -1,1 +1,28 @@
-<div #highchartEvoution></div>
+<div class="highcharts">
+  <form class="date">
+    <div class="form-inline">
+      <mat-form-field (click)="$event.preventDefault(); pickerStart.open()" class="form">
+        <mat-label>Data Inicio</mat-label>
+        <input autocomplete="off" matInput [matDatepicker]="pickerStart" placeholder="Data início">
+        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <mat-datepicker [touchUi]="isMobile" #pickerStart>
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="form-inline">
+      <mat-form-field (click)="$event.preventDefault(); pickerEnd.open()" class="form">
+        <mat-label>Data Fim</mat-label>
+        <input autocomplete="off" matInput [matDatepicker]="pickerEnd" placeholder="Data fim">
+        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <mat-datepicker [touchUi]="isMobile" #pickerEnd>
+        </mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div class="buttons">
+      <button mat-raised-button>Filtrar</button>
+    </div>
+  </form>
+  <div #highchartEvoution></div>
+  <div #highchartPie></div>
+</div>
