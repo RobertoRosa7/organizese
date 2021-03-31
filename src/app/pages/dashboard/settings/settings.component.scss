@@ -96,3 +96,9 @@
     margin: 8px 0;
   }
 }
+
+@media (max-width: 920px) {
+  .settings .settings-container .aside.mobile {
+    display: none;
+  }
+}

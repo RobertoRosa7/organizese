@@ -133,6 +133,7 @@
     align-items: center;
     position: relative;
     padding: 16px;
+    flex-wrap: wrap;
     .container-buttons {
       display: flex;
       justify-content: flex-end;
@@ -226,6 +227,7 @@ $marginTopButton: 25px;
     max-width: 50%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     p {
       display: flex;
       justify-content: flex-start;

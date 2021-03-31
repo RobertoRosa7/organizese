@@ -20,21 +20,21 @@ export class SettingsComponent extends DashboardComponent implements OnInit, DoC
 
   public settingsMenu = [
     {
-      subtitle: 'definir seu nome ou e-mail',
+      subtitle: 'Definir seu nome ou e-mail',
       is_button: false,
       icon: 'person',
       label: 'Perfil',
       target: 'profile'
     },
     {
-      subtitle: 'definir nova senha',
+      subtitle: 'Definir nova senha',
       is_button: false,
       icon: 'vpn_key',
       label: 'Nova senha',
       target: 'new-password'
     },
     {
-      subtitle: 'sobre o app',
+      subtitle: 'Sobre o app',
       is_button: false,
       icon: 'info',
       label: 'Sobre',
