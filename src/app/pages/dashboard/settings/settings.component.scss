@@ -5,6 +5,7 @@
   height: 100%;
   .settings-container {
     display: flex;
+    width: 100%;
     .aside {
       min-width: 280px;
       ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content,
@@ -21,9 +22,11 @@
     }
     .content {
       flex: 1;
-      max-width: 768px;
-      // margin-left: auto;
-      margin-right: auto;
+      .pages {
+        max-width: 768px;
+        margin-left: auto;
+        margin-right: auto;
+      }
     }
   }
   .tabs {

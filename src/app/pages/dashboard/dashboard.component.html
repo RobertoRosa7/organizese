@@ -37,9 +37,11 @@
       <div class="content-pages">
         <mat-toolbar>
           <mat-toolbar-row class="app-custom-toolbar-row">
-            <button title="sidebar" mat-icon-button (click)="drawer.open()">
-              <mat-icon>menu</mat-icon>
-            </button>
+            <div class="button-menu">
+              <button title="sidebar" mat-icon-button (click)="drawer.open()">
+                <mat-icon>menu</mat-icon>
+              </button>
+            </div>
 
             <div *ngIf="!isMobile" class="menu-toolbar">
               <form (ngSubmit)="onSubmit()">
@@ -56,23 +58,22 @@
                 </mat-form-field>
               </form>
             </div>
+            <div class="perfil-menu" style="min-width: 280px;">
+              <div class="prev-consolidado" title="Consolidado">
+                <span>Consolidado</span>
+                <span *ngIf="hideValues; else hide" [ngClass]="returnClass()">R$ {{ formatarValor(consolidado || 0)
+                  }}</span>
+                <ng-template #hide>
+                  <span class="hide-value">
+                    R$&nbsp;<span></span>
+                  </span>
+                </ng-template>
+              </div>
 
-            <div title="Consolidado" class="prev-consolidado">
-              <span>Consolidado</span>
-              <span *ngIf="hideValues; else hide" [ngClass]="returnClass()">R$ {{ formatarValor(consolidado || 0)
-                }}</span>
-              <ng-template #hide>
-                <span class="hide-value">
-                  R$&nbsp;<span></span>
-                </span>
-              </ng-template>
+              <button mat-icon-button title="Perfil" mat-icon-button [matMenuTriggerFor]="perfil">
+                <mat-icon>account_circle</mat-icon>
+              </button>
             </div>
-
-            <button mat-icon-button title="Perfil" mat-icon-button [matMenuTriggerFor]="perfil"
-              style="margin-right: auto;">
-              <mat-icon>account_circle</mat-icon>
-            </button>
-
             <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
               <ul role="list">
                 <div class="img-perfil">
