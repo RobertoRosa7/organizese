@@ -3,6 +3,29 @@
 .settings {
   position: relative;
   height: 100%;
+  .settings-container {
+    display: flex;
+    .aside {
+      min-width: 280px;
+      ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content,
+      .mat-list-base .mat-list-option .mat-list-item-content {
+        padding: 0;
+      }
+      .list {
+        cursor: pointer;
+      }
+      .list:focus {
+        border: none;
+        outline: none;
+      }
+    }
+    .content {
+      flex: 1;
+      max-width: 768px;
+      // margin-left: auto;
+      margin-right: auto;
+    }
+  }
   .tabs {
     display: flex;
     .tab-header {

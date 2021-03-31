@@ -26,15 +26,25 @@ import { PanelControlComponent } from '../../components/panel-control/panel-cont
 import { MaterialModule } from "src/app/material.module"
 import { NgxMaskModule } from 'ngx-mask'
 import { LoaderComponent } from "src/app/components/loader/loader.component"
-import { DownloadsComponent } from "src/app/components/downloads/downloads.component"
-import { LoginComponent } from "src/app/components/login/login.component"
 import { OwlModule } from 'ngx-owl-carousel'
+import { SettingsMenuComponent } from './settings/settings-menu/settings-menu.component'
+import { DarkThemeComponent } from "src/app/components/dark-theme/dark-theme.component";
+import { SettingsAboutComponent } from './settings/settings-about/settings-about.component';
+import { SettingsProfileComponent } from './settings/settings-profile/settings-profile.component';
+import { SettingsNewPasswordComponent } from './settings/settings-new-password/settings-new-password.component'
 
 const routes: Routes = [
   {
     path: '', component: DashboardComponent, children: [
       { path: '', component: MainComponent },
-      { path: 'settings', component: SettingsComponent },
+      {
+        path: 'settings', component: SettingsComponent, children: [
+          { path: '', component: SettingsMenuComponent },
+          { path: 'profile', component: SettingsProfileComponent },
+          { path: 'about', component: SettingsAboutComponent },
+          { path: 'new-password', component: SettingsNewPasswordComponent },
+        ]
+      },
       { path: 'registers', component: RegistersComponent },
       { path: 'result-search', component: ResultSearchComponent },
     ]
@@ -74,6 +84,11 @@ registerLocaleData(localePt, 'pt')
     HighchartsComponent,
     PanelControlComponent,
     LoaderComponent,
+    SettingsMenuComponent,
+    DarkThemeComponent,
+    SettingsAboutComponent,
+    SettingsProfileComponent,
+    SettingsNewPasswordComponent
   ],
   exports: [
     LoaderComponent,
@@ -81,6 +96,7 @@ registerLocaleData(localePt, 'pt')
     TabMenuComponent,
     TabContentComponent,
     TabHeaderComponent,
+    DarkThemeComponent
   ],
   imports: [
     MaterialModule,

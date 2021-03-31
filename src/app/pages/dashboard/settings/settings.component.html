@@ -1,20 +1,53 @@
 <section class="settings">
   <mat-progress-bar *ngIf="isLoading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
+  <div class="settings-container">
+    <aside *ngIf="!isMobile" class="aside">
+      <mat-list>
+        <mat-list-item class="list" *ngFor="let item of settingsMenu" [routerLink]="item.target">
+          <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
+          <p mat-line>{{item.subtitle}}</p>
+        </mat-list-item>
+      </mat-list>
+    </aside>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
 
-  <div (click)="backTab(tab)" *ngIf="isMobile && tabActive"
+    <!-- <div class="tabs">
+      <div *ngIf="!tabActive" class="tab-header">
+        <app-tab-menu *ngFor="let item of settingsMenu" (click)="getTarget(item.target)" [subtitle]="item.subtitle"
+          [isButton]="item.is_button" [icon]="item.icon" [label]="item.label" [target]="item.target">
+        </app-tab-menu>
+      </div>
+    </div> -->
+
+    <!-- <mat-card class="settings-card">
+      <mat-list>
+        <mat-list-item class="list" *ngFor="let item of settingsMenu" (click)="getTarget(item.target)">
+          <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
+          <h3 mat-line>{{item.label}}</h3>
+          <p mat-line>{{item.subtitle}}</p>
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </mat-list-item>
+      </mat-list>
+    </mat-card> -->
+  </div>
+
+
+  <!-- <div (click)="backTab(tab)" *ngIf="isMobile && tabActive"
     style="display: flex; align-items: center; margin-bottom: 30px;">
     <mat-icon>arrow_back</mat-icon>
     <span style="margin-left: 8px;">{{getLabel(tab)}}</span>
-  </div>
+  </div> -->
 
-  <div class="tabs">
+  <!-- <div class="tabs">
     <div *ngIf="!tabActive" class="tab-header">
       <app-tab-menu *ngFor="let item of settingsMenu" (click)="getTarget(item.target)" [subtitle]="item.subtitle"
         [isButton]="item.is_button" [icon]="item.icon" [label]="item.label" [target]="item.target">
       </app-tab-menu>
-    </div>
+    </div> -->
 
-    <app-tab-content *ngIf="showTabContent" class="tab-content">
+  <!-- <app-tab-content *ngIf="showTabContent" class="tab-content">
       <div *ngIf="tab === 'profile'" profile class="profile">
         <form [formGroup]="formProfile" (ngSubmit)="onProfileSubmit()" class="form-profile">
           <div class="container-forms">
@@ -153,5 +186,5 @@
         </div>
       </div>
     </app-tab-content>
-  </div>
+  </div> -->
 </section>

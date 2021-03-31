@@ -59,7 +59,8 @@
 
             <div title="Consolidado" class="prev-consolidado">
               <span>Consolidado</span>
-              <span *ngIf="hideValues; else hide" [ngClass]="returnClass()">R$ {{ formatarValor(consolidado || 0) }}</span>
+              <span *ngIf="hideValues; else hide" [ngClass]="returnClass()">R$ {{ formatarValor(consolidado || 0)
+                }}</span>
               <ng-template #hide>
                 <span class="hide-value">
                   R$&nbsp;<span></span>
@@ -92,6 +93,9 @@
                   <mat-icon>settings</mat-icon>
                   <span>Configurações</span>
                 </li>
+                <!-- <li class="settings">
+                  <app-dark-theme></app-dark-theme>
+                </li> -->
                 <li (click)="logout()" class="logout">
                   <mat-icon>logout</mat-icon>
                   <span>Sair</span>
