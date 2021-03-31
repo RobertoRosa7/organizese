@@ -91,7 +91,7 @@
         <ng-container *ngIf="ELEMENT_DATA.length > 0; else noneOfExtracts">
           <div *ngFor="let item of ELEMENT_DATA">
             <span class="line-month">{{item.month | date:'MMMM' }}</span>
-            <app-list-registers *ngFor="let i of item.lista" [item]="i"></app-list-registers>
+            <app-list-registers (send)="onDelete($event)" *ngFor="let i of item.lista" [item]="i"></app-list-registers>
           </div>
         </ng-container>
 

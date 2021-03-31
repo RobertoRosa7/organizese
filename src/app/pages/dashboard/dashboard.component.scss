@@ -174,7 +174,7 @@
   .dashboard .sidebar {
     // display: none;
     bottom: 0;
-    height: 54px;
+    height: 64px;
     width: 100%;
     .app-menu-list {
       display: flex;
@@ -184,10 +184,10 @@
   }
   .dashboard .pages {
     margin-left: 0;
-    padding: 0 16px 64px 16px;
+    padding: 0 16px 74px 16px;
   }
   .dashboard .content-pages .app-custom-toolbar-row {
-    padding: 0 25px;
+    padding: 0 16px;
   }
   .dashboard .button-top {
     right: 20px;

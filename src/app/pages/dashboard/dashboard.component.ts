@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, KeyValueDiffers, AfterViewInit } from '@angular/core'
+import { Component, OnInit, DoCheck, KeyValueDiffers, AfterViewInit, HostListener } from '@angular/core'
 import { Router } from '@angular/router'
 import { ActionsSubject, Store } from '@ngrx/store'
 import { IpcService } from 'src/app/services/ipc.service'
@@ -107,13 +107,10 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
       this.hideValues = state.hide_values
       this.autocomplete = await this.isEmpty(state.autocomplete)
       this.user = await this.isEmpty(state.profile)
-
       if (state.http_error.errors.length > 0) {
         this.handleError(state.http_error.errors[0])
       }
-
     })
-
     this._as?.pipe(filter(a => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
       .subscribe(({ payload }: any) => {
         const name: string = this.fetchNames(payload)

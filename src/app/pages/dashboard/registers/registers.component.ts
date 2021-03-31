@@ -281,6 +281,7 @@ export class RegistersComponent extends DashboardComponent implements OnInit, Af
       return 'icon-default-transparent-512x512'
     }
   }
+
   public exportExcel(data: any): void {
     const d = data.map((v: any) => ({
       ...v,
@@ -288,5 +289,11 @@ export class RegistersComponent extends DashboardComponent implements OnInit, Af
       type: v.type === 'incoming' ? 'entrada' : 'saida'
     }))
     this._snackbar.openFromComponent(CustomSnackbarComponent, { data: { to_excel: d } })
+  }
+
+  public onDelete(event: any): void {
+    if (event === 'delete') {
+      this.filterByDays = '7'
+    }
   }
 }
