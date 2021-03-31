@@ -3,6 +3,32 @@
 .settings {
   position: relative;
   height: 100%;
+  .settings-container {
+    display: flex;
+    width: 100%;
+    .aside {
+      min-width: 280px;
+      ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content,
+      .mat-list-base .mat-list-option .mat-list-item-content {
+        padding: 0;
+      }
+      .list {
+        cursor: pointer;
+      }
+      .list:focus {
+        border: none;
+        outline: none;
+      }
+    }
+    .content {
+      flex: 1;
+      .pages {
+        max-width: 768px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    }
+  }
   .tabs {
     display: flex;
     .tab-header {
@@ -68,5 +94,11 @@
   }
   .expansion-panels {
     margin: 8px 0;
+  }
+}
+
+@media (max-width: 920px) {
+  .settings .settings-container .aside.mobile {
+    display: none;
   }
 }

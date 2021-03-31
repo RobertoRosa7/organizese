@@ -159,4 +159,9 @@
 ###### 24/03/2021
 
 * [x] Reset all data when user logout
-* [] Boot animation
+* [x] Boot animation
+
+###### 31/03/2021
+
+* [x] Novo layout de configurações
+* [x] Novo layout de cadastro de despesas e entrada

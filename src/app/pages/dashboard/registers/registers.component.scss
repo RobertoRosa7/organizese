@@ -83,7 +83,18 @@
   .create {
     display: flex;
     justify-content: space-between;
-    padding: 16px;
+    // padding: 16px;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+
+    ::ng-deep .mat-ink-bar {
+      background-color: transparent;
+    }
+
+    ::ng-deep .mat-tab-header {
+      border: none;
+    }
   }
   .container-cards-mobile {
     mat-card {
@@ -122,6 +133,7 @@
     align-items: center;
     position: relative;
     padding: 16px;
+    flex-wrap: wrap;
     .container-buttons {
       display: flex;
       justify-content: flex-end;
@@ -215,6 +227,7 @@ $marginTopButton: 25px;
     max-width: 50%;
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
     p {
       display: flex;
       justify-content: flex-start;

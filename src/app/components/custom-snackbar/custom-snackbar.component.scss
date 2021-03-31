@@ -1,4 +1,12 @@
-.custom-snackbar {
+.custom-snackbar,
+.container {
   display: flex;
   align-items: center;
+}
+.custom-snackbar .container span {
+  margin: 0 8px;
+  display: inline-block;
+}
+.custom-snackbar {
+  justify-content: space-between;
 }

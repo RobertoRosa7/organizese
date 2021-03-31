@@ -26,12 +26,9 @@ import { NgxMaskModule } from 'ngx-mask'
 import { ProfileEffect } from './effects/profile.effect'
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core'
 import { MomentDateAdapter } from '@angular/material-moment-adapter'
-import { OwlModule } from 'ngx-owl-carousel'
 import { DashboardModule } from './pages/dashboard/dashboard.module'
-import { LoaderComponent } from './components/loader/loader.component'
 import { getSaver, SAVER } from './providers/save.provider';
-import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component'
-// import { getSaver, SAVER } from './providers/save.provider'
+import { CustomSnackbarComponent } from './components/custom-snackbar/custom-snackbar.component';
 
 registerLocaleData(localePt, 'pt-BR')
 
