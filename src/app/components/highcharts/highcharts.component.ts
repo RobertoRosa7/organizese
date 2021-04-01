@@ -1,3 +1,4 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, DoCheck, ElementRef, Input, KeyValueDiffers, OnInit, ViewChild } from '@angular/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
@@ -37,6 +38,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
 
   @Input() public evolucao: any
   @Input() public operation: string
+  public isMobile: boolean
 
   public chartLine: any = {
     chart: {
@@ -258,16 +260,18 @@ export class HighchartsComponent implements OnInit, DoCheck {
 
   constructor(
     private _store: Store,
-    protected _differs: KeyValueDiffers
+    private _differs: KeyValueDiffers,
+    private _breakpoint: BreakpointObserver
   ) {
+    this._breakpoint?.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
     this.differ = this._differs.find({}).create()
   }
 
   public ngOnInit(): void {
     this._store.select(({ dashboard }: any) =>
       ({ mode: dashboard.dark_mode, evolucao: dashboard.evolucao })).subscribe(state => {
-        let theme = state.mode === 'light-mode' ? 'var(--color-white)' : 'var(--color-default-dark)'
-        let themeInverse = state.mode != 'light-mode' ? 'var(--color-white)' : 'var(--color-default-dark)'
+        let theme = state.mode === 'light-mode' ? 'var(--color-medium-white)' : 'var(--color-default-dark)'
+        let themeInverse = state.mode != 'light-mode' ? 'var(--color-medium-white)' : 'var(--color-default-dark)'
 
         this.chartLine.chart.backgroundColor = theme
         this.chartLine.tooltip.backgroundColor = theme
