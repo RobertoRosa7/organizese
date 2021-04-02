@@ -5,7 +5,7 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  padding: 8px;
+  padding: 24px 0;
   .form-inline {
     display: flex;
     justify-content: space-between;
@@ -18,7 +18,7 @@
     .form-textarea {
       width: 100%;
     }
-    .mat-option{
+    .mat-option {
       padding: 0 16px;
     }
   }
@@ -28,7 +28,7 @@
     justify-content: space-between;
     max-width: 270px;
     margin: 0 auto;
-    align-items: center
+    align-items: center;
   }
   button {
     @include custom-button-icon-width-text;

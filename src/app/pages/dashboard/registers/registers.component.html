@@ -101,18 +101,21 @@
         </ng-template>
       </div>
 
-      <mat-tab-group *ngIf="tab === 'create'" create mat-stretch-tabs class="create">
+      <mat-card *ngIf="tab === 'create'" create>
+        <mat-tab-group mat-stretch-tabs class="create">
 
-        <mat-tab label="Entrada">
-          <app-form-incoming (send)="listeningEventForm($event)" type="incoming" label="Entrada" placeholder="R$ 0,00">
-          </app-form-incoming>
-        </mat-tab>
+          <mat-tab label="Entrada">
+            <app-form-incoming (send)="listeningEventForm($event)" type="incoming" label="Entrada"
+              placeholder="R$ 0,00">
+            </app-form-incoming>
+          </mat-tab>
 
-        <mat-tab label="Saída">
-          <app-form-incoming (send)="listeningEventForm($event)" type="outcoming" label="Saída" placeholder="R$ 0,00">
-          </app-form-incoming>
-        </mat-tab>
-      </mat-tab-group>
+          <mat-tab label="Saída">
+            <app-form-incoming (send)="listeningEventForm($event)" type="outcoming" label="Saída" placeholder="R$ 0,00">
+            </app-form-incoming>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
 
       <!-- <mat-card *ngIf="tab === 'create'" class="create" create>
         <div class="form-group">

@@ -2,8 +2,8 @@
   <form class="date">
     <div class="form-inline">
       <mat-form-field (click)="$event.preventDefault(); pickerStart.open()" class="form">
-        <mat-label>Data Inicio</mat-label>
-        <input autocomplete="off" matInput [matDatepicker]="pickerStart" placeholder="Data início">
+        <mat-label>Data Início</mat-label>
+        <input autocomplete="off" matInput [matDatepicker]="pickerStart">
         <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker [touchUi]="isMobile" #pickerStart>
         </mat-datepicker>
@@ -13,7 +13,7 @@
     <div class="form-inline">
       <mat-form-field (click)="$event.preventDefault(); pickerEnd.open()" class="form">
         <mat-label>Data Fim</mat-label>
-        <input autocomplete="off" matInput [matDatepicker]="pickerEnd" placeholder="Data fim">
+        <input autocomplete="off" matInput [matDatepicker]="pickerEnd">
         <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker [touchUi]="isMobile" #pickerEnd>
         </mat-datepicker>

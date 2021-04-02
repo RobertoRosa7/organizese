@@ -16,6 +16,13 @@
   ::ng-deep .mat-tab-header {
     border: none;
   }
+  ::ng-deep .owl-theme .owl-dots .owl-dot span {
+    background: var(--color-medium-white);
+  }
+  ::ng-deep .owl-theme .owl-dots .owl-dot.active span {
+    background: var(--text-green);
+    // color: red;
+  }
 
   .cards-main {
     display: flex;
