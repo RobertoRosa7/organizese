@@ -11,14 +11,14 @@
     </owl-carousel>
   </div>
 
-  <mat-tab-group mat-stretch-tabs>
-    <mat-tab class="tab" label="Categoria">
+  <mat-tab-group>
+    <mat-tab label="Categoria">
       <app-highcharts operation="categoria" [category]="CATEGORY_DATA"></app-highcharts>
     </mat-tab>
-    <mat-tab class="tab" label="Despesas">
+    <mat-tab label="Despesas">
       <app-highcharts operation="despesas" [evolucao]="EVOLUCAO_DESPESAS_DATA"></app-highcharts>
     </mat-tab>
-    <mat-tab class="tab" label="Receita">
+    <mat-tab label="Receita">
       <app-highcharts operation="receita" [evolucao]="EVOLUCAO_DATA"></app-highcharts>
     </mat-tab>
   </mat-tab-group>

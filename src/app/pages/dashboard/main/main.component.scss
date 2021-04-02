@@ -1,4 +1,22 @@
 .main {
+  ::ng-deep .mat-tab-labels {
+    justify-content: space-between;
+  }
+  ::ng-deep .mat-tab-label {
+    padding: 0;
+    width: 32.33%;
+    flex-grow: 0 !important;
+  }
+  ::ng-deep .mat-tab-label.mat-tab-label-active {
+    background: var(--text-green-light);
+  }
+  ::ng-deep .mat-ink-bar {
+    background-color: transparent !important;
+  }
+  ::ng-deep .mat-tab-header {
+    border: none;
+  }
+
   .cards-main {
     display: flex;
     flex: 1;

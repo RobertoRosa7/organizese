@@ -45,7 +45,13 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public chartLine: any = {
     chart: {
       type: 'column',
-      height: 400
+      height: 400,
+      spacingTop: 50,
+      // spacingRight: 10,
+      // spacingBottom: 10,
+      // spacingLeft: 10,
+      // plotBorderWidth: 10,
+      // margin: [50]
     },
     navigator: { enabled: false },
     scrollbar: { enabled: false },
@@ -170,7 +176,8 @@ export class HighchartsComponent implements OnInit, DoCheck {
       plotBackgroundColor: null,
       plotBorderWidth: null,
       plotShadow: false,
-      type: 'pie'
+      type: 'pie',
+      spacingTop: 30,
     },
     title: {
       text: ''
@@ -230,7 +237,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
         showInLegend: true
       }
     },
-    series: [{ name: 'Brands', colorByPoint: true, data: [] }]
+    series: [{ name: 'Despesas', colorByPoint: true, data: [] }]
     // series: [
     //   {
     //     name: 'Brands',
@@ -324,35 +331,12 @@ export class HighchartsComponent implements OnInit, DoCheck {
 
   public instanceHighchart(): Promise<any> {
     return new Promise(resolve => {
-      const values: any = []
       switch (this.operation) {
         case 'despesas':
-          if (this.evolucao.graph_evolution) {
-            for (const i in this.evolucao.graph_evolution) {
-              if (i !== 'dates') {
-                values.push({
-                  name: this.evolucao.graph_evolution[i].label,
-                  data: this.evolucao.graph_evolution[i].values,
-                })
-              }
-            }
-            this.chartLine.series = values
-            this.chartLine.xAxis.categories = this.evolucao.graph_evolution.dates
-          }
+          this.setDataOnGraph()
           break
         case 'receita':
-          if (this.evolucao.graph_evolution) {
-            for (const i in this.evolucao.graph_evolution) {
-              if (i !== 'dates') {
-                values.push({
-                  name: this.evolucao.graph_evolution[i].label,
-                  data: this.evolucao.graph_evolution[i].values,
-                })
-              }
-            }
-            this.chartLine.series = values
-            this.chartLine.xAxis.categories = this.evolucao.graph_evolution.dates
-          }
+          this.setDataOnGraph()
           break
         case 'categoria':
           this.chartPie.series[0].data = this.category
@@ -361,5 +345,21 @@ export class HighchartsComponent implements OnInit, DoCheck {
       }
       resolve(true)
     })
+  }
+
+  private setDataOnGraph(): void {
+    const values: any = []
+    if (this.evolucao.graph_evolution) {
+      for (const i in this.evolucao.graph_evolution) {
+        if (i !== 'dates') {
+          values.push({
+            name: this.evolucao.graph_evolution[i].label,
+            data: this.evolucao.graph_evolution[i].values,
+          })
+        }
+      }
+      this.chartLine.series = values
+      this.chartLine.xAxis.categories = this.evolucao.graph_evolution.dates
+    }
   }
 }
