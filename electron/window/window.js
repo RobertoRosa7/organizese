@@ -3,8 +3,8 @@ const path = require('path')
 const menu = require("../menu/menu")
 
 const windowSettings = {
-  width: 1280,
-  height: 740,
+  width: 1366,
+  height: 768,
   backgroundColor: "#FAFAFA",
   name: "Organizese",
   icon: `${__dirname}/../../dist/assets/icon-default-white-512x512.png`,

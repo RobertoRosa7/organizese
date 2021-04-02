@@ -36,12 +36,13 @@
 
       <div class="content-pages">
         <div class="banner"></div>
-        <mat-toolbar>
+        <mat-toolbar class="top-toolbar">
           <mat-toolbar-row class="app-custom-toolbar-row">
             <div class="button-menu">
-              <button title="sidebar" mat-icon-button (click)="drawer.open()">
+              <mat-icon svgIcon="icon-default-white-512x512"></mat-icon>
+              <!-- <button title="sidebar" mat-icon-button (click)="drawer.open()">
                 <mat-icon>menu</mat-icon>
-              </button>
+              </button> -->
             </div>
 
             <div *ngIf="!isMobile" class="menu-toolbar">
@@ -59,7 +60,8 @@
                 </mat-form-field>
               </form>
             </div>
-            <div class="perfil-menu" style="min-width: 280px;">
+            
+            <div class="perfil-menu">
               <div class="prev-consolidado" title="Consolidado">
                 <span>Consolidado</span>
                 <span *ngIf="hideValues; else hide" [ngClass]="returnClass()">R$ {{ formatarValor(consolidado || 0)

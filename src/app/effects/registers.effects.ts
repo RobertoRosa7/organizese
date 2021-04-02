@@ -55,6 +55,7 @@ export class RegistersEffect {
         this._store.dispatch(actionsDashboard.INIT_DASHBOARD())
         this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
         this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
+        this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
         this._store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
         return actions.INIT({ payload: {} })
       }
@@ -85,6 +86,7 @@ export class RegistersEffect {
         this._store.dispatch(actionsDashboard.INIT_DASHBOARD())
         this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
         this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
+        this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
         this._store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
         return actions.GET_REGISTERS({ payload })
       }
@@ -119,6 +121,7 @@ export class RegistersEffect {
         this._store.dispatch(actionsDashboard.INIT_DASHBOARD())
         this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
         this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
+        this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
         this._store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
         return actions.SET_UPDATE({ payload: response.data })
       }

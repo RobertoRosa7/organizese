@@ -66,6 +66,7 @@ export class AppComponent implements AfterViewInit {
   public ngAfterViewInit() {
     this
       .addSvgIcon("excel-icon")
+      .addSvgIcon("icon-default-white-512x512")
   }
 
   public initTheme(): void {

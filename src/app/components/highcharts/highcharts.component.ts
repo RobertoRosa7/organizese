@@ -237,7 +237,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
         showInLegend: true
       }
     },
-    series: [{ name: 'Despesas', colorByPoint: true, data: [] }]
+    series: [{ name: 'Despesa', colorByPoint: true, data: [] }]
     // series: [
     //   {
     //     name: 'Brands',
