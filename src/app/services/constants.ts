@@ -21,9 +21,10 @@ export class Constants {
     fetch_evolucao: 'dashboard/fetch_evolucao',
     fetch_evolucao_despesas: 'dashboard/fetch_evolucao_despesas',
     fetch_evolucao_detail: 'dashboard/fetch_evolucao_detail',
-    fetch_search:'dashboard/search',
+    fetch_search: 'dashboard/search',
     fetch_excel: 'dashboard/excel',
-    
+    fetch_graph_category: 'dashboard/fetch_graph_category',
+
     new_register: 'dashboard/new_register',
     delete_register: 'dashboard/delete_register',
     update_register: 'dashboard/update_register',
@@ -39,7 +40,7 @@ export class Constants {
     login_verified: 'login/login_verified',
     email_to_reset: 'login/email_to_reset',
 
-    profile_update:'profile/update',
+    profile_update: 'profile/update',
     profile_get: 'profile/get_profile',
     profile_delete: 'profile/delete',
 

@@ -122,5 +122,9 @@ export class DashboardService {
       responseType: 'blob' as 'json'
     }).pipe(download((blob) => this.save(blob, 'organizese')))
   }
+
+  public fetchGraphCategory(): Observable<any> {
+    return this.http.get<any>(this.constants.get('fetch_graph_category'))
+  }
 }
 

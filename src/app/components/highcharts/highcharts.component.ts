@@ -37,7 +37,9 @@ export class HighchartsComponent implements OnInit, DoCheck {
   @ViewChild('highchartPie', { static: true }) highchartPie: ElementRef
 
   @Input() public evolucao: any
+  @Input() public category: any
   @Input() public operation: string
+
   public isMobile: boolean
 
   public chartLine: any = {
@@ -228,31 +230,41 @@ export class HighchartsComponent implements OnInit, DoCheck {
         showInLegend: true
       }
     },
-    series: [{
-      name: 'Brands',
-      colorByPoint: true,
-      data: [{
-        name: 'Chrome',
-        y: 61.41,
-        sliced: true,
-        selected: true
-      }, {
-        name: 'Internet Explorer',
-        y: 11.84
-      }, {
-        name: 'Firefox',
-        y: 10.85
-      }, {
-        name: 'Edge',
-        y: 4.67
-      }, {
-        name: 'Safari',
-        y: 4.18
-      }, {
-        name: 'Other',
-        y: 7.05
-      }]
-    }]
+    series: [{ name: 'Brands', colorByPoint: true, data: [] }]
+    // series: [
+    //   {
+    //     name: 'Brands',
+    //     colorByPoint: true,
+    //     data: [
+    //       {
+    //         name: 'Chrome',
+    //         y: 61.41,
+    //         sliced: true,
+    //         selected: true
+    //       },
+    //       {
+    //         name: 'Internet Explorer',
+    //         y: 11.84
+    //       },
+    //       {
+    //         name: 'Firefox',
+    //         y: 10.85
+    //       },
+    //       {
+    //         name: 'Edge',
+    //         y: 4.67
+    //       },
+    //       {
+    //         name: 'Safari',
+    //         y: 4.18
+    //       },
+    //       {
+    //         name: 'Other',
+    //         y: 7.05
+    //       }
+    //     ]
+    //   }
+    // ]
   }
 
   public data: any = {}
@@ -299,11 +311,12 @@ export class HighchartsComponent implements OnInit, DoCheck {
               this.instanceHighchart().then(() =>
                 Highcharts.chart(this.highchartEvoution.nativeElement, this.chartLine))
               break
-            case 'categoria':
-              this.instanceHighchart().then(() =>
-                Highcharts.chart(this.highchartPie.nativeElement, this.chartPie))
-              break
           }
+        }
+
+        if (item.key === 'category') {
+          this.instanceHighchart().then(() =>
+            Highcharts.chart(this.highchartPie.nativeElement, this.chartPie))
         }
       })
     }
@@ -312,19 +325,41 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public instanceHighchart(): Promise<any> {
     return new Promise(resolve => {
       const values: any = []
-      if (this.evolucao.graph_evolution) {
-        for (const i in this.evolucao.graph_evolution) {
-          if (i !== 'dates') {
-            values.push({
-              name: this.evolucao.graph_evolution[i].label,
-              data: this.evolucao.graph_evolution[i].values,
-            })
+      switch (this.operation) {
+        case 'despesas':
+          if (this.evolucao.graph_evolution) {
+            for (const i in this.evolucao.graph_evolution) {
+              if (i !== 'dates') {
+                values.push({
+                  name: this.evolucao.graph_evolution[i].label,
+                  data: this.evolucao.graph_evolution[i].values,
+                })
+              }
+            }
+            this.chartLine.series = values
+            this.chartLine.xAxis.categories = this.evolucao.graph_evolution.dates
           }
-        }
-        this.chartLine.series = values
-        this.chartLine.xAxis.categories = this.evolucao.graph_evolution.dates
-        resolve(true)
+          break
+        case 'receita':
+          if (this.evolucao.graph_evolution) {
+            for (const i in this.evolucao.graph_evolution) {
+              if (i !== 'dates') {
+                values.push({
+                  name: this.evolucao.graph_evolution[i].label,
+                  data: this.evolucao.graph_evolution[i].values,
+                })
+              }
+            }
+            this.chartLine.series = values
+            this.chartLine.xAxis.categories = this.evolucao.graph_evolution.dates
+          }
+          break
+        case 'categoria':
+          this.chartPie.series[0].data = this.category
+          console.log(this.chartPie)
+          break
       }
+      resolve(true)
     })
   }
 }

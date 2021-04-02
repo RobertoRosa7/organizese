@@ -8,6 +8,7 @@ import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
 import { delay, map } from 'rxjs/operators'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
+import { DashboardService } from 'src/app/services/dashboard.service'
 
 @Component({
   selector: 'app-main',
@@ -54,6 +55,7 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
   public filterByDays: number = 0
   public differ: any
   public isMainLoading: boolean = true
+  public CATEGORY_DATA: any = []
 
   constructor(
     protected _store: Store,
@@ -61,7 +63,8 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
     protected _router: Router,
     protected _dialog: MatDialog,
     protected _differs: KeyValueDiffers,
-    protected _breakpoint: BreakpointObserver
+    protected _breakpoint: BreakpointObserver,
+    protected _dashboardService: DashboardService
   ) {
     super()
     this._breakpoint?.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
@@ -78,6 +81,11 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
   }
 
   public ngOnInit(): void {
+    this._dashboardService.fetchGraphCategory().subscribe(res => {
+      this.CATEGORY_DATA = Object.values(res.category).map((v: any) => ({ name: v, sliced: true })).map((val: any, i) =>
+        ({ ...val, name: val.name, y: Object.values(res.each_percent).map((v: any) => ({ v: v }))[i].v }))
+    })
+
     this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
     this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
 
@@ -137,7 +145,7 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
   public isLoaded(): Promise<boolean> {
     return new Promise(resolve => setTimeout(() => resolve(false), 500))
   }
-  
+
   public formatarValor(valor: number = 0): string {
     return new Intl.NumberFormat('pt-BR', { currency: 'BRL', minimumFractionDigits: 2 })
       .format(parseFloat(valor.toFixed(2)))
