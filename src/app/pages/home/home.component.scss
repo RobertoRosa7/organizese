@@ -16,6 +16,14 @@
     width: 100%;
     z-index: -1;
   }
+  .background::after {
+    position: absolute;
+    content: '';
+    height: 20%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 100px 100px 60px rgba(0, 0, 0, 0.05);
+  }
   .container-home {
     @include size-container;
     width: inherit;
@@ -47,7 +55,7 @@
           display: flex;
           max-width: 420px;
           justify-content: space-between;
-          flex:1;
+          flex: 1;
           button {
             @include custom-button-icon-width-text;
           }

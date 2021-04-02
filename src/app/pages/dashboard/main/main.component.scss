@@ -8,7 +8,8 @@
     flex-grow: 0 !important;
   }
   ::ng-deep .mat-tab-label.mat-tab-label-active {
-    background: var(--text-green-light);
+    // background: var(--text-green-light);
+    background: rgba(0, 0, 0, 0.15);
   }
   ::ng-deep .mat-ink-bar {
     background-color: transparent !important;

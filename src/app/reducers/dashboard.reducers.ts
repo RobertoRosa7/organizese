@@ -19,7 +19,7 @@ const INITIAL_STATES = {
   evolucao_detail: {},
   evolucao_despesas: {},
   auto_complete: [],
-  graph_category: {}
+  graph_category: []
 }
 
 const dashboardReducers = createReducer(
@@ -31,11 +31,13 @@ const dashboardReducers = createReducer(
   on(actions.SET_DEV_MODE, (states, { payload }) => ({ ...states, mode: payload.mode })),
   on(actions.SET_EVOLUCAO_DESPESAS, (states, { payload }) => ({ ...states, evolucao_despesas: payload })),
   on(actions.SET_AUTOCOMPLETE, (states, { payload }) => ({ ...states, auto_complete: payload })),
-  on(actions.SET_GRAPH_CATEGORY, (states, { payload }) => ({
-    ...states,
-    graph_category: Object.values(payload.category).map((v: any) => ({ name: v, sliced: true })).map((val: any, i) =>
-      ({ ...val, name: val.name, y: Object.values(payload.each_percent).map((v: any) => ({ v: v }))[i].v }))
-  })),
+  on(actions.SET_GRAPH_CATEGORY, (states, { payload }) => {
+    const payloadFormated: any = formatDataToGraphCategory({ ...payload })
+    return ({
+      ...states,
+      graph_category: payloadFormated
+    })
+  }),
 
   on(actionsApp.RESET_ALL, (states) => ({
     ...states,
@@ -53,9 +55,14 @@ const dashboardReducers = createReducer(
     evolucao_despesas: {},
     auto_complete: [],
     evolucao_detail: {},
-    graph_category: {}
+    graph_category: []
   }))
 )
+
+function formatDataToGraphCategory(payload: any) {
+  return Object.values(payload.category).map((v: any) => ({ name: v, sliced: true })).map((val: any, i) =>
+    ({ ...val, name: val.name, y: Object.values(payload.each_percent).map((v: any) => ({ v: v }))[i].v }))
+}
 
 export function reducerDashboard(state: any, action: any) {
   return dashboardReducers(state, action)

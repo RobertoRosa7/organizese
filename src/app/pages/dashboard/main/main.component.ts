@@ -81,19 +81,21 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
   }
 
   public ngOnInit(): void {
-    this._dashboardService.fetchGraphCategory().subscribe(res => {
-      this.CATEGORY_DATA = Object.values(res.category).map((v: any) => ({ name: v, sliced: true })).map((val: any, i) =>
-        ({ ...val, name: val.name, y: Object.values(res.each_percent).map((v: any) => ({ v: v }))[i].v }))
-    })
+    // this._dashboardService.fetchGraphCategory().subscribe(res => {
+    //   this.CATEGORY_DATA = Object.values(res.category).map((v: any) => ({ name: v, sliced: true })).map((val: any, i) =>
+    //     ({ ...val, name: val.name, y: Object.values(res.each_percent).map((v: any) => ({ v: v }))[i].v }))
+    // })
 
     this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
     this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
+    this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
 
     this._store.select(({ registers, dashboard }: any) => ({
       all: [...registers.all],
       consolidado: dashboard.consolidado,
       evolucao: dashboard.evolucao,
       evoucao_despesas: dashboard.evolucao_despesas,
+      graph_category: dashboard.graph_category,
       tab: registers.tab,
       total_geral: registers.total_geral,
       despesas: registers.total_despesas,
@@ -102,7 +104,7 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
       a_receber: dashboard.consolidado.a_receber,
       total_credit: dashboard.consolidado.total_credit,
       total_debit: dashboard.consolidado.total_debit,
-      all_days_period: registers.all_days_period
+      all_days_period: registers.all_days_period,
     })).pipe(
       map((state) => {
         this.total = state.total_geral
@@ -111,6 +113,7 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
         this.aPagar = state.a_pagar
         this.aReceber = state.a_receber
         this.filterByDays = state.all_days_period
+        this.CATEGORY_DATA = state.graph_category
         this.ELEMENT_DATA = state.all.splice(0, 7)
         this.EVOLUCAO_DATA = state.evolucao
         this.EVOLUCAO_DESPESAS_DATA = state.evoucao_despesas

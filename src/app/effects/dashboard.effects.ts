@@ -125,6 +125,21 @@ export class DashboardEffect {
   )
 
   @Effect()
+  public graphCategory$: Observable<Actions> = this._action.pipe(
+    ofType(actions.actionsTypes.FETCH_GRAPH_CATEGORY),
+    mergeMap(() => this._dashboardService.fetchGraphCategory().pipe(catchError(e => of(e)))),
+    map((payload) => {
+      if (payload instanceof HttpErrorResponse) {
+        const source = { ...payload, source: 'graph_category' }
+        return SET_ERRORS({ payload: source })
+      } else {
+        return actions.SET_GRAPH_CATEGORY({ payload })
+      }
+    }),
+    catchError(err => of(err))
+  )
+
+  @Effect()
   public devMode$: Observable<Actions> = this._action.pipe(
     ofType(actions.GET_DEV_MODE),
     mergeMap(({ payload }) => this._dashboardService.setDevMode(payload).pipe(catchError(e => of(e)))),
