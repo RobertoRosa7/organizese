@@ -39,7 +39,8 @@
         <mat-toolbar class="top-toolbar">
           <mat-toolbar-row class="app-custom-toolbar-row">
             <div class="button-menu">
-              <mat-icon svgIcon="icon-default-white-512x512"></mat-icon>
+              <img routerLink="/dashboard" [src]="logo" alt="logo">
+              <!-- <mat-icon svgIcon="icon-default-white-512x512"></mat-icon> -->
               <!-- <button title="sidebar" mat-icon-button (click)="drawer.open()">
                 <mat-icon>menu</mat-icon>
               </button> -->
@@ -60,7 +61,7 @@
                 </mat-form-field>
               </form>
             </div>
-            
+
             <div class="perfil-menu">
               <div class="prev-consolidado" title="Consolidado">
                 <span>Consolidado</span>
@@ -74,13 +75,13 @@
               </div>
 
               <button mat-icon-button title="Perfil" mat-icon-button [matMenuTriggerFor]="perfil">
-                <mat-icon>account_circle</mat-icon>
+                <mat-icon svgIcon="account_circle_black_24dp"></mat-icon>
               </button>
             </div>
             <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
               <ul role="list">
                 <div class="img-perfil">
-                  <mat-icon>account_circle</mat-icon>
+                  <mat-icon svgIcon="account_circle_black_24dp"></mat-icon>
                 </div>
                 <li role="list-item">
                   <p style="display: flex; flex-direction: column">

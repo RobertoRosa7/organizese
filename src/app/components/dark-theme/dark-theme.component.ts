@@ -18,14 +18,14 @@ export class DarkThemeComponent implements OnInit {
     protected _store: Store,
   ) {
     this.renderer = this._renderedFactory.createRenderer(null, null)
-
   }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.getColorTheme()
     this.renderer.addClass(document.body, this.colorTheme)
     this.isDark = this.isDarkMode()
   }
+  
   private getColorTheme(): void {
     localStorage.getItem('user-theme')
       ? this.colorTheme = localStorage.getItem('user-theme') || ''

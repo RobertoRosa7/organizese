@@ -67,6 +67,7 @@ export class AppComponent implements AfterViewInit {
     this
       .addSvgIcon("excel-icon")
       .addSvgIcon("icon-default-white-512x512")
+      .addSvgIcon("account_circle_black_24dp")
   }
 
   public initTheme(): void {

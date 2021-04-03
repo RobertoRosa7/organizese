@@ -80,7 +80,7 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
     protected _loadService?: LoadService,
     protected _utilsService?: UtilsService
   ) {
-    this.logo = './assets/' + this.getTheme()
+    // this.logo = './assets/' + this.getTheme('light-mode')
     this._router?.events.subscribe((u: any) => this.isActive = u.url)
     this._breakpoint?.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
 
@@ -100,17 +100,22 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
       http_error,
       consolidado: dashboard.consolidado,
       autocomplete: dashboard.auto_complete,
+      theme: dashboard.dark_mode,
       profile: profile.user,
       hide_values: app.hide_values
     })).subscribe(async state => {
+      this.logo = './assets/' + this.getTheme(state.theme)
       this.consolidado = state.consolidado.total_consolidado
       this.hideValues = state.hide_values
       this.autocomplete = await this.isEmpty(state.autocomplete)
       this.user = await this.isEmpty(state.profile)
+
       if (state.http_error.errors.length > 0) {
         this.handleError(state.http_error.errors[0])
       }
+
     })
+
     this._as?.pipe(filter(a => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
       .subscribe(({ payload }: any) => {
         const name: string = this.fetchNames(payload)
@@ -258,16 +263,13 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
     this._store?.dispatch(actionsLogin.LOGOUT())
   }
 
-  public getTheme(): string {
-    if (localStorage.getItem('user-theme')) {
-      if (localStorage.getItem('user-theme') === 'dark-mode') {
-        return 'icon-default-dark-512x512.svg'
-      } else {
-        return 'icon-default-stroke-512x512.svg'
-      }
-    } else {
-      return 'icon-deffault-transparent-512x512.svg'
-    }
+  public getTheme(theme: string): string {
+    return theme === 'dark-mode' ? 'icon-default-dark-512x512.svg' : 'icon-default-stroke-512x512.svg'
+    // if (theme === 'dark-mode') {
+    //   return 'icon-default-dark-512x512.svg'
+    // } else {
+    //   return 'icon-default-stroke-512x512.svg'
+    // }
   }
 
   public goTo(action: any): void {
