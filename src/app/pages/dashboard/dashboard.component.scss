@@ -68,6 +68,9 @@
         display: inline-block;
         max-width: 200px;
       }
+      li.drawer-item {
+        justify-content: flex-start;
+      }
     }
   }
   .content-pages {

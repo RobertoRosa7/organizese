@@ -1,15 +1,15 @@
 <div class="dashboard">
   <mat-drawer-container class="container">
-    <mat-drawer #drawer mode="over" opened="false">
+    <mat-drawer class="drawer" #drawer mode="over" opened="false">
       <ul class="app-menu-list">
-        <li [title]="item.name" (click)="goTo(item)" [ngClass]="{'link-active': isActive === item.link}"
-          (click)="drawer.toggle()" *ngFor="let item of menuList" [routerLink]="item.link">
+        <li class="drawer-item" [title]="item.name" (click)="drawer.toggle(); goTo(item)"
+          [ngClass]="{'link-active': isActive === item.link}" *ngFor="let item of menuList" [routerLink]="item.link">
           <a>
             <mat-icon>{{item.icon}}</mat-icon>
           </a>
           <span>{{item.name}}</span>
         </li>
-        <li (click)="logout()" class="btn-logout">
+        <li (click)="logout()" class="btn-logout drawer-item">
           <a>
             <mat-icon>logout</mat-icon>
           </a>
@@ -39,7 +39,8 @@
           <div class="container-toolbar">
             <form (ngSubmit)="onSubmit()" class="form">
               <mat-form-field class="field" appearance="outline">
-                <mat-icon style="cursor: pointer;" [svgIcon]="isDark ? 'menu_black_24dp': 'menu_white_24dp'" matPrefix>
+                <mat-icon (click)="drawer.toggle()" style="cursor: pointer;"
+                  [svgIcon]="isDark ? 'menu_black_24dp': 'menu_white_24dp'" matPrefix>
                 </mat-icon>
                 <input type="text" [formControl]="searchTerms" [matAutocomplete]="auto" autocomplete="off"
                   name="searchTerms" matInput placeholder="Procurar">
