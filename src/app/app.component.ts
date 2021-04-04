@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Renderer2, RendererFactory2 } from '@angular/core'
+import { AfterViewInit, Component, HostBinding, Renderer2, RendererFactory2 } from '@angular/core'
 import { Store } from '@ngrx/store'
 import * as actionsDashboard from './actions/dashboard.actions'
 import * as actionsApp from './actions/app.actions'
@@ -18,6 +18,7 @@ import { MatIconRegistry } from '@angular/material/icon'
 })
 
 export class AppComponent implements AfterViewInit {
+  @HostBinding('class.app') loading = true;
   private renderer: Renderer2
   private colorTheme: string = ''
   public isOnline: boolean = false
@@ -52,6 +53,7 @@ export class AppComponent implements AfterViewInit {
           setTimeout(() => {
             this.isOnline = true
             this.isLoading = false
+            this.loading = false
           }, 1000)
         }
       })
@@ -68,6 +70,13 @@ export class AppComponent implements AfterViewInit {
       .addSvgIcon("excel-icon")
       .addSvgIcon("icon-default-white-512x512")
       .addSvgIcon("account_circle_black_24dp")
+      .addSvgIcon("account_circle_white_24dp")
+      .addSvgIcon("menu_black_24dp")
+      .addSvgIcon("menu_white_24dp")
+      .addSvgIcon("search_black_24dp")
+      .addSvgIcon("search_white_24dp")
+      .addSvgIcon("close_black_24dp")
+      .addSvgIcon("close_white_24dp")
   }
 
   public initTheme(): void {

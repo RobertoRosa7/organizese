@@ -1,4 +1,4 @@
-<mat-card class="cards" [title]="item.title">
+<mat-card *ngIf="!isLoading" class="cards" [title]="item.title">
   <div class="cards-header">
     <div class="cards-title">
       <div class="value-percent">
@@ -25,6 +25,23 @@
           R$&nbsp;<span></span>
         </span>
       </ng-template>
+    </div>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="isLoading" class="cards" [title]="item.title">
+  <div class="cards-header loading-waves">
+    <div class="cards-title">
+      <div class="value-percent">
+        <span class="hide-value"></span>
+        <small></small>
+      </div>
+    </div>
+  </div>
+  <div class="cards-content loading-waves">
+    <div class="cards-cash ">
+      <span class="cards-label"></span>
+      <span class="hide-value"></span>
     </div>
   </div>
 </mat-card>

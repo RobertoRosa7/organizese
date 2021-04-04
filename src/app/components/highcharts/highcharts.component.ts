@@ -340,7 +340,6 @@ export class HighchartsComponent implements OnInit, DoCheck {
           break
         case 'categoria':
           this.chartPie.series[0].data = this.category
-          console.log(this.chartPie)
           break
       }
       resolve(true)

@@ -1,10 +1,13 @@
 @import "../../../styles.scss";
 .cards {
-  min-height: 78.33px;
+  min-height: 140px;
   overflow: hidden;
   margin: 8px 0;
   padding: 16px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   h1 {
     font-weight: 500;
   }
@@ -21,7 +24,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
-
     .eyes mat-icon {
       font-size: 16px;
       width: 16px;
@@ -41,7 +43,6 @@
     width: 100%;
     flex-direction: column;
     margin: 16px 0;
-
     .hide-value {
       font-size: 35px;
       font-weight: 500;
@@ -63,5 +64,31 @@
   .cards-label {
     font-size: 12px;
     font-weight: 100;
+  }
+  .cards-content {
+    min-height: 87px;
+  }
+  .loading-waves {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    position: relative;
+  }
+  .loading-waves::before {
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.02);
+    backdrop-filter: blur(15px);
+    animation: waves 1s linear infinite;
+    position: absolute;
+    top: 0;
+  }
+}
+
+@keyframes waves {
+  to {
+    transform: translateX(100%);
   }
 }

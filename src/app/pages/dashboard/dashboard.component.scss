@@ -4,7 +4,7 @@
   margin-right: auto;
   overflow: hidden;
   height: 100%;
-
+  width: 100%;
   .button-top {
     position: fixed;
     bottom: 10px;
@@ -87,11 +87,53 @@
       width: 100%;
       height: 60%;
       background-color: rgba(0, 0, 0, 0.09);
-      // background: linear-gradient(-180deg, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0.2) 60%);
-      // background: linear-gradient(-180deg, rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0.2) 60%);
-      // background: radial-gradient(rgba(0, 0, 0, 0.15) 10%, rgba(0, 0, 0, 0.2) 60%);
-      // filter: blur(10px);
       box-shadow: 0px 100px 100px 60px rgba(0, 0, 0, 0.09);
+    }
+    .search-toolbar {
+      margin-left: 64px;
+      margin-top: 16px;
+      margin-bottom: 16px;
+      padding: 0 30px 0 30px;
+      width: inherit;
+      .container-toolbar {
+        max-width: 1024px;
+        margin-right: auto;
+        margin-left: auto;
+        width: 100%;
+        height: 64px;
+        width: 100%;
+        .form {
+          width: inherit;
+          background: rgba(0, 0, 0, 0.08);
+          border-radius: 32px;
+          ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+            padding: 6px 12px;
+          }
+          ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+            padding: 0;
+          }
+          ::ng-deep .mat-form-field-wrapper {
+            padding-bottom: 0;
+          }
+          ::ng-deep .mat-form-field-infix {
+            border-top: 0;
+          }
+          ::ng-deep .mat-input-element {
+            font-size: 14px;
+            height: 20px;
+          }
+          ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+            color: transparent;
+          }
+          .field {
+            width: inherit;
+            flex: 1;
+            input[type="text"] {
+              padding: 0 16px;
+            }
+          }
+        }
+      }
     }
     .top-toolbar {
       margin-left: 30px;
@@ -193,7 +235,7 @@
     }
   }
   .pages {
-    margin-top: 125px;
+    // margin-top: 125px;
     padding: 0 30px 0 30px;
     margin-left: 64px;
     .container-pages {
@@ -241,10 +283,15 @@
   .dashboard .content-pages .banner {
     height: 88%;
   }
+  .dashboard .content-pages .search-toolbar {
+    margin-left: 0;
+    padding: 0 16px 0px 16px;
+  }
   .dashboard .pages {
     margin-left: 0;
     padding: 0 16px 74px 16px;
   }
+
   .dashboard .button-top {
     right: 20px;
   }

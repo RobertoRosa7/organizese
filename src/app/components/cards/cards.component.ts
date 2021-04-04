@@ -14,6 +14,7 @@ export class CardsComponent implements OnInit {
   @Input('value') public value: number = 0
   @Input('type') public type: string = ''
   @Input('item') public item: any
+  @Input('isLoading') public isLoading: boolean
 
   public showValues: boolean = true
   public changeTextHide: string = this.showValues ? 'visibility' : 'visibility_off'
@@ -23,6 +24,7 @@ export class CardsComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+ 
   }
 
   public returnClass(): string {

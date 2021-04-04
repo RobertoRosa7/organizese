@@ -6,9 +6,10 @@ import { DashboardComponent } from '../dashboard.component'
 import * as actionsDashboard from '../../../actions/dashboard.actions'
 import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
-import { delay, map } from 'rxjs/operators'
+import { delay, map, mergeMap } from 'rxjs/operators'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { DashboardService } from 'src/app/services/dashboard.service'
+import { Observable, of } from 'rxjs'
 
 @Component({
   selector: 'app-main',
@@ -69,7 +70,6 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
     super()
     this._breakpoint?.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
     this.differ = this._differs.find({}).create()
-
   }
 
   public ngDoCheck() {
@@ -80,17 +80,47 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
     }
   }
 
-  public ngOnInit(): void {
-    // this._dashboardService.fetchGraphCategory().subscribe(res => {
-    //   this.CATEGORY_DATA = Object.values(res.category).map((v: any) => ({ name: v, sliced: true })).map((val: any, i) =>
-    //     ({ ...val, name: val.name, y: Object.values(res.each_percent).map((v: any) => ({ v: v }))[i].v }))
-    // })
+  public async ngOnInit(): Promise<any> {
+    await this.initializingMain()
 
-    this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
-    this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
-    this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
+    this._store.select(({ registers, dashboard }: any) => this.assignmentStates({ registers, dashboard }))
+      .pipe(
+        map((state) => this.mapToProps(state)),
+        delay(3500),
+      ).subscribe((st) => this.isMainLoading = false)
+  }
 
-    this._store.select(({ registers, dashboard }: any) => ({
+  private initializingMain(): Promise<boolean> {
+    return new Promise(resolve => {
+      this.initGraphEvolution().then(() => {
+        this.initGraphEvolutionExpense().then(() => {
+          this.initGraphEvolutionCategory().then(() => {
+            resolve(true)
+          })
+        })
+      })
+    })
+  }
+
+  private initGraphEvolution(): Promise<any> {
+    return new Promise(resolve => resolve(this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())))
+  }
+
+  private initGraphEvolutionExpense(): Promise<any> {
+    return new Promise(resolve => resolve(this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())))
+  }
+
+  private initGraphEvolutionCategory(): Promise<any> {
+    return new Promise(resolve => resolve(this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())))
+  }
+
+  public formatarValor(valor: number = 0): string {
+    return new Intl.NumberFormat('pt-BR', { currency: 'BRL', minimumFractionDigits: 2 })
+      .format(parseFloat(valor.toFixed(2)))
+  }
+
+  private assignmentStates({ registers, dashboard }: any) {
+    return ({
       all: [...registers.all],
       consolidado: dashboard.consolidado,
       evolucao: dashboard.evolucao,
@@ -105,52 +135,40 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
       total_credit: dashboard.consolidado.total_credit,
       total_debit: dashboard.consolidado.total_debit,
       all_days_period: registers.all_days_period,
-    })).pipe(
-      map((state) => {
-        this.total = state.total_geral
-        this.totalDespesa = state.total_debit
-        this.totalReceita = state.total_credit
-        this.aPagar = state.a_pagar
-        this.aReceber = state.a_receber
-        this.filterByDays = state.all_days_period
-        this.CATEGORY_DATA = state.graph_category
-        this.ELEMENT_DATA = state.all.splice(0, 7)
-        this.EVOLUCAO_DATA = state.evolucao
-        this.EVOLUCAO_DESPESAS_DATA = state.evoucao_despesas
-        this.percent_consolidado = state.consolidado.percent_consolidado
-        this.percent_debit = state.consolidado.percent_debit
-        return state
-      }),
-    ).subscribe(state => {
-      this.cards.forEach(value => {
-        switch (value.type) {
-          case 'incoming':
-            value.value = state.consolidado.total_credit || 0
-            value.percent = state.consolidado.percent_credit || 0
-            break
-          case 'outcoming':
-            value.value = state.consolidado.total_debit || 0
-            value.percent = state.consolidado.percent_debit || 0
-            break
-          case 'consolidado':
-            value.value = state.consolidado.total_consolidado || 0
-            value.percent = state.consolidado.percent_consolidado
-            break
-        }
-      })
     })
   }
 
-  public async ngAfterViewInit(): Promise<any> {
-    this.isMainLoading = await this.isLoaded()
-  }
+  private mapToProps(state: any) {
+    this.total = state.total_geral
+    this.totalDespesa = state.total_debit
+    this.totalReceita = state.total_credit
+    this.aPagar = state.a_pagar
+    this.aReceber = state.a_receber
+    this.filterByDays = state.all_days_period
+    this.CATEGORY_DATA = state.graph_category
+    this.ELEMENT_DATA = state.all.splice(0, 7)
+    this.EVOLUCAO_DATA = state.evolucao
+    this.EVOLUCAO_DESPESAS_DATA = state.evoucao_despesas
+    this.percent_consolidado = state.consolidado.percent_consolidado
+    this.percent_debit = state.consolidado.percent_debit
 
-  public isLoaded(): Promise<boolean> {
-    return new Promise(resolve => setTimeout(() => resolve(false), 500))
-  }
+    this.cards.forEach(value => {
+      switch (value.type) {
+        case 'incoming':
+          value.value = state.consolidado.total_credit || 0
+          value.percent = state.consolidado.percent_credit || 0
+          break
+        case 'outcoming':
+          value.value = state.consolidado.total_debit || 0
+          value.percent = state.consolidado.percent_debit || 0
+          break
+        case 'consolidado':
+          value.value = state.consolidado.total_consolidado || 0
+          value.percent = state.consolidado.percent_consolidado
+          break
+      }
+    })
 
-  public formatarValor(valor: number = 0): string {
-    return new Intl.NumberFormat('pt-BR', { currency: 'BRL', minimumFractionDigits: 2 })
-      .format(parseFloat(valor.toFixed(2)))
+    return state
   }
 }

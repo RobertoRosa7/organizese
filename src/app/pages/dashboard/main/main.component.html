@@ -1,13 +1,17 @@
 <section class="main">
   <!-- <app-title title="Dashboard" subtitle="geral"></app-title> -->
   <div *ngIf="!isMobile" class="cards-main">
-    <app-cards *ngFor="let item of cards" [item]="item" [value]="item.value"></app-cards>
+    <app-cards [isLoading]="isMainLoading" *ngFor="let item of cards" [item]="item" [value]="item.value"></app-cards>
   </div>
 
+  <!-- <div *ngIf="!isMobile && isMainLoading" class="cards-main">
+    <app-cards [isLoading]="isMainLoading" *ngFor="let item of cards" [item]="item" [value]="item.value"></app-cards>
+  </div> -->
+
   <div *ngIf="isMobile" class="cards-main">
-    <owl-carousel [options]="{items: 1}" style="width: 100%;"
-      [carouselClasses]="['owl-theme', 'row', 'sliding']">
-      <app-cards style="max-width: 200px;" *ngFor="let item of cards" [item]="item" [value]="item.value"></app-cards>
+    <owl-carousel [options]="{items: 1}" style="width: 100%;" [carouselClasses]="['owl-theme', 'row', 'sliding']">
+      <app-cards [isLoading]="isMainLoading" style="max-width: 200px;" *ngFor="let item of cards" [item]="item"
+        [value]="item.value"></app-cards>
     </owl-carousel>
   </div>
 
