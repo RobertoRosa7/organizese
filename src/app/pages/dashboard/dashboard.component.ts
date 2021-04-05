@@ -18,6 +18,8 @@ import { FormControl } from '@angular/forms'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
 import { LoadService } from 'src/app/services/load.service'
 import { UtilsService } from 'src/app/utils/utis.service'
+import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component'
+import { Register } from 'src/app/models/models'
 
 @Component({
   selector: 'app-dashboard',
@@ -79,7 +81,7 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
     protected _differs?: KeyValueDiffers,
     protected _dialog?: MatDialog,
     protected _loadService?: LoadService,
-    protected _utilsService?: UtilsService
+    protected _utilsService?: UtilsService,
   ) {
     this._router?.events.subscribe((u: any) => this.isActive = u.url)
     this._breakpoint?.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
@@ -108,13 +110,12 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
       this.isDark = !(state.theme === 'dark-mode')
       this.consolidado = state.consolidado.total_consolidado
       this.hideValues = state.hide_values
-      this.autocomplete = await this.isEmpty(state.autocomplete)
-      this.user = await this.isEmpty(state.profile)
+      this.autocomplete = state.autocomplete
+      this.user = state.profile
 
       if (state.http_error.errors.length > 0) {
         this.handleError(state.http_error.errors[0])
       }
-
     })
 
     this._as?.pipe(filter(a => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
@@ -272,5 +273,26 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
     if (action.name === 'Home') {
       this._store?.dispatch(actionsApp.RESET_ALL())
     }
+  }
+
+  public add(type: string): void {
+    this._dialog?.open(DialogFormIncomingComponent, { data: { type }, panelClass: 'dialog-default' })
+      .afterClosed().subscribe(res => {
+        if (res) {
+          const payload: Register = {
+            category: res.category || 'Outros',
+            created_at: res.created_at,
+            updated_at: res.created_at,
+            type: res.type,
+            value: res.value,
+            status: 'pending',
+            brand: res.brand || '',
+            edit: false,
+            user: this.user,
+            description: res.description?.trim() || 'Sem descrição'
+          }
+          this._store?.dispatch(actionsRegister.ADD_REGISTERS({ payload }))
+        }
+      })
   }
 }

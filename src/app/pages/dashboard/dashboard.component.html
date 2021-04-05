@@ -153,8 +153,19 @@
       </div>
     </mat-drawer-content>
   </mat-drawer-container>
-  <!-- <button (click)="goToTop()" *ngIf="buttonToTop" mat-fab color="primary" class="button-top">
-    <mat-icon>keyboard_arrow_up</mat-icon>
-  </button> -->
+  <button (click)="$event.stopPropagation()" [matMenuTriggerFor]="menu" mat-fab color="primary" class="button-top">
+    <mat-icon>add</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" overlapTrigger="true">
+    <button (click)="add('incoming')" mat-menu-item>
+      <mat-icon>add_circle_outline</mat-icon>
+      <span style="font-weight: 500">RECEITA</span>
+    </button>
+
+    <button (click)="add('outcoming')" mat-menu-item>
+      <mat-icon>add_circle_outline</mat-icon>
+      <span style="font-weight: 500">DESPESAS</span>
+    </button>
+  </mat-menu>
 </div>
 <!-- <app-loader *ngIf="isLoadingDashboard"></app-loader> -->

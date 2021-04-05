@@ -184,8 +184,8 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public differ: any
   public enableButtonFilter: boolean = true
   public isMobile: boolean
-  public setDtStart: Date
-  public setDtEnd: Date
+  public setDtStart: any
+  public setDtEnd: any
 
   constructor(
     private _store: Store,
@@ -263,22 +263,22 @@ export class HighchartsComponent implements OnInit, DoCheck {
         case 'despesas':
           this.setDataOnGraph()
           const outcome = this.evolucao.graph_evolution
-          if (outcome.dates.length > 0) {
-            this.setDatesAndEnableButton()
-          }
+          !this._utilsService.isEmpty(outcome) && outcome.dates.length > 0
+            ? this.setDatesAndEnableButton()
+            : this.resetDatesAndEnableButton()
           break
         case 'receita':
           this.setDataOnGraph()
           const income = this.evolucao.graph_evolution
-          if (income.dates.length > 0) {
-            this.setDatesAndEnableButton()
-          }
+          !this._utilsService.isEmpty(income) && income.dates.length > 0
+            ? this.setDatesAndEnableButton()
+            : this.resetDatesAndEnableButton()
           break
         case 'categoria':
           this.chartPie.series[0].data = this.category.map((v: any) => ({ name: v.name, y: v.y, sliced: v.sliced }))
-          if (this.category.length > 0) {
-            this.setDatesAndEnableButton()
-          }
+          this.category.length > 0
+            ? this.setDatesAndEnableButton()
+            : this.resetDatesAndEnableButton()
           break
       }
       resolve(true)
@@ -324,12 +324,9 @@ export class HighchartsComponent implements OnInit, DoCheck {
     this.enableButtonFilter = false
   }
 
-  // private resetDates(graphData: any) {
-  //   if (this._utilsService.isEmpty(graphData)) {
-  //     this.enableButtonFilter = true
-  //     return true
-  //     // this._store.dispatch(actionsDashboard.FETCH_DATES({ payload: { dt_start: null, dt_end: null } }))
-  //   }
-  //   return false
-  // }
+  private resetDatesAndEnableButton(): void {
+    this.setDtEnd = undefined
+    this.setDtStart = undefined
+    this.enableButtonFilter = true
+  }
 }
