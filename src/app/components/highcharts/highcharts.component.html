@@ -1,26 +1,30 @@
 <div class="highcharts">
-  <form class="date">
+  <form class="date" (ngSubmit)="onSubmit()">
     <div class="form-inline">
-      <mat-form-field (click)="$event.preventDefault(); pickerStart.open()" class="form">
+      <mat-form-field (click)="$event.preventDefault(); !enableButtonFilter ? pickerStart.open() : undefined"
+        class="form">
         <mat-label>Data Início</mat-label>
-        <input autocomplete="off" matInput [matDatepicker]="pickerStart">
-        <mat-datepicker-toggle matSuffix [for]="pickerStart"></mat-datepicker-toggle>
+        <input [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
+          [(ngModel)]="setDtStart" matInput [matDatepickerFilter]="filterStart" [matDatepicker]="pickerStart">
+        <mat-datepicker-toggle [disabled]="enableButtonFilter" matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker [touchUi]="isMobile" #pickerStart>
         </mat-datepicker>
       </mat-form-field>
     </div>
 
     <div class="form-inline">
-      <mat-form-field (click)="$event.preventDefault(); pickerEnd.open()" class="form">
+      <mat-form-field (click)="$event.preventDefault(); !enableButtonFilter ? pickerEnd.open() : undefined"
+        class="form">
         <mat-label>Data Fim</mat-label>
-        <input autocomplete="off" matInput [matDatepicker]="pickerEnd">
-        <mat-datepicker-toggle matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
+        <input [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
+          [(ngModel)]="setDtEnd" [matDatepickerFilter]="filterEnd" matInput [matDatepicker]="pickerEnd">
+        <mat-datepicker-toggle [disabled]="enableButtonFilter" matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker [touchUi]="isMobile" #pickerEnd>
         </mat-datepicker>
       </mat-form-field>
     </div>
     <div class="buttons">
-      <button mat-raised-button>Filtrar</button>
+      <button [disabled]="enableButtonFilter" type="submit" mat-raised-button>Filtrar</button>
     </div>
   </form>
   <div #highchartEvoution></div>

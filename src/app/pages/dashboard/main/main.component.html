@@ -15,15 +15,19 @@
     </owl-carousel>
   </div>
 
-  <mat-tab-group>
+  <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Categoria">
-      <app-highcharts operation="categoria" [category]="CATEGORY_DATA"></app-highcharts>
+      <app-highcharts [dtEnd]="dates?.category.dt_end" [dtStart]="dates?.category.dt_start" [tabChanged]="tabChanged"
+        operation="categoria" [category]="CATEGORY_DATA"></app-highcharts>
     </mat-tab>
     <mat-tab label="Despesas">
-      <app-highcharts operation="despesas" [evolucao]="EVOLUCAO_DESPESAS_DATA"></app-highcharts>
+      <app-highcharts [dtEnd]="dates?.outcome.dt_end" [dtStart]="dates?.outcome.dt_start" [tabChanged]="tabChanged"
+        operation="despesas" [evolucao]="EVOLUCAO_DESPESAS_DATA">
+      </app-highcharts>
     </mat-tab>
     <mat-tab label="Receita">
-      <app-highcharts operation="receita" [evolucao]="EVOLUCAO_DATA"></app-highcharts>
+      <app-highcharts [dtEnd]="dates?.income.dt_end" [dtStart]="dates?.income.dt_start" [tabChanged]="tabChanged"
+        operation="receita" [evolucao]="EVOLUCAO_DATA"></app-highcharts>
     </mat-tab>
   </mat-tab-group>
 

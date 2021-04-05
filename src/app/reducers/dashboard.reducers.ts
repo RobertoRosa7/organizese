@@ -1,6 +1,7 @@
 import { createReducer, on } from "@ngrx/store";
 import * as actions from '../actions/dashboard.actions'
 import * as actionsApp from '../actions/app.actions'
+import * as moment from 'moment'
 
 const INITIAL_STATES = {
   consolidado: {
@@ -19,7 +20,21 @@ const INITIAL_STATES = {
   evolucao_detail: {},
   evolucao_despesas: {},
   auto_complete: [],
-  graph_category: []
+  graph_category: [],
+  dates: {
+    category: {
+      dt_start: moment().subtract(31, 'days'),
+      dt_end: moment(new Date())
+    },
+    outcome: {
+      dt_start: moment().subtract(31, 'days'),
+      dt_end: moment(new Date())
+    },
+    income: {
+      dt_start: moment().subtract(31, 'days'),
+      dt_end: moment(new Date())
+    }
+  }
 }
 
 const dashboardReducers = createReducer(
@@ -31,6 +46,8 @@ const dashboardReducers = createReducer(
   on(actions.SET_DEV_MODE, (states, { payload }) => ({ ...states, mode: payload.mode })),
   on(actions.SET_EVOLUCAO_DESPESAS, (states, { payload }) => ({ ...states, evolucao_despesas: payload })),
   on(actions.SET_AUTOCOMPLETE, (states, { payload }) => ({ ...states, auto_complete: payload })),
+  on(actions.FETCH_DATES, (states, { payload }) => ({ ...states, dates: payload })),
+
   on(actions.SET_GRAPH_CATEGORY, (states, { payload }) => {
     const payloadFormated: any = formatDataToGraphCategory({ ...payload })
     return ({
@@ -55,7 +72,7 @@ const dashboardReducers = createReducer(
     evolucao_despesas: {},
     auto_complete: [],
     evolucao_detail: {},
-    graph_category: []
+    graph_category: [],
   }))
 )
 

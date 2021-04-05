@@ -6,10 +6,10 @@ import { DashboardComponent } from '../dashboard.component'
 import * as actionsDashboard from '../../../actions/dashboard.actions'
 import { Router } from '@angular/router'
 import { MatDialog } from '@angular/material/dialog'
-import { delay, map, mergeMap } from 'rxjs/operators'
+import { delay, map } from 'rxjs/operators'
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
 import { DashboardService } from 'src/app/services/dashboard.service'
-import { Observable, of } from 'rxjs'
+import { MatTabChangeEvent } from '@angular/material/tabs'
 
 @Component({
   selector: 'app-main',
@@ -57,6 +57,10 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
   public differ: any
   public isMainLoading: boolean = true
   public CATEGORY_DATA: any = []
+  public tabChanged: any
+  public dates: any
+  public dtStart: Date
+  public dtEnd: Date
 
   constructor(
     protected _store: Store,
@@ -83,11 +87,11 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
   public async ngOnInit(): Promise<any> {
     await this.initializingMain()
 
-    this._store.select(({ registers, dashboard }: any) => this.assignmentStates({ registers, dashboard }))
+    this._store.select(({ registers, dashboard }: any) => this.abastractStates({ registers, dashboard }))
       .pipe(
         map((state) => this.mapToProps(state)),
         delay(3500),
-      ).subscribe((st) => this.isMainLoading = false)
+      ).subscribe(() => this.isMainLoading = false)
   }
 
   private initializingMain(): Promise<boolean> {
@@ -119,56 +123,66 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
       .format(parseFloat(valor.toFixed(2)))
   }
 
-  private assignmentStates({ registers, dashboard }: any) {
+  private abastractStates({ registers, dashboard }: any) {
     return ({
-      all: [...registers.all],
       consolidado: dashboard.consolidado,
       evolucao: dashboard.evolucao,
       evoucao_despesas: dashboard.evolucao_despesas,
       graph_category: dashboard.graph_category,
-      tab: registers.tab,
-      total_geral: registers.total_geral,
-      despesas: registers.total_despesas,
-      receita: registers.total_receita,
       a_pagar: dashboard.consolidado.a_pagar,
       a_receber: dashboard.consolidado.a_receber,
       total_credit: dashboard.consolidado.total_credit,
       total_debit: dashboard.consolidado.total_debit,
+      dates: dashboard.dates,
+
+      all: [...registers.all],
+      tab: registers.tab,
+      total_geral: registers.total_geral,
+      despesas: registers.total_despesas,
+      receita: registers.total_receita,
       all_days_period: registers.all_days_period,
     })
   }
 
-  private mapToProps(state: any) {
-    this.total = state.total_geral
-    this.totalDespesa = state.total_debit
-    this.totalReceita = state.total_credit
-    this.aPagar = state.a_pagar
-    this.aReceber = state.a_receber
-    this.filterByDays = state.all_days_period
-    this.CATEGORY_DATA = state.graph_category
-    this.ELEMENT_DATA = state.all.splice(0, 7)
-    this.EVOLUCAO_DATA = state.evolucao
-    this.EVOLUCAO_DESPESAS_DATA = state.evoucao_despesas
-    this.percent_consolidado = state.consolidado.percent_consolidado
-    this.percent_debit = state.consolidado.percent_debit
+  private mapToProps(st: any) {
+    this.ELEMENT_DATA = st.all.splice(0, 7)
+    this.total = st.total_geral
+    this.totalDespesa = st.total_debit
+    this.totalReceita = st.total_credit
+    this.filterByDays = st.all_days_period
+
+    this.dates = st.dates
+    // this.dtStart = st.dates.dt_start
+    // this.dtEnd = st.dates.dt_end
+    this.aPagar = st.a_pagar
+    this.aReceber = st.a_receber
+    this.CATEGORY_DATA = st.graph_category
+    this.EVOLUCAO_DATA = st.evolucao
+    this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas
+    this.percent_consolidado = st.consolidado.percent_consolidado
+    this.percent_debit = st.consolidado.percent_debit
 
     this.cards.forEach(value => {
       switch (value.type) {
         case 'incoming':
-          value.value = state.consolidado.total_credit || 0
-          value.percent = state.consolidado.percent_credit || 0
+          value.value = st.consolidado.total_credit || 0
+          value.percent = st.consolidado.percent_credit || 0
           break
         case 'outcoming':
-          value.value = state.consolidado.total_debit || 0
-          value.percent = state.consolidado.percent_debit || 0
+          value.value = st.consolidado.total_debit || 0
+          value.percent = st.consolidado.percent_debit || 0
           break
         case 'consolidado':
-          value.value = state.consolidado.total_consolidado || 0
-          value.percent = state.consolidado.percent_consolidado
+          value.value = st.consolidado.total_consolidado || 0
+          value.percent = st.consolidado.percent_consolidado
           break
       }
     })
 
-    return state
+    return st
+  }
+
+  public onTabChange(event: MatTabChangeEvent): void {
+    this.tabChanged = event.index
   }
 }

@@ -11,6 +11,7 @@ export enum actionsTypes {
   FETCH_EVOLUCAO_DETAIL = '[FETCH_EVOLUCAO_DETAIL]',
   FETCH_GRAPH_CATEGORY = '[FETCH_GRAPH_CATEGORY]',
   FETCH_AUTOCOMPLETE = '[FETCH_AUTOCOMPLETE]',
+  FETCH_DATES = '[FETCH_DATES]',
 
   SET_AUTOCOMPLETE = '[SET_AUTOCOMPLETE]',
   SET_EVOLUCAO = '[SET_EVOLUCAO]',
@@ -18,6 +19,7 @@ export enum actionsTypes {
   SET_EVOLUCAO_DETAIL = '[SET_EVOLUCAO_DETAIL]',
   SET_GRAPH_CATEGORY = '[SET_GRAPH_CATEGORY]',
   SET_DEV_MODE = '[SET_DEV_MODE]',
+  SET_DATES = '[SET_DATES]',
 
   DARK_MODE = '[DARK_MODE]',
   UPDATE_AUTOCOMPLETE = '[UPDATE_AUTOCOMPLETE]',
@@ -30,6 +32,7 @@ export const FETCH_EVOLUCAO_DESPESAS = createAction(actionsTypes.FETCH_EVOLUCAO_
 export const FETCH_GRAPH_CATEGORY = createAction(actionsTypes.FETCH_GRAPH_CATEGORY)
 export const FETCH_EVOLUCAO_DETAIL = createAction(actionsTypes.FETCH_EVOLUCAO_DETAIL, props<{ payload: any }>())
 export const FETCH_AUTOCOMPLETE = createAction(actionsTypes.FETCH_AUTOCOMPLETE)
+export const FETCH_DATES = createAction(actionsTypes.FETCH_DATES, props<{ payload: any }>())
 
 export const GET_TOTALS = createAction(actionsTypes.GET_TOTALS, props<{ payload: any }>())
 export const GET_DEV_MODE = createAction(actionsTypes.GET_DEV_MODE, props<{ payload: any }>())

@@ -4,6 +4,9 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Store } from '@ngrx/store';
 import * as Highcharts from 'highcharts'
+import * as moment from 'moment'
+import { UtilsService } from 'src/app/utils/utis.service';
+import * as actionsDashboard from '../../actions/dashboard.actions'
 
 const Boost = require('highcharts/modules/boost')
 const noData = require('highcharts/modules/no-data-to-display')
@@ -37,21 +40,18 @@ export class HighchartsComponent implements OnInit, DoCheck {
   @ViewChild('highchartPie', { static: true }) highchartPie: ElementRef
 
   @Input() public evolucao: any
-  @Input() public category: any
+  @Input() public category: any[] = []
   @Input() public operation: string
+  @Input() public dtStart: Date
+  @Input() public dtEnd: Date
+  @Input() public tabChanged: any
 
-  public isMobile: boolean
 
   public chartLine: any = {
     chart: {
       type: 'column',
       height: 400,
       spacingTop: 50,
-      // spacingRight: 10,
-      // spacingBottom: 10,
-      // spacingLeft: 10,
-      // plotBorderWidth: 10,
-      // margin: [50]
     },
     navigator: { enabled: false },
     scrollbar: { enabled: false },
@@ -129,36 +129,8 @@ export class HighchartsComponent implements OnInit, DoCheck {
       }
     },
     plotOptions: {
-      // line: {
-      //   marker: {
-      //     enabled: false
-      //   }
-      // },
       series: {
         pointPadding: 0,
-        // states: {
-        //   hover: {
-        //     color: 'rgba(68, 188, 93, 1)'
-        //   }
-        // }
-
-        // enableMouseTracking: false,
-
-        // dataLabels: {
-        //   enabled: true,
-        //   formatter: function () {
-        //     const self: any = this
-        //     let str: string = ''
-        //     if (self.point.y > 0) {
-        //       str += `R$ ${Intl.NumberFormat('pt-BR', { currency: 'BRL', minimumFractionDigits: 2 })
-        //         .format(self.point.y.toFixed(2))}`
-        //     }
-        //     return str
-        //   },
-        //   style: {
-        //     fontSize: '9px',
-        //   }
-        // }
       },
       column: {
         pointPadding: 0,
@@ -166,11 +138,9 @@ export class HighchartsComponent implements OnInit, DoCheck {
         pointWidth: 20
       }
     },
-    // lang: {
-    //   noData: ''
-    // },
     series: []
   }
+
   public chartPie: any = {
     chart: {
       plotBackgroundColor: null,
@@ -185,36 +155,6 @@ export class HighchartsComponent implements OnInit, DoCheck {
     tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
     },
-    // tooltip: {
-    //   borderWidth: 0,
-    //   borderRadius: 8,
-    //   shadow: true,
-    //   padding: 10,
-    //   zIndex: 1,
-    //   useHTML: true,
-    //   shared: true,
-    //   crosshairs: true,
-    //   formatter: function (): any {
-    //     const self: any = this
-    //     let s = `
-    //         <div class="highchart-tooltip">
-    //           <strong>${Highcharts.dateFormat('%d/%m/%Y', self.x * 1000)}</strong>
-    //         </div>
-    //       `;
-    //     for (let i in self.points) {
-    //       if (self.points[i].y > 0) {
-    //         s += `<span style="color:${self.points[i].series.color}">●</span>
-    //           <span class="highchart-text">${self.points[i].series.name}: </span>
-    //           <b class="highchart-text">
-    //           R$ ${Intl.NumberFormat('pt-BR', { currency: 'BRL', minimumFractionDigits: 2 })
-    //             .format(self.points[i].y.toFixed(2))}</b>
-    //         <br/>
-    //       `
-    //       }
-    //     }
-    //     return s
-    //   }
-    // },
     legend: {
       enabled: true,
       itemStyle: {
@@ -238,57 +178,29 @@ export class HighchartsComponent implements OnInit, DoCheck {
       }
     },
     series: [{ name: 'Despesa', colorByPoint: true, data: [] }]
-    // series: [
-    //   {
-    //     name: 'Brands',
-    //     colorByPoint: true,
-    //     data: [
-    //       {
-    //         name: 'Chrome',
-    //         y: 61.41,
-    //         sliced: true,
-    //         selected: true
-    //       },
-    //       {
-    //         name: 'Internet Explorer',
-    //         y: 11.84
-    //       },
-    //       {
-    //         name: 'Firefox',
-    //         y: 10.85
-    //       },
-    //       {
-    //         name: 'Edge',
-    //         y: 4.67
-    //       },
-    //       {
-    //         name: 'Safari',
-    //         y: 4.18
-    //       },
-    //       {
-    //         name: 'Other',
-    //         y: 7.05
-    //       }
-    //     ]
-    //   }
-    // ]
   }
 
   public data: any = {}
   public differ: any
+  public enableButtonFilter: boolean = true
+  public isMobile: boolean
+  public setDtStart: Date
+  public setDtEnd: Date
 
   constructor(
     private _store: Store,
     private _differs: KeyValueDiffers,
-    private _breakpoint: BreakpointObserver
+    private _breakpoint: BreakpointObserver,
+    private _utilsService: UtilsService
   ) {
     this._breakpoint?.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
     this.differ = this._differs.find({}).create()
   }
 
   public ngOnInit(): void {
-    this._store.select(({ dashboard }: any) =>
-      ({ mode: dashboard.dark_mode, evolucao: dashboard.evolucao })).subscribe(state => {
+    this._store.select(({ dashboard }: any) => this.abstractStates({ dashboard }))
+      .subscribe(state => {
+
         let theme = state.mode === 'light-mode' ? 'var(--color-medium-white)' : 'var(--color-default-dark)'
         let themeInverse = state.mode != 'light-mode' ? 'var(--color-medium-white)' : 'var(--color-default-dark)'
 
@@ -304,26 +216,42 @@ export class HighchartsComponent implements OnInit, DoCheck {
       })
   }
 
+  private abstractStates({ dashboard }: any) {
+    return ({
+      mode: dashboard.dark_mode,
+      evolucao: dashboard.evolucao,
+      dates: dashboard.dates
+    })
+  }
+
   public ngDoCheck(): void {
     const change = this.differ.diff(this)
     if (change) {
       change.forEachChangedItem((item: any) => {
-        if (item.key === 'evolucao') {
-          switch (this.operation) {
-            case 'despesas':
-              this.instanceHighchart().then(() =>
-                Highcharts.chart(this.highchartEvoution.nativeElement, this.chartLine))
-              break
-            case 'receita':
-              this.instanceHighchart().then(() =>
-                Highcharts.chart(this.highchartEvoution.nativeElement, this.chartLine))
-              break
-          }
+        if (item.key === 'category') {
+          this.instanceHighchart().then(() => {
+            Highcharts.chart(this.highchartPie.nativeElement, this.chartPie)
+          })
         }
 
-        if (item.key === 'category') {
-          this.instanceHighchart().then(() =>
-            Highcharts.chart(this.highchartPie.nativeElement, this.chartPie))
+        if (item.key === 'tabChanged') {
+          if (this.tabChanged == 1 && this.operation === 'despesas') {
+            this.instanceHighchart().then(() => {
+              Highcharts.chart(this.highchartEvoution.nativeElement, this.chartLine)
+            })
+          }
+
+          if (this.tabChanged == 2 && this.operation === 'receita') {
+            this.instanceHighchart().then(() => {
+              Highcharts.chart(this.highchartEvoution.nativeElement, this.chartLine)
+            })
+          }
+
+          if (this.tabChanged == 0 && this.operation === 'categoria') {
+            this.instanceHighchart().then(() => {
+              Highcharts.chart(this.highchartPie.nativeElement, this.chartPie).redraw()
+            })
+          }
         }
       })
     }
@@ -334,12 +262,23 @@ export class HighchartsComponent implements OnInit, DoCheck {
       switch (this.operation) {
         case 'despesas':
           this.setDataOnGraph()
+          const outcome = this.evolucao.graph_evolution
+          if (outcome.dates.length > 0) {
+            this.setDatesAndEnableButton()
+          }
           break
         case 'receita':
           this.setDataOnGraph()
+          const income = this.evolucao.graph_evolution
+          if (income.dates.length > 0) {
+            this.setDatesAndEnableButton()
+          }
           break
         case 'categoria':
-          this.chartPie.series[0].data = this.category
+          this.chartPie.series[0].data = this.category.map((v: any) => ({ name: v.name, y: v.y, sliced: v.sliced }))
+          if (this.category.length > 0) {
+            this.setDatesAndEnableButton()
+          }
           break
       }
       resolve(true)
@@ -361,4 +300,36 @@ export class HighchartsComponent implements OnInit, DoCheck {
       this.chartLine.xAxis.categories = this.evolucao.graph_evolution.dates
     }
   }
+
+  public filterEnd = (d: any): boolean => {
+    return moment(d).isSameOrAfter(moment(new Date()))
+  }
+
+  public filterStart = (d: any): boolean => {
+    return moment(d).isSameOrBefore(moment(new Date))
+  }
+
+  public onSubmit(): void {
+    // this._store.dispatch(actionsDashboard.FETCH_DATES({
+    //   payload: {
+    //     dt_start: moment(this.dtStart),
+    //     dt_end: moment(this.dtEnd)
+    //   }
+    // }))
+  }
+
+  private setDatesAndEnableButton(): void {
+    this.setDtEnd = this.dtEnd
+    this.setDtStart = this.dtStart
+    this.enableButtonFilter = false
+  }
+
+  // private resetDates(graphData: any) {
+  //   if (this._utilsService.isEmpty(graphData)) {
+  //     this.enableButtonFilter = true
+  //     return true
+  //     // this._store.dispatch(actionsDashboard.FETCH_DATES({ payload: { dt_start: null, dt_end: null } }))
+  //   }
+  //   return false
+  // }
 }
