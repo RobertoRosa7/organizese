@@ -57,7 +57,7 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
   public differ: any
   public isMainLoading: boolean = true
   public CATEGORY_DATA: any = []
-  public tabChanged: any
+  public tabChanged: number
   public dates: any
   public dtStart: Date
   public dtEnd: Date
@@ -184,5 +184,15 @@ export class MainComponent extends DashboardComponent implements OnInit, DoCheck
 
   public onTabChange(event: MatTabChangeEvent): void {
     this.tabChanged = event.index
+  }
+
+  public onDatesListening(event: any): void {
+    switch (event.type) {
+      case event.type:
+        this._store.dispatch(actionsDashboard.FETCH_DATES({
+          payload: { ...this.dates, [`${event.type}`]: event[event.type] }
+        }))
+        break
+    }
   }
 }

@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, DoCheck, ElementRef, Input, KeyValueDiffers, OnInit, ViewChild } from '@angular/core';
+import { Component, DoCheck, ElementRef, EventEmitter, Input, KeyValueDiffers, OnInit, Output, ViewChild } from '@angular/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { Store } from '@ngrx/store';
@@ -44,8 +44,9 @@ export class HighchartsComponent implements OnInit, DoCheck {
   @Input() public operation: string
   @Input() public dtStart: Date
   @Input() public dtEnd: Date
-  @Input() public tabChanged: any
+  @Input() public tabChanged: number
 
+  @Output() public onDates: EventEmitter<any> = new EventEmitter()
 
   public chartLine: any = {
     chart: {
@@ -310,12 +311,23 @@ export class HighchartsComponent implements OnInit, DoCheck {
   }
 
   public onSubmit(): void {
-    // this._store.dispatch(actionsDashboard.FETCH_DATES({
-    //   payload: {
-    //     dt_start: moment(this.dtStart),
-    //     dt_end: moment(this.dtEnd)
-    //   }
-    // }))
+    const tab: number = this.tabChanged ? this.tabChanged : 0
+    const payload: any = {}
+    switch (tab) {
+      case 0:
+        payload['category'] = { dt_end: moment(this.setDtEnd), dt_start: moment(this.setDtStart) }
+        payload['type'] = 'category'
+        break
+      case 1:
+        payload['outcome'] = { dt_end: moment(this.setDtEnd), dt_start: moment(this.setDtStart) }
+        payload['type'] = 'outcome'
+        break
+      case 2:
+        payload['income'] = { dt_end: moment(this.setDtEnd), dt_start: moment(this.setDtStart) }
+        payload['type'] = 'income'
+        break
+    }
+    this.onDates.emit(payload)
   }
 
   private setDatesAndEnableButton(): void {

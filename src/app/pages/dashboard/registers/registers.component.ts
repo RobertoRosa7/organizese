@@ -170,20 +170,23 @@ export class RegistersComponent extends DashboardComponent implements OnInit, Af
   }
 
   public listeningEventForm(event: Register): void {
-    this.isLoadingRegisters = true
-    const payload: Register = {
-      category: event.category || 'Outros',
-      created_at: event.created_at,
-      updated_at: event.created_at,
-      type: event.type,
-      value: event.value,
-      status: 'pending',
-      brand: event.brand || this.user.credit_card?.brand,
-      edit: false,
-      user: this.user,
-      description: event.description?.trim() || 'Sem descrição'
+    if (!event) {
+      this._store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }))
+    } else {
+      const payload: Register = {
+        category: event.category || 'Outros',
+        created_at: event.created_at,
+        updated_at: event.created_at,
+        type: event.type,
+        value: event.value,
+        status: 'pending',
+        brand: event.brand || this.user.credit_card?.brand,
+        edit: false,
+        user: this.user,
+        description: event.description?.trim() || 'Sem descrição'
+      }
+      this._store.dispatch(actionsRegister.ADD_REGISTERS({ payload }))
     }
-    this._store.dispatch(actionsRegister.ADD_REGISTERS({ payload }))
   }
 
   public orderbyChange(event: MatSelectChange): void {

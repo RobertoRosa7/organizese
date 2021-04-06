@@ -10,9 +10,7 @@
         <mat-datepicker [touchUi]="isMobile" #pickerStart>
         </mat-datepicker>
       </mat-form-field>
-    </div>
 
-    <div class="form-inline">
       <mat-form-field (click)="$event.preventDefault(); !enableButtonFilter ? pickerEnd.open() : undefined"
         class="form">
         <mat-label>Data Fim</mat-label>
@@ -23,6 +21,7 @@
         </mat-datepicker>
       </mat-form-field>
     </div>
+
     <div class="buttons">
       <button [disabled]="enableButtonFilter" type="submit" mat-raised-button>Filtrar</button>
     </div>

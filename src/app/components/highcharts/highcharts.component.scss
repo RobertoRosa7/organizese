@@ -4,14 +4,31 @@
   .date {
     display: flex;
     justify-content: space-between;
-    max-width: 650px;
+    max-width: 480px;
     margin-left: auto;
     align-items: center;
     margin-top: 8px;
     margin-bottom: 8px;
     flex-wrap: wrap;
+    .form-inline {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 320px;
+      .form {
+        width: 100%;
+        max-width: 130px;
+      }
+    }
     .buttons button {
       @include custom-button-icon-width-text;
     }
+  }
+}
+
+@media (max-width: 480px) {
+  .date .form-inline {
+    max-width: 100% !important;
   }
 }

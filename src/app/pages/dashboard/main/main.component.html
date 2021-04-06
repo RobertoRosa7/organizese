@@ -17,17 +17,20 @@
 
   <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Categoria">
-      <app-highcharts [dtEnd]="dates?.category.dt_end" [dtStart]="dates?.category.dt_start" [tabChanged]="tabChanged"
-        operation="categoria" [category]="CATEGORY_DATA"></app-highcharts>
+      <app-highcharts (onDates)="onDatesListening($event)" [dtEnd]="dates?.category.dt_end"
+        [dtStart]="dates?.category.dt_start" [tabChanged]="tabChanged" operation="categoria" [category]="CATEGORY_DATA">
+      </app-highcharts>
     </mat-tab>
     <mat-tab label="Despesas">
-      <app-highcharts [dtEnd]="dates?.outcome.dt_end" [dtStart]="dates?.outcome.dt_start" [tabChanged]="tabChanged"
-        operation="despesas" [evolucao]="EVOLUCAO_DESPESAS_DATA">
+      <app-highcharts (onDates)="onDatesListening($event)" [dtEnd]="dates?.outcome.dt_end"
+        [dtStart]="dates?.outcome.dt_start" [tabChanged]="tabChanged" operation="despesas"
+        [evolucao]="EVOLUCAO_DESPESAS_DATA">
       </app-highcharts>
     </mat-tab>
     <mat-tab label="Receita">
-      <app-highcharts [dtEnd]="dates?.income.dt_end" [dtStart]="dates?.income.dt_start" [tabChanged]="tabChanged"
-        operation="receita" [evolucao]="EVOLUCAO_DATA"></app-highcharts>
+      <app-highcharts (onDates)="onDatesListening($event)" [dtEnd]="dates?.income.dt_end"
+        [dtStart]="dates?.income.dt_start" [tabChanged]="tabChanged" operation="receita" [evolucao]="EVOLUCAO_DATA">
+      </app-highcharts>
     </mat-tab>
   </mat-tab-group>
 

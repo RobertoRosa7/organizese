@@ -1,19 +1,21 @@
 import { Injectable } from '@angular/core'
 import { Actions, ofType, Effect } from '@ngrx/effects'
-import { forkJoin, Observable, of } from 'rxjs'
-import { catchError, map, mergeMap } from 'rxjs/operators'
+import { forkJoin, from, Observable, of } from 'rxjs'
+import { catchError, map, mergeMap, switchMap } from 'rxjs/operators'
 import * as actions from '../actions/dashboard.actions'
 import { IndexdbService } from '../services/indexedbs.service'
 import { SET_ERRORS, GET_STATUS_CODE, SET_STATUS_CODE } from '../actions/errors.actions'
 import { DashboardService } from '../services/dashboard.service'
 import { HttpErrorResponse } from '@angular/common/http'
+import { Store } from '@ngrx/store'
 
 @Injectable()
 export class DashboardEffect {
   constructor(
     private _action: Actions,
     private _indexedb: IndexdbService,
-    private _dashboardService: DashboardService
+    private _dashboardService: DashboardService,
+    private _store: Store
   ) {
   }
 
@@ -82,7 +84,8 @@ export class DashboardEffect {
   @Effect()
   public fetchEvolucao$: Observable<Actions> = this._action.pipe(
     ofType(actions.FETCH_EVOLUCAO),
-    mergeMap(() => this._dashboardService.fetchEvocucao().pipe(catchError(e => of(e)))),
+    switchMap(() => from(this.getDatesFromStore())),
+    mergeMap(({ dates }) => this._dashboardService.fetchEvocucao(dates.income).pipe(catchError(e => of(e)))),
     map((payload: any) => {
       if (payload instanceof HttpErrorResponse) {
         const source = { ...payload, source: 'fetch_evolucao' }
@@ -97,7 +100,8 @@ export class DashboardEffect {
   @Effect()
   public fetchEvolucaoDespesas$: Observable<Actions> = this._action.pipe(
     ofType(actions.FETCH_EVOLUCAO_DESPESAS),
-    mergeMap(() => this._dashboardService.fetchEvocucaoDespesas().pipe(catchError(e => of(e)))),
+    switchMap(() => from(this.getDatesFromStore())),
+    mergeMap(({ dates }) => this._dashboardService.fetchEvocucaoDespesas(dates.outcome).pipe(catchError(e => of(e)))),
     map((payload: any) => {
       if (payload instanceof HttpErrorResponse) {
         const source = { ...payload, source: 'fetch_evolucao_despesas' }
@@ -127,7 +131,8 @@ export class DashboardEffect {
   @Effect()
   public graphCategory$: Observable<Actions> = this._action.pipe(
     ofType(actions.actionsTypes.FETCH_GRAPH_CATEGORY),
-    mergeMap(() => this._dashboardService.fetchGraphCategory().pipe(catchError(e => of(e)))),
+    switchMap(() => from(this.getDatesFromStore())),
+    mergeMap(({ dates }) => this._dashboardService.fetchGraphCategory(dates.category).pipe(catchError(e => of(e)))),
     map((payload) => {
       if (payload instanceof HttpErrorResponse) {
         const source = { ...payload, source: 'graph_category' }
@@ -153,4 +158,9 @@ export class DashboardEffect {
     }),
     catchError(e => of(e))
   )
+
+  private getDatesFromStore(): Promise<any> {
+    return new Promise(resolve => this._store.select(({ dashboard }: any) => ({ dates: dashboard.dates }))
+      .subscribe((dates) => resolve(dates)))
+  }
 }

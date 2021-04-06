@@ -61,6 +61,13 @@ export class DashboardService {
     return '?' + Object.entries(payload).map(e => e.join('=')).join('&')
   }
 
+  private convertDates(dates: any) {
+    return ({
+      dt_start: new Date(dates.dt_start).getTime() / 1000,
+      dt_end: new Date(dates.dt_end).getTime() / 1000,
+    })
+  }
+
   public fetchRegisters(params?: any): Observable<Register[]> {
     return this.http.get<Register[]>(`${this.constants.get('fetch_registers')}${this.convertJsonToUrl(params)}`)
   }
@@ -89,12 +96,14 @@ export class DashboardService {
     return this.http.get<StatusCode[]>(this.constants.get('get_status_code'))
   }
 
-  public fetchEvocucao(): Observable<any> {
-    return this.http.get<any>(this.constants.get('fetch_evolucao'))
+  public fetchEvocucao(dates?: any): Observable<any> {
+    const params = dates ? this.convertDates(dates) : ''
+    return this.http.get<any>(`${this.constants.get('fetch_evolucao')}${this.convertJsonToUrl(params)}`)
   }
 
-  public fetchEvocucaoDespesas(): Observable<any> {
-    return this.http.get<any>(this.constants.get('fetch_evolucao_despesas'))
+  public fetchEvocucaoDespesas(dates?: any): Observable<any> {
+    const params = dates ? this.convertDates(dates) : ''
+    return this.http.get<any>(`${this.constants.get('fetch_evolucao_despesas')}${this.convertJsonToUrl(params)}`)
   }
 
   public fetchEvocucaoDetail(payload: any): Observable<any> {
@@ -123,8 +132,9 @@ export class DashboardService {
     }).pipe(download((blob) => this.save(blob, 'organizese')))
   }
 
-  public fetchGraphCategory(): Observable<any> {
-    return this.http.get<any>(this.constants.get('fetch_graph_category'))
+  public fetchGraphCategory(dates?: any): Observable<any> {
+    const params = dates ? this.convertDates(dates) : ''
+    return this.http.get<any>(`${this.constants.get('fetch_graph_category')}${this.convertJsonToUrl(params)}`)
   }
 }
 

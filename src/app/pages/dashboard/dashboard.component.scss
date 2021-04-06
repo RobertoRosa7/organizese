@@ -260,6 +260,16 @@
   .dashboard .cards {
     flex-direction: column;
   }
+  .dashboard .button-top {
+    bottom: 84px;
+    min-width: 45px;
+    width: 45px;
+    height: 45px;
+    line-height: 45px;
+  }
+  ::ng-deep .mat-fab .mat-button-wrapper {
+    padding: 0 !important;
+  }
   .dashboard .sidebar {
     bottom: 0;
     height: 64px;

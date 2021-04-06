@@ -29,3 +29,8 @@
     display: flex;
   }
 }
+@media (max-width: 768px) {
+  .dialog .container-form-incoming {
+    padding: 0;
+  }
+}
