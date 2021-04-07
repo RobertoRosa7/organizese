@@ -1,150 +1,169 @@
-import { Injectable } from '@angular/core'
-import { Actions, ofType, Effect } from '@ngrx/effects'
-import { Observable, of, forkJoin } from 'rxjs'
-import { catchError, delay, map, mergeMap } from 'rxjs/operators'
-import * as actions from '../actions/registers.actions'
-import * as actionsDashboard from '../actions/dashboard.actions'
-import { SET_ERRORS, SET_SUCCESS } from '../actions/errors.actions'
-import { DashboardService } from '../services/dashboard.service'
-import { HttpErrorResponse } from '@angular/common/http'
-import { Store } from '@ngrx/store'
+import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { forkJoin, Observable, of } from 'rxjs';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+import * as actionsDashboard from '../actions/dashboard.actions';
+import { SET_ERRORS, SET_SUCCESS } from '../actions/errors.actions';
+import * as actions from '../actions/registers.actions';
+import { DashboardService } from '../services/dashboard.service';
 
 @Injectable()
 export class RegistersEffect {
-
   private props = {
     fetch_registers: 'fetch_registers',
     new_register: 'new_register',
     delete_register: 'delete_register',
     update_register: 'update_register',
-    fetch_search: 'fetch_search'
-  }
+    fetch_search: 'fetch_search',
+  };
 
   constructor(
-    private _action: Actions,
-    private _store: Store,
-    private _dashboardService: DashboardService,
-  ) {
-  }
+    private action: Actions,
+    private store: Store,
+    private dashboardService: DashboardService
+  ) {}
 
   @Effect()
-  public init$: Observable<Actions> = this._action.pipe(
+  public init$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.INIT),
-    mergeMap(({ payload }) => this._dashboardService.fetchRegisters(payload).pipe(catchError(e => of(e)))),
+    mergeMap(({ payload }) =>
+      this.dashboardService
+        .fetchRegisters(payload)
+        .pipe(catchError((e) => of(e)))
+    ),
     map((payload) => {
       if (payload instanceof HttpErrorResponse) {
-        const source = { ...payload, source: this.props.fetch_registers }
-        return SET_ERRORS({ payload: source })
+        const source = { ...payload, source: this.props.fetch_registers };
+        return SET_ERRORS({ payload: source });
       } else {
-        return actions.GET_REGISTERS({ payload })
+        return actions.GET_REGISTERS({ payload });
       }
     }),
-    catchError(err => of(err))
-  )
+    catchError((err) => of(err))
+  );
 
   @Effect()
-  public addedRegister$: Observable<Actions> = this._action.pipe(
+  public addedRegister$: Observable<Actions> = this.action.pipe(
     ofType(actions.ADDED_REGISTERS),
-    mergeMap(({ payload }) => this._dashboardService.newRegister(payload).pipe(catchError(e => of(e)))),
-    map(response => {
+    mergeMap(({ payload }) =>
+      this.dashboardService.newRegister(payload).pipe(catchError((e) => of(e)))
+    ),
+    map((response) => {
       if (response instanceof HttpErrorResponse) {
-        const source = { ...response, source: this.props.new_register }
-        return SET_ERRORS({ payload: source })
+        const source = { ...response, source: this.props.new_register };
+        return SET_ERRORS({ payload: source });
       } else {
-        this._store.dispatch(SET_SUCCESS({ payload: this.props.new_register }))
-        this._store.dispatch(actionsDashboard.INIT_DASHBOARD())
-        this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
-        this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
-        this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
-        this._store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
-        return actions.INIT({ payload: {} })
+        this.store.dispatch(SET_SUCCESS({ payload: this.props.new_register }));
+        this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
+        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
+        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
+        this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY());
+        this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+        return actions.INIT({ payload: {} });
       }
     }),
-    catchError(e => of(e))
-  )
+    catchError((e) => of(e))
+  );
 
   @Effect()
-  public addRegisters$: Observable<Actions> = this._action.pipe(
+  public addRegisters$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.ADD_REGISTERS),
     mergeMap(({ payload }) => [
       actions.ADDED_REGISTERS({ payload }),
       actions.SET_REGISTERS({ payload }),
     ]),
-    catchError(err => of(err))
-  )
+    catchError((err) => of(err))
+  );
 
   @Effect()
-  public deleteRegisters$: Observable<Actions> = this._action.pipe(
+  public deleteRegisters$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.DELETE_REGISTERS),
-    mergeMap(({ payload }: any) => this._dashboardService.deleteRegister(payload).pipe(catchError(e => of(e)))),
-    map(payload => {
+    mergeMap(({ payload }: any) =>
+      this.dashboardService
+        .deleteRegister(payload)
+        .pipe(catchError((e) => of(e)))
+    ),
+    map((payload) => {
       if (payload instanceof HttpErrorResponse) {
-        const source = { ...payload, source: this.props.delete_register }
-        return SET_ERRORS({ payload: source })
+        const source = { ...payload, source: this.props.delete_register };
+        return SET_ERRORS({ payload: source });
       } else {
-        this._store.dispatch(SET_SUCCESS({ payload: this.props.delete_register }))
-        this._store.dispatch(actionsDashboard.INIT_DASHBOARD())
-        this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
-        this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
-        this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
-        this._store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
-        return actions.GET_REGISTERS({ payload })
+        this.store.dispatch(
+          SET_SUCCESS({ payload: this.props.delete_register })
+        );
+        this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
+        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
+        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
+        this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY());
+        this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+        return actions.GET_REGISTERS({ payload });
       }
     }),
-    catchError(err => of(err))
-  )
+    catchError((err) => of(err))
+  );
 
   @Effect()
-  public showTab$: Observable<Actions> = this._action.pipe(
+  public showTab$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.GET_SHOWTAB),
     map(({ payload }: any) => {
-      const showtabs: any = {}
-      payload.forEach((e: any) => showtabs[e] = true)
-      return actions.SET_SHOWTAB({ payload: showtabs })
+      const showtabs: any = {};
+      payload.forEach((e: any) => (showtabs[e] = true));
+      return actions.SET_SHOWTAB({ payload: showtabs });
     }),
-    catchError(err => of(err))
-  )
+    catchError((err) => of(err))
+  );
 
   @Effect()
-  public updateRegister$: Observable<Actions> = this._action.pipe(
+  public updateRegister$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.UPDATE_REGISTER),
-    mergeMap(({ payload }: any) => forkJoin([
-      this._dashboardService.updateRegister(payload).pipe(catchError(e => of(e))),
-      of(payload)
-    ])),
+    mergeMap(({ payload }: any) =>
+      forkJoin([
+        this.dashboardService
+          .updateRegister(payload)
+          .pipe(catchError((e) => of(e))),
+        of(payload),
+      ])
+    ),
     map(([response, payload]) => {
       if (response instanceof HttpErrorResponse) {
-        const source = { ...response, source: this.props.update_register }
-        return SET_ERRORS({ payload: source })
+        const source = { ...response, source: this.props.update_register };
+        return SET_ERRORS({ payload: source });
       } else {
-        this._store.dispatch(SET_SUCCESS({ payload: this.props.update_register }))
-        this._store.dispatch(actionsDashboard.INIT_DASHBOARD())
-        this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO())
-        this._store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS())
-        this._store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY())
-        this._store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
-        return actions.SET_UPDATE({ payload: response.data })
+        this.store.dispatch(
+          SET_SUCCESS({ payload: this.props.update_register })
+        );
+        this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
+        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
+        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
+        this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY());
+        this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+        return actions.SET_UPDATE({ payload: response.data });
       }
     }),
-    catchError(err => of(err))
-  )
+    catchError((err) => of(err))
+  );
 
   @Effect()
-  public fetchSearch$: Observable<Actions> = this._action.pipe(
+  public fetchSearch$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.GET_SEARCH),
-    mergeMap(({ payload }: any) => forkJoin([
-      this._dashboardService.fetchSearch(payload).pipe(catchError(e => of(e))),
-      of(payload)
-    ])),
+    mergeMap(({ payload }: any) =>
+      forkJoin([
+        this.dashboardService
+          .fetchSearch(payload)
+          .pipe(catchError((e) => of(e))),
+        of(payload),
+      ])
+    ),
     map(([response, payload]) => {
       if (response instanceof HttpErrorResponse) {
-        const source = { ...response, source: this.props.fetch_search }
-        return SET_ERRORS({ payload: source })
+        const source = { ...response, source: this.props.fetch_search };
+        return SET_ERRORS({ payload: source });
       } else {
-        return actions.SET_SEARCH({ payload: response.search })
+        return actions.SET_SEARCH({ payload: response.search });
       }
     }),
-    catchError(err => of(err))
-  )
-
+    catchError((err) => of(err))
+  );
 }

@@ -1,9 +1,10 @@
-import { createReducer, on } from "@ngrx/store";
-import * as actions from '../actions/dashboard.actions'
-import * as actionsApp from '../actions/app.actions'
-import * as moment from 'moment'
+import { createReducer, on } from '@ngrx/store';
+import * as moment from 'moment';
+import * as actionsApp from '../actions/app.actions';
+import * as actions from '../actions/dashboard.actions';
+import * as utils from './utils.reducer';
 
-const INITIAL_STATES = {
+const BASE = {
   consolidado: {
     total_credit: 0,
     total_debit: 0,
@@ -14,6 +15,7 @@ const INITIAL_STATES = {
     a_pagar: 0,
     a_receber: 0
   },
+  registers: [],
   dark_mode: '',
   mode: '',
   evolucao: {},
@@ -22,6 +24,7 @@ const INITIAL_STATES = {
   auto_complete: [],
   graph_category: [],
   dates: {
+    type: 'default',
     category: {
       dt_start: moment().subtract(31, 'days'),
       dt_end: moment(new Date())
@@ -33,9 +36,15 @@ const INITIAL_STATES = {
     income: {
       dt_start: moment().subtract(31, 'days'),
       dt_end: moment(new Date())
+    },
+    default: {
+      dt_start: moment().subtract(31, 'days'),
+      dt_end: moment(new Date())
     }
   }
 }
+
+const INITIAL_STATES = BASE;
 
 const dashboardReducers = createReducer(
   INITIAL_STATES,
@@ -48,39 +57,33 @@ const dashboardReducers = createReducer(
   on(actions.SET_AUTOCOMPLETE, (states, { payload }) => ({ ...states, auto_complete: payload })),
   on(actions.FETCH_DATES, (states, { payload }) => ({ ...states, dates: payload })),
 
+  on(actions.SET_DASHBOARD, (states, { payload }) => {
+    const totals: any = utils.total(payload.data.results);
+    console.log(payload);
+    return ({
+      ...states,
+      registers: payload.data.results.length > 0 ? utils.updateAll(payload.data.results) : [],
+      // consolidado: payload.data.consolidado,
+      total: payload.data.total,
+      total_geral: payload.data.total_geral,
+      total_despesas: totals.despesa,
+      total_receita: totals.receita,
+      a_pagar: payload.data.consolidado.a_pagar,
+      a_receber: payload.data.consolidado.a_receber,
+      all_days_period: payload.data.days <= 0 ? 1 : payload.data.days
+    });
+  }),
+
   on(actions.SET_GRAPH_CATEGORY, (states, { payload }) => {
-    const payloadFormated: any = formatDataToGraphCategory({ ...payload })
+    const payloadFormated: any = utils.formatDataToGraphCategory({ ...payload })
     return ({
       ...states,
       graph_category: payloadFormated
     })
   }),
+  on(actionsApp.RESET_ALL, (states) => ({ ...states, BASE }))
+);
 
-  on(actionsApp.RESET_ALL, (states) => ({
-    ...states,
-    consolidado: {
-      a_pagar: 0,
-      total_consolidado: 0,
-      total_credit: 0,
-      total_debit: 0,
-      a_receber: 0,
-      percent_consolidado: 0,
-      percent_debit: 0,
-      percent_credit: 0,
-    },
-    evolucao: {},
-    evolucao_despesas: {},
-    auto_complete: [],
-    evolucao_detail: {},
-    graph_category: [],
-  }))
-)
-
-function formatDataToGraphCategory(payload: any) {
-  return Object.values(payload.category).map((v: any) => ({ name: v, sliced: true })).map((val: any, i) =>
-    ({ ...val, name: val.name, y: Object.values(payload.each_percent).map((v: any) => ({ v: v }))[i].v }))
-}
-
-export function reducerDashboard(state: any, action: any) {
-  return dashboardReducers(state, action)
+export function reducerDashboard(state: any, action: any): any {
+  return dashboardReducers(state, action);
 }

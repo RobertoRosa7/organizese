@@ -2,12 +2,18 @@
   <mat-drawer-container class="container">
     <mat-drawer class="drawer" #drawer mode="over" opened="false">
       <ul class="app-menu-list">
-        <li class="drawer-item" [title]="item.name" (click)="drawer.toggle(); goTo(item)"
-          [ngClass]="{'link-active': isActive === item.link}" *ngFor="let item of menuList" [routerLink]="item.link">
+        <li
+          class="drawer-item"
+          [title]="item.name"
+          (click)="drawer.toggle(); goTo(item)"
+          [ngClass]="{ 'link-active': isActive === item.link }"
+          *ngFor="let item of menuList"
+          [routerLink]="item.link"
+        >
           <a>
-            <mat-icon>{{item.icon}}</mat-icon>
+            <mat-icon>{{ item.icon }}</mat-icon>
           </a>
-          <span>{{item.name}}</span>
+          <span>{{ item.name }}</span>
         </li>
         <li (click)="logout()" class="btn-logout drawer-item">
           <a>
@@ -20,10 +26,15 @@
     <mat-drawer-content>
       <div class="sidebar bg-mode">
         <ul class="app-menu-list">
-          <li [title]="item.name" (click)="goTo(item)" [ngClass]="{'link-active': isActive === item.link}"
-            *ngFor="let item of menuList" [routerLink]="item.link">
+          <li
+            [title]="item.name"
+            (click)="goTo(item)"
+            [ngClass]="{ 'link-active': isActive === item.link }"
+            *ngFor="let item of menuList"
+            [routerLink]="item.link"
+          >
             <a>
-              <mat-icon>{{item.icon}}</mat-icon>
+              <mat-icon>{{ item.icon }}</mat-icon>
             </a>
           </li>
           <li (click)="logout()" class="btn-logout">
@@ -39,19 +50,51 @@
           <div class="container-toolbar">
             <form (ngSubmit)="onSubmit()" class="form">
               <mat-form-field class="field" appearance="outline">
-                <mat-icon (click)="drawer.toggle()" style="cursor: pointer;"
-                  [svgIcon]="isDark ? 'menu_black_24dp': 'menu_white_24dp'" matPrefix>
+                <mat-icon
+                  (click)="drawer.toggle()"
+                  style="cursor: pointer"
+                  [svgIcon]="isDark ? 'menu_black_24dp' : 'menu_white_24dp'"
+                  matPrefix
+                >
                 </mat-icon>
-                <input type="text" [formControl]="searchTerms" [matAutocomplete]="auto" autocomplete="off"
-                  name="searchTerms" matInput placeholder="Procurar">
-                <mat-autocomplete #auto="matAutocomplete" (optionSelected)="setSearch($event)">
-                  <mat-option *ngFor="let option of autocomplete$ | async" [value]="option">{{option}}</mat-option>
+                <input
+                  type="text"
+                  [formControl]="searchTerms"
+                  [matAutocomplete]="auto"
+                  autocomplete="off"
+                  name="searchTerms"
+                  matInput
+                  placeholder="Procurar"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="setSearch($event)"
+                >
+                  <mat-option
+                    *ngFor="let option of autocomplete$ | async"
+                    [value]="option"
+                    >{{ option }}</mat-option
+                  >
                 </mat-autocomplete>
-                <mat-icon (click)="$event.stopPropagation()" [matMenuTriggerFor]="perfil" style="cursor: pointer;"
+                <mat-icon
+                  (click)="$event.stopPropagation()"
+                  [matMenuTriggerFor]="perfil"
+                  style="cursor: pointer"
                   *ngIf="!searchTerms.value"
-                  [svgIcon]="isDark ? 'account_circle_black_24dp': 'account_circle_white_24dp'" matSuffix></mat-icon>
-                <mat-icon [svgIcon]="isDark ? 'close_black_24dp': 'close_white_24dp'" *ngIf="searchTerms.value"
-                  (click)="searchTerms.reset()" style="cursor: pointer;" matSuffix></mat-icon>
+                  [svgIcon]="
+                    isDark
+                      ? 'account_circle_black_24dp'
+                      : 'account_circle_white_24dp'
+                  "
+                  matSuffix
+                ></mat-icon>
+                <mat-icon
+                  [svgIcon]="isDark ? 'close_black_24dp' : 'close_white_24dp'"
+                  *ngIf="searchTerms.value"
+                  (click)="searchTerms.reset()"
+                  style="cursor: pointer"
+                  matSuffix
+                ></mat-icon>
               </mat-form-field>
             </form>
             <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
@@ -61,9 +104,9 @@
                 </div>
                 <li role="list-item">
                   <p style="display: flex; flex-direction: column">
-                    <small> {{user?.name}}</small>
-                    <small> {{user?.email}}</small>
-                    <small> {{user?.tel}}</small>
+                    <small> {{ user?.name }}</small>
+                    <small> {{ user?.email }}</small>
+                    <small> {{ user?.tel }}</small>
                   </p>
                 </li>
                 <li class="divider">
@@ -153,7 +196,13 @@
       </div>
     </mat-drawer-content>
   </mat-drawer-container>
-  <button (click)="$event.stopPropagation()" [matMenuTriggerFor]="menu" mat-fab color="primary" class="button-top">
+  <button
+    (click)="$event.stopPropagation()"
+    [matMenuTriggerFor]="menu"
+    mat-fab
+    color="primary"
+    class="button-top"
+  >
     <mat-icon>add</mat-icon>
   </button>
   <mat-menu #menu="matMenu" overlapTrigger="true">

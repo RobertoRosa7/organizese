@@ -3,9 +3,13 @@
   <div class="settings-container">
     <aside class="aside mobile">
       <mat-list>
-        <mat-list-item class="list" *ngFor="let item of settingsMenu" [routerLink]="item.target">
-          <mat-icon mat-list-icon>{{item.icon}}</mat-icon>
-          <p mat-line>{{item.subtitle}}</p>
+        <mat-list-item
+          class="list"
+          *ngFor="let item of settingsMenu"
+          [routerLink]="item.target"
+        >
+          <mat-icon mat-list-icon>{{ item.icon }}</mat-icon>
+          <p mat-line>{{ item.subtitle }}</p>
         </mat-list-item>
       </mat-list>
     </aside>

@@ -1,7 +1,7 @@
 <div #contentDialog class="dialog" [ngSwitch]="type">
   <div *ngSwitchCase="'details'" class="dialog-container detail">
     <div class="header dialog-header-mode">
-      <small class="title">{{detail.description}}</small>
+      <small class="title">{{ detail.description }}</small>
       <div class="max-window">
         <!-- <button type="button" mat-icon-button disableRipple="true" (click)="close()">
           <mat-icon>close</mat-icon>
@@ -15,28 +15,46 @@
     <div class="content-dialog">
       <div class="line">
         <p class="categoria">
-          <span>{{detail.category}} <mat-icon>{{detail.cat_icon}}</mat-icon></span>
+          <span
+            >{{ detail.category }}
+            <mat-icon>{{ detail.cat_icon }}</mat-icon></span
+          >
         </p>
         <p class="description">
-          <span>{{detail.description}}</span>
+          <span>{{ detail.description }}</span>
         </p>
       </div>
       <p class="valor">
-        <span [ngClass]="{'cards-money-on':detail.type === 'incoming','cards-money-off':detail.type === 'outcoming'}">
+        <span
+          [ngClass]="{
+            'cards-money-on': detail.type === 'incoming',
+            'cards-money-off': detail.type === 'outcoming'
+          }"
+        >
           <small *ngIf="detail.type === 'outcoming'">-</small>
-          R$ {{formatarValor(detail.value)}}
+          R$ {{ formatarValor(detail.value) }}
         </span>
       </p>
     </div>
     <div class="container-footer">
       <div class="container-tools">
         <p class="save" title="salvar">
-          <button disableRipple="true" (click)="edit(detail)" mat-icon-button type="button">
+          <button
+            disableRipple="true"
+            (click)="edit(detail)"
+            mat-icon-button
+            type="button"
+          >
             <mat-icon>edit</mat-icon>
           </button>
         </p>
         <p class="download" title="download">
-          <button disableRipple="true" (click)="btnDownload(detail)" mat-icon-button type="button">
+          <button
+            disableRipple="true"
+            (click)="btnDownload(detail)"
+            mat-icon-button
+            type="button"
+          >
             <mat-icon>download</mat-icon>
           </button>
         </p>
@@ -51,13 +69,18 @@
           </button>
         </p> -->
         <p class="save" title="salvar">
-          <button disableRipple="true" (click)="del(detail)" mat-icon-button type="button">
+          <button
+            disableRipple="true"
+            (click)="del(detail)"
+            mat-icon-button
+            type="button"
+          >
             <mat-icon>delete</mat-icon>
           </button>
         </p>
       </div>
       <p class="date">
-        <span>{{detail.created_at * 1000 | date:'medium'}}</span>
+        <span>{{ detail.created_at * 1000 | date: 'medium' }}</span>
       </p>
     </div>
   </div>
@@ -65,7 +88,7 @@
     <div class="header dialog-header-mode">
       <div class="title">
         <small>Seu Sistema Operacional</small>&nbsp;&nbsp; - &nbsp;&nbsp;
-        <span> {{downloadList.current_os}}</span>
+        <span> {{ downloadList.current_os }}</span>
       </div>
       <div class="max-window">
         <!-- <button type="button" mat-icon-button disableRipple="true" (click)="close()">
@@ -76,17 +99,31 @@
         </span>
       </div>
     </div>
-    <mat-list role="list" style="height: inherit;">
+    <mat-list role="list" style="height: inherit">
       <!-- <p>Linux</p> -->
-      <app-downloads *ngFor="let i of downloadList?.linux" [downloadItem]="i"></app-downloads>
+      <app-downloads
+        *ngFor="let i of downloadList?.linux"
+        [downloadItem]="i"
+      ></app-downloads>
       <!-- <p>Windows</p> -->
-      <app-downloads *ngFor="let i of downloadList?.windows" [downloadItem]="i"></app-downloads>
+      <app-downloads
+        *ngFor="let i of downloadList?.windows"
+        [downloadItem]="i"
+      ></app-downloads>
       <!-- <p>Mac</p> -->
       <!-- <app-downloads *ngFor="let i of downloadList.mac" [downloadItem]="i"></app-downloads> -->
     </mat-list>
   </div>
-  <div *ngSwitchCase="'login'" class="dialog-container login" [ngStyle]="{'opacity': showProgressbar ? '0.3' : '1'}">
-    <mat-progress-bar class="progress-bar" *ngIf="showProgressbar" mode="indeterminate"></mat-progress-bar>
+  <div
+    *ngSwitchCase="'login'"
+    class="dialog-container login"
+    [ngStyle]="{ opacity: showProgressbar ? '0.3' : '1' }"
+  >
+    <mat-progress-bar
+      class="progress-bar"
+      *ngIf="showProgressbar"
+      mode="indeterminate"
+    ></mat-progress-bar>
     <div class="header dialog-header-mode">
       <div class="title">
         <small>Acesse sua conta</small>
@@ -98,6 +135,10 @@
         </span>
       </div>
     </div>
-    <app-login dialog="dialog" (trigger)="onTrigger($event)" style="height: inherit;"></app-login>
+    <app-login
+      dialog="dialog"
+      (trigger)="onTrigger($event)"
+      style="height: inherit"
+    ></app-login>
   </div>
 </div>

@@ -1,9 +1,16 @@
 <section class="result-search">
   <div class="container-search">
-    <app-title title="Resultado:" [subtitle]="(TOTAL_RESULT$ | async)"></app-title>
+    <app-title
+      title="Resultado:"
+      [subtitle]="TOTAL_RESULT$ | async"
+    ></app-title>
 
-    <ng-container *ngIf="(TOTAL_RESULT$ | async)">
-      <app-list-registers (send)="onEvent($event)" *ngFor="let i of RESULT_DATA$ | async" [item]="i"></app-list-registers>
+    <ng-container *ngIf="TOTAL_RESULT$ | async">
+      <app-list-registers
+        (send)="onEvent($event)"
+        *ngFor="let i of RESULT_DATA$ | async"
+        [item]="i"
+      ></app-list-registers>
     </ng-container>
 
     <p *ngIf="!(TOTAL_RESULT$ | async)">Nenhum registro encontrado</p>

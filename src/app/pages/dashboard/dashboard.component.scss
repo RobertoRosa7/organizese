@@ -131,7 +131,7 @@
           .field {
             width: inherit;
             flex: 1;
-            input[type="text"] {
+            input[type='text'] {
               padding: 0 16px;
             }
           }
@@ -253,6 +253,7 @@
     height: 100%;
     position: fixed;
     z-index: 10;
+    width: 64px;
   }
 }
 
@@ -290,7 +291,11 @@
     max-width: 100%;
     min-width: 40px !important;
   }
-  .dashboard .content-pages .app-custom-toolbar-row .perfil-menu .prev-consolidado {
+  .dashboard
+    .content-pages
+    .app-custom-toolbar-row
+    .perfil-menu
+    .prev-consolidado {
     width: auto;
   }
   .dashboard .content-pages .banner {

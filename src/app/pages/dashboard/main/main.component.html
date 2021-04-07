@@ -1,7 +1,8 @@
 <section class="main">
   <!-- <app-title title="Dashboard" subtitle="geral"></app-title> -->
   <div *ngIf="!isMobile" class="cards-main">
-    <app-cards [isLoading]="isMainLoading" *ngFor="let item of cards" [item]="item" [value]="item.value"></app-cards>
+    <app-cards [isLoading]="isMainLoading" *ngFor="let item of cards" [item]="item" [value]="(item.value || 0)">
+    </app-cards>
   </div>
 
   <!-- <div *ngIf="!isMobile && isMainLoading" class="cards-main">
@@ -17,18 +18,18 @@
 
   <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Categoria">
-      <app-highcharts (onDates)="onDatesListening($event)" [dtEnd]="dates?.category.dt_end"
+      <app-highcharts [minDate]="minDate" (onDates)="onDatesListening($event)" [dtEnd]="dates?.category.dt_end"
         [dtStart]="dates?.category.dt_start" [tabChanged]="tabChanged" operation="categoria" [category]="CATEGORY_DATA">
       </app-highcharts>
     </mat-tab>
     <mat-tab label="Despesas">
-      <app-highcharts (onDates)="onDatesListening($event)" [dtEnd]="dates?.outcome.dt_end"
+      <app-highcharts [minDate]="minDate" (onDates)="onDatesListening($event)" [dtEnd]="dates?.outcome.dt_end"
         [dtStart]="dates?.outcome.dt_start" [tabChanged]="tabChanged" operation="despesas"
         [evolucao]="EVOLUCAO_DESPESAS_DATA">
       </app-highcharts>
     </mat-tab>
     <mat-tab label="Receita">
-      <app-highcharts (onDates)="onDatesListening($event)" [dtEnd]="dates?.income.dt_end"
+      <app-highcharts [minDate]="minDate" (onDates)="onDatesListening($event)" [dtEnd]="dates?.income.dt_end"
         [dtStart]="dates?.income.dt_start" [tabChanged]="tabChanged" operation="receita" [evolucao]="EVOLUCAO_DATA">
       </app-highcharts>
     </mat-tab>

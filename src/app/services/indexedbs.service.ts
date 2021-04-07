@@ -1,45 +1,42 @@
-import { Injectable } from '@angular/core'
-import { NgxIndexedDBService } from 'ngx-indexed-db'
-import { Observable, from, of } from 'rxjs'
+import { Injectable } from '@angular/core';
+import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class IndexdbService {
-  constructor(
-    private _indexdb: NgxIndexedDBService
-  ) { }
+  constructor(private indexdb: NgxIndexedDBService) {}
 
   public create(payload: any): Observable<any> {
-    return from(this._indexdb.add('organizese', payload))
+    return from(this.indexdb.add('organizese', payload));
   }
 
   public update(payload: any): Observable<any> {
-    return from(this._indexdb.update('organizese', payload))
+    return from(this.indexdb.update('organizese', payload));
   }
 
   public delete(id: string): Observable<any> {
-    return from(this._indexdb.delete('organizese', id))
+    return from(this.indexdb.delete('organizese', id));
   }
 
   public clearStore(): Observable<any> {
-    return from(this._indexdb.clear('organizese'))
+    return from(this.indexdb.clear('organizese'));
   }
 
   public getById(id: string): Observable<any> {
-    return from(this._indexdb.getByID('organizese', id))
+    return from(this.indexdb.getByID('organizese', id));
   }
 
   public getAll(): Observable<any> {
-    return from(this._indexdb.getAll('organizese'))
+    return from(this.indexdb.getAll('organizese'));
   }
 
   public getByIndex(index: number): Observable<any> {
-    return from(this._indexdb.getByIndex('organizese', 'issue', index))
+    return from(this.indexdb.getByIndex('organizese', 'issue', index));
   }
 
   public count(): Observable<any> {
-    return from(this._indexdb.count('organizese'))
+    return from(this.indexdb.count('organizese'));
   }
 }

@@ -4,7 +4,7 @@
       <mat-form-field (click)="$event.preventDefault(); !enableButtonFilter ? pickerStart.open() : undefined"
         class="form">
         <mat-label>Data Início</mat-label>
-        <input [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
+        <input [min]="minDate" [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
           [(ngModel)]="setDtStart" matInput [matDatepickerFilter]="filterStart" [matDatepicker]="pickerStart">
         <mat-datepicker-toggle [disabled]="enableButtonFilter" matSuffix [for]="pickerStart"></mat-datepicker-toggle>
         <mat-datepicker [touchUi]="isMobile" #pickerStart>
@@ -14,7 +14,7 @@
       <mat-form-field (click)="$event.preventDefault(); !enableButtonFilter ? pickerEnd.open() : undefined"
         class="form">
         <mat-label>Data Fim</mat-label>
-        <input [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
+        <input [min]="minDate" [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
           [(ngModel)]="setDtEnd" [matDatepickerFilter]="filterEnd" matInput [matDatepicker]="pickerEnd">
         <mat-datepicker-toggle [disabled]="enableButtonFilter" matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
         <mat-datepicker [touchUi]="isMobile" #pickerEnd>

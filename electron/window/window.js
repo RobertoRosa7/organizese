@@ -3,7 +3,7 @@ const path = require('path')
 const menu = require("../menu/menu")
 
 const windowSettings = {
-  width: 1366,
+  width: 1024,
   height: 768,
   backgroundColor: "#FAFAFA",
   name: "Organizese",
@@ -21,7 +21,7 @@ module.exports = function createDefaultWindow() {
   // const reload = () => remote.getCurrentWindow().reload()
 
   // globalShortcut.register('F5', reload)
-  
+
   // window.addEventListener('beforeunload', () => {
   //   globalShortcut.unregister('F5', reload)
   //   globalShortcut.unregister('CommandOrControl+R', reload)

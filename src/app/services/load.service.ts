@@ -1,18 +1,17 @@
-import { Injectable } from "@angular/core";
-import { Observable, ReplaySubject } from "rxjs";
+import { Injectable } from '@angular/core';
+import { Observable, ReplaySubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LoadService {
-  private httpLoading$ = new ReplaySubject<boolean>(1)
+  private httpLoading$ = new ReplaySubject<boolean>(1);
 
-  constructor() {
-  }
+  constructor() {}
 
   public httpProgress(): Observable<boolean> {
-    return this.httpLoading$.asObservable()
+    return this.httpLoading$.asObservable();
   }
 
-  public setHttpProgressStatus(inprogress: boolean) {
-    this.httpLoading$.next(inprogress)
+  public setHttpProgressStatus(inprogress: boolean): void {
+    this.httpLoading$.next(inprogress);
   }
 }

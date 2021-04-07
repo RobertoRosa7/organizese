@@ -1,22 +1,24 @@
-import { Component, DoCheck, KeyValueDiffers, OnInit } from '@angular/core'
-import { Store } from '@ngrx/store'
-import { DashboardComponent } from '../dashboard.component'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { FormBuilder } from '@angular/forms'
-import { DashboardService } from 'src/app/services/dashboard.service'
-import { UtilsService } from 'src/app/utils/utis.service'
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
-import { MatDialog } from '@angular/material/dialog'
-import { ProfileService } from 'src/app/services/profile.service'
-import { Router } from '@angular/router'
+import { Component, DoCheck, KeyValueDiffers, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { DashboardComponent } from '../dashboard.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { FormBuilder } from '@angular/forms';
+import { DashboardService } from 'src/app/services/dashboard.service';
+import { UtilsService } from 'src/app/utils/utis.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { MatDialog } from '@angular/material/dialog';
+import { ProfileService } from 'src/app/services/profile.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
-  styleUrls: ['./settings.component.scss']
+  styleUrls: ['./settings.component.scss'],
 })
-export class SettingsComponent extends DashboardComponent implements OnInit, DoCheck {
-  public differ: any
+export class SettingsComponent
+  extends DashboardComponent
+  implements OnInit, DoCheck {
+  public differ: any;
 
   public settingsMenu = [
     {
@@ -24,48 +26,49 @@ export class SettingsComponent extends DashboardComponent implements OnInit, DoC
       is_button: false,
       icon: 'person',
       label: 'Perfil',
-      target: 'profile'
+      target: 'profile',
     },
     {
       subtitle: 'Definir nova senha',
       is_button: false,
       icon: 'vpn_key',
       label: 'Nova senha',
-      target: 'new-password'
+      target: 'new-password',
     },
     {
       subtitle: 'Sobre o app',
       is_button: false,
       icon: 'info',
       label: 'Sobre',
-      target: 'about'
+      target: 'about',
     },
-  ]
+  ];
 
   constructor(
-    protected _store: Store,
-    protected _snackbar: MatSnackBar,
-    protected _fb: FormBuilder,
-    protected _dashboardService: DashboardService,
-    protected _utilsService: UtilsService,
-    protected _differs: KeyValueDiffers,
-    protected _breakpointObserver: BreakpointObserver,
-    protected _dialog: MatDialog,
-    protected _profileService: ProfileService,
-    protected _router: Router
+    protected store: Store,
+    protected snackbar: MatSnackBar,
+    protected fb: FormBuilder,
+    protected dashboardService: DashboardService,
+    protected utilsService: UtilsService,
+    protected differs: KeyValueDiffers,
+    protected breakpointObserver: BreakpointObserver,
+    protected dialog: MatDialog,
+    protected profileService: ProfileService,
+    protected router: Router
   ) {
-    super()
-    _breakpointObserver.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
-    this.differ = this._differs?.find({}).create()
+    super();
+    breakpointObserver
+      .observe([Breakpoints.XSmall])
+      .subscribe((result) => (this.isMobile = !!result.matches));
+    this.differ = this.differs?.find({}).create();
   }
 
-  public ngOnInit(): void {
-  }
+  public ngOnInit(): void {}
 
   public ngDoCheck() {
-    const change = this.differ.diff(this)
+    const change = this.differ.diff(this);
     if (change) {
-      change.forEachChangedItem((item: any) => { })
+      change.forEachChangedItem((item: any) => {});
     }
   }
 }

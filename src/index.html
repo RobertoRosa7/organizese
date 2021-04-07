@@ -39,12 +39,14 @@
     .app::after {
       content: '';
       border: 4px solid rgba(0, 0, 0, 0.05);
-      border-left-color: #009688;
+      border-left-color: rgba(255, 255, 255, 1);
       border-radius: 50%;
       width: 54px;
       height: 54px;
       animation: spin 1s linear infinite;
       margin: 50px 0;
+      position: absolute;
+      bottom: 20px;
     }
 
     @keyframes spin {

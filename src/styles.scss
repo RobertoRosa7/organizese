@@ -176,7 +176,8 @@ $text-accent: var(--text-accent);
     background: linear-gradient(-90deg, var(--color-whitesmoke) 100%, transparent);
   }
   .bg-mode {
-    background: var(--color-whitesmoke);
+    // background: var(--color-whitesmoke);
+    background: transparent;
   }
   .bg-mode-custom {
     background: linear-gradient(-90deg, var(--color-whitesmoke), transparent);
@@ -257,7 +258,8 @@ $text-accent: var(--text-accent);
     background: linear-gradient(-90deg, #393939 100%, #42424290 0);
   }
   .bg-mode {
-    background: #212121;
+    // background: #212121;
+    background: transparent;
   }
   .bg-mode-custom {
     background: linear-gradient(-90deg, #393939, #42424290);
@@ -359,11 +361,23 @@ h2.welcome-subtitle {
       font-size: 0.9em;
     }
   }
+  .dark-mode .bg-mode {
+    background: #212121;
+  }
+  .light-mode .bg-mode {
+    background: var(--color-whitesmoke);
+  }
 }
 
 @media screen and (min-width: 557.98px) and (max-width: 768px) {
   .dialog-default {
     max-width: calc(100% - 211px) !important;
+  }
+  .dark-mode .bg-mode {
+    background: #212121;
+  }
+  .light-mode .bg-mode {
+    background: var(--color-whitesmoke);
   }
 }
 
