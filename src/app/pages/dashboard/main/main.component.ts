@@ -75,9 +75,10 @@ export class MainComponent
     protected dashboardService: DashboardService
   ) {
     super();
-    this.breakpoint
-      ?.observe([Breakpoints.XSmall])
-      .subscribe((result) => (this.isMobile = !!result.matches));
+    const breakPoint = this.breakpoint?.observe([Breakpoints.XSmall]);
+
+    // tslint:disable-next-line: deprecation
+    breakPoint.subscribe((result) => (this.isMobile = !!result.matches));
     this.differ = this.differs.find({}).create();
   }
 
@@ -91,17 +92,17 @@ export class MainComponent
   public async ngOnInit(): Promise<any> {
     await this.initializingMain();
 
-    this.store
+    const store = this.store
       .select(({ registers, dashboard }: any) =>
         this.abastractStates({ registers, dashboard })
       )
       .pipe(
         map((state) => this.mapToProps(state)),
         delay(3500)
-      )
-      .subscribe(() => {
-        this.isMainLoading = false;
-      });
+      );
+
+    // tslint:disable-next-line: deprecation
+    store.subscribe(() => (this.isMainLoading = false));
   }
 
   private initializingMain(): Promise<boolean> {
@@ -110,6 +111,7 @@ export class MainComponent
         this.initGraphEvolution().then(() => {
           this.initGraphEvolutionExpense().then(() => {
             this.initGraphEvolutionCategory().then(() => {
+              // tslint:disable-next-line: deprecation
               this.dashboardService.fetchLastDate().subscribe((dt) => {
                 this.minDate = new Date(dt.dt_start);
                 resolve(true);
@@ -151,40 +153,43 @@ export class MainComponent
     }).format(parseFloat(valor.toFixed(2)));
   }
 
-  private abastractStates({ registers, dashboard }: any): object {
+  private abastractStates({ registers, dashboard }: any): any {
     return {
+      all: [...dashboard.registers],
       consolidado: dashboard.consolidado,
       evolucao: dashboard.evolucao,
+
       evoucao_despesas: dashboard.evolucao_despesas,
       graph_category: dashboard.graph_category,
-      // a_pagar: dashboard.consolidado.a_pagar,
-      // a_receber: dashboard.consolidado.a_receber,
-      // total_credit: dashboard.consolidado.total_credit,
-      // total_debit: dashboard.consolidado.total_debit,
-      dates: dashboard.dates,
-      all: [...dashboard.registers],
-      all_days_period: dashboard.all_days_period,
-      total_geral: registers.total_geral,
-      despesas: registers.total_despesas,
-      receita: registers.total_receita,
+      a_pagar: dashboard.a_pagar,
 
+      a_receber: dashboard.a_receber,
+      total_credit: dashboard.total_credit,
+      total_debit: dashboard.total_debit,
+
+      despesas: dashboard.total_despesas,
+      receita: dashboard.total_receita,
+      all_days_period: dashboard.all_days_period,
+
+      dates: dashboard.dates,
+      total: dashboard.total,
       tab: registers.tab,
     };
   }
 
   private mapToProps(st: any): any {
     this.ELEMENT_DATA = st.all.splice(0, 7);
-    this.total = st.total_geral;
-    this.totalDespesa = st.total_debit;
-    this.totalReceita = st.total_credit;
+    this.total = st.total;
+    this.totalDespesa = st.despesas;
+    this.totalReceita = st.receita;
     this.filterByDays = st.all_days_period;
 
     this.dates = st.dates;
     this.CATEGORY_DATA = st.graph_category;
     this.EVOLUCAO_DATA = st.evolucao;
     this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas;
-    // this.percentConsolidado = st.consolidado.percentConsolidado
-    // this.percentDebit = st.consolidado.percentDebit
+    this.percentConsolidado = st.consolidado.percent_consolidado;
+    this.percentDebit = st.consolidado.percent_debit;
 
     this.cards.forEach((value) => {
       switch (value.type) {
@@ -194,11 +199,11 @@ export class MainComponent
           break;
         case 'outcoming':
           value.value = st.consolidado.total_debit || 0;
-          value.percent = st.consolidado.percentDebit || 0;
+          value.percent = st.consolidado.percent_debit || 0;
           break;
         case 'consolidado':
           value.value = st.consolidado.total_consolidado || 0;
-          value.percent = st.consolidado.percentConsolidado;
+          value.percent = st.consolidado.percent_consolidado;
           break;
       }
     });
@@ -222,7 +227,7 @@ export class MainComponent
             },
           })
         );
-        this.store.dispatch(event.action());
+        this.initMain().then(() => this.store.dispatch(event.action()));
         break;
     }
   }

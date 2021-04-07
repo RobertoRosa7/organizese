@@ -46,6 +46,7 @@ export class DashboardEffect {
         ];
       } else {
         return this.dashboardService.fetchAutocomplete().pipe(
+          // tslint:disable-next-line: no-shadowed-variable
           map((autocomplete: any) => {
             if (autocomplete) {
               this.indexedb.create({
@@ -222,6 +223,7 @@ export class DashboardEffect {
           dates: dashboard.dates,
           type: dashboard.dates.type,
         }))
+        // tslint:disable-next-line: deprecation
         .subscribe((dates) => resolve(dates))
     );
   }

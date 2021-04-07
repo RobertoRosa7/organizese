@@ -111,7 +111,8 @@ export class HighchartsComponent implements OnInit, DoCheck {
       categories: [],
       crosshair: true,
       labels: {
-        formatter: function () {
+        // tslint:disable-next-line: object-literal-shorthand
+        formatter: function (): any {
           const self: any = this;
           return Highcharts.dateFormat('%m/%Y', self.value * 1000);
         },
@@ -129,6 +130,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
       useHTML: true,
       shared: true,
       crosshairs: true,
+      // tslint:disable-next-line: object-literal-shorthand
       formatter: function (): any {
         const self: any = this;
         let s = `
@@ -139,7 +141,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
               )}</strong>
             </div>
           `;
-        for (let i in self.points) {
+        for (const i in self.points) {
           if (self.points[i].y > 0) {
             s += `<span style="color:${self.points[i].series.color}">●</span>
               <span class="highchart-text">${
@@ -224,6 +226,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
   ) {
     this.breakpoint
       ?.observe([Breakpoints.XSmall])
+      // tslint:disable-next-line: deprecation
       .subscribe((result) => (this.isMobile = !!result.matches));
     this.differ = this.differs.find({}).create();
   }
@@ -231,6 +234,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public ngOnInit(): void {
     this.store
       .select(({ dashboard }: any) => this.abstractStates({ dashboard }))
+      // tslint:disable-next-line: deprecation
       .subscribe((state) => {
         const theme =
           state.mode === 'light-mode'
@@ -353,10 +357,12 @@ export class HighchartsComponent implements OnInit, DoCheck {
 
   public filterEnd = (d: any): boolean => {
     return moment(d).isSameOrAfter(moment(new Date()));
+    // tslint:disable-next-line: semicolon
   };
 
   public filterStart = (d: any): boolean => {
     return moment(d).isSameOrBefore(moment(new Date()));
+    // tslint:disable-next-line: semicolon
   };
 
   public onSubmit(): void {

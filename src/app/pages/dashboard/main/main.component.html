@@ -1,7 +1,12 @@
 <section class="main">
   <!-- <app-title title="Dashboard" subtitle="geral"></app-title> -->
   <div *ngIf="!isMobile" class="cards-main">
-    <app-cards [isLoading]="isMainLoading" *ngFor="let item of cards" [item]="item" [value]="(item.value || 0)">
+    <app-cards
+      [isLoading]="isMainLoading"
+      *ngFor="let item of cards"
+      [item]="item"
+      [value]="item.value || 0"
+    >
     </app-cards>
   </div>
 
@@ -10,34 +15,69 @@
   </div> -->
 
   <div *ngIf="isMobile" class="cards-main">
-    <owl-carousel [options]="{items: 1}" style="width: 100%;" [carouselClasses]="['owl-theme', 'row', 'sliding']">
-      <app-cards [isLoading]="isMainLoading" style="max-width: 200px;" *ngFor="let item of cards" [item]="item"
-        [value]="item.value"></app-cards>
+    <owl-carousel
+      [options]="{ items: 1 }"
+      style="width: 100%"
+      [carouselClasses]="['owl-theme', 'row', 'sliding']"
+    >
+      <app-cards
+        [isLoading]="isMainLoading"
+        style="max-width: 200px"
+        *ngFor="let item of cards"
+        [item]="item"
+        [value]="item.value"
+      ></app-cards>
     </owl-carousel>
   </div>
 
   <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Categoria">
-      <app-highcharts [minDate]="minDate" (onDates)="onDatesListening($event)" [dtEnd]="dates?.category.dt_end"
-        [dtStart]="dates?.category.dt_start" [tabChanged]="tabChanged" operation="categoria" [category]="CATEGORY_DATA">
+      <app-highcharts
+        [minDate]="minDate"
+        (onDates)="onDatesListening($event)"
+        [dtEnd]="dates?.category.dt_end"
+        [dtStart]="dates?.category.dt_start"
+        [tabChanged]="tabChanged"
+        operation="categoria"
+        [category]="CATEGORY_DATA"
+      >
       </app-highcharts>
     </mat-tab>
     <mat-tab label="Despesas">
-      <app-highcharts [minDate]="minDate" (onDates)="onDatesListening($event)" [dtEnd]="dates?.outcome.dt_end"
-        [dtStart]="dates?.outcome.dt_start" [tabChanged]="tabChanged" operation="despesas"
-        [evolucao]="EVOLUCAO_DESPESAS_DATA">
+      <app-highcharts
+        [minDate]="minDate"
+        (onDates)="onDatesListening($event)"
+        [dtEnd]="dates?.outcome.dt_end"
+        [dtStart]="dates?.outcome.dt_start"
+        [tabChanged]="tabChanged"
+        operation="despesas"
+        [evolucao]="EVOLUCAO_DESPESAS_DATA"
+      >
       </app-highcharts>
     </mat-tab>
     <mat-tab label="Receita">
-      <app-highcharts [minDate]="minDate" (onDates)="onDatesListening($event)" [dtEnd]="dates?.income.dt_end"
-        [dtStart]="dates?.income.dt_start" [tabChanged]="tabChanged" operation="receita" [evolucao]="EVOLUCAO_DATA">
+      <app-highcharts
+        [minDate]="minDate"
+        (onDates)="onDatesListening($event)"
+        [dtEnd]="dates?.income.dt_end"
+        [dtStart]="dates?.income.dt_start"
+        [tabChanged]="tabChanged"
+        operation="receita"
+        [evolucao]="EVOLUCAO_DATA"
+      >
       </app-highcharts>
     </mat-tab>
   </mat-tab-group>
 
   <div class="analise">
-    <app-panel-control [filterByDays]="filterByDays" [aPagar]="aPagar" [aReceber]="aReceber" [total]="total"
-      [totalReceita]="totalReceita" [totalDespesa]="totalDespesa">
+    <app-panel-control
+      [filterByDays]="filterByDays"
+      [aPagar]="aPagar"
+      [aReceber]="aReceber"
+      [total]="total"
+      [totalReceita]="totalReceita"
+      [totalDespesa]="totalDespesa"
+    >
     </app-panel-control>
   </div>
 
@@ -68,7 +108,10 @@
   </div> -->
 
   <div style="margin-bottom: 80px">
-    <app-list-registers *ngFor="let item of ELEMENT_DATA" [item]="item"></app-list-registers>
+    <app-list-registers
+      *ngFor="let item of ELEMENT_DATA"
+      [item]="item"
+    ></app-list-registers>
   </div>
 
   <!-- <div class="col-7">
