@@ -165,3 +165,10 @@
 
 * [x] Novo layout de configurações
 * [x] Novo layout de cadastro de despesas e entrada
+
+###### 03/04/2021
+* [] Landing page ao iniciar
+* [x] Layout dashboard com banner
+* [x] Layout setttings perfil
+* [x] Gráfico categoria implementado
+* [] Hash do gráfico

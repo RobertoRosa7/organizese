@@ -1,37 +1,37 @@
-import { LOCALE_ID, NgModule } from "@angular/core"
-import { registerLocaleData } from "@angular/common"
-import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core'
-import { MomentDateAdapter } from '@angular/material-moment-adapter'
-import localePt from '@angular/common/locales/pt'
-import { RouterModule, Routes } from "@angular/router"
-import { SettingsComponent } from "./settings/settings.component"
-import { RegistersComponent } from "./registers/registers.component"
-import { FormIncomingComponent } from "src/app/components/form-incoming/form-incoming.component"
-import { GridComponent } from "src/app/components/grid/grid.component"
-import { DashboardComponent } from "./dashboard.component"
-import { CardsComponent } from "src/app/components/cards/cards.component"
-import { MainComponent } from './main/main.component'
-import { ResultSearchComponent } from './result-search/result-search.component'
-import { DialogFormIncomingComponent } from "src/app/components/dialog-form-incoming/dialog-form-incoming.component"
-import { TitleComponent } from "src/app/components/title/title.component"
-import { TabsComponent } from '../../components/tabs/tabs.component'
-import { TabMenuComponent } from '../../components/tabs/tab-menu/tab-menu.component'
-import { TabContentComponent } from '../../components/tabs/tab-content/tab-content.component'
-import { TabHeaderComponent } from '../../components/tabs/tab-header/tab-header.component'
-import { DialogConfirmComponent } from "src/app/components/dialog-confirm/dialog-confirm.component"
-import { ListRegistersComponent } from '../../components/list-registers/list-registers.component'
-import { HighchartsComponent } from '../../components/highcharts/highcharts.component';
+import { registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { RouterModule, Routes } from '@angular/router';
+import { NgxMaskModule } from 'ngx-mask';
+import { OwlModule } from 'ngx-owl-carousel';
+import { CardsComponent } from 'src/app/components/cards/cards.component';
+import { DarkThemeComponent } from 'src/app/components/dark-theme/dark-theme.component';
+import { DialogConfirmComponent } from 'src/app/components/dialog-confirm/dialog-confirm.component';
+import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
+import { FormIncomingComponent } from 'src/app/components/form-incoming/form-incoming.component';
+import { GridComponent } from 'src/app/components/grid/grid.component';
+import { LoaderComponent } from 'src/app/components/loader/loader.component';
+import { TitleComponent } from 'src/app/components/title/title.component';
+import { MaterialModule } from 'src/app/material.module';
 import { DialogsComponent } from '../../components/dialogs/dialogs.component';
-import { PanelControlComponent } from '../../components/panel-control/panel-control.component'
-import { MaterialModule } from "src/app/material.module"
-import { NgxMaskModule } from 'ngx-mask'
-import { LoaderComponent } from "src/app/components/loader/loader.component"
-import { OwlModule } from 'ngx-owl-carousel'
-import { SettingsMenuComponent } from './settings/settings-menu/settings-menu.component'
-import { DarkThemeComponent } from "src/app/components/dark-theme/dark-theme.component";
+import { HighchartsComponent } from '../../components/highcharts/highcharts.component';
+import { ListRegistersComponent } from '../../components/list-registers/list-registers.component';
+import { PanelControlComponent } from '../../components/panel-control/panel-control.component';
+import { TabContentComponent } from '../../components/tabs/tab-content/tab-content.component';
+import { TabHeaderComponent } from '../../components/tabs/tab-header/tab-header.component';
+import { TabMenuComponent } from '../../components/tabs/tab-menu/tab-menu.component';
+import { TabsComponent } from '../../components/tabs/tabs.component';
+import { DashboardComponent } from './dashboard.component';
+import { MainComponent } from './main/main.component';
+import { RegistersComponent } from './registers/registers.component';
+import { ResultSearchComponent } from './result-search/result-search.component';
 import { SettingsAboutComponent } from './settings/settings-about/settings-about.component';
+import { SettingsMenuComponent } from './settings/settings-menu/settings-menu.component';
+import { SettingsNewPasswordComponent } from './settings/settings-new-password/settings-new-password.component';
 import { SettingsProfileComponent } from './settings/settings-profile/settings-profile.component';
-import { SettingsNewPasswordComponent } from './settings/settings-new-password/settings-new-password.component'
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {

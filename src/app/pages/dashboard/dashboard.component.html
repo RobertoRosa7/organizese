@@ -1,15 +1,21 @@
 <div class="dashboard">
   <mat-drawer-container class="container">
-    <mat-drawer #drawer mode="over" opened="false">
+    <mat-drawer class="drawer" #drawer mode="over" opened="false">
       <ul class="app-menu-list">
-        <li [title]="item.name" (click)="goTo(item)" [ngClass]="{'link-active': isActive === item.link}"
-          (click)="drawer.toggle()" *ngFor="let item of menuList" [routerLink]="item.link">
+        <li
+          class="drawer-item"
+          [title]="item.name"
+          (click)="drawer.toggle(); goTo(item)"
+          [ngClass]="{ 'link-active': isActive === item.link }"
+          *ngFor="let item of menuList"
+          [routerLink]="item.link"
+        >
           <a>
-            <mat-icon>{{item.icon}}</mat-icon>
+            <mat-icon>{{ item.icon }}</mat-icon>
           </a>
-          <span>{{item.name}}</span>
+          <span>{{ item.name }}</span>
         </li>
-        <li (click)="logout()" class="btn-logout">
+        <li (click)="logout()" class="btn-logout drawer-item">
           <a>
             <mat-icon>logout</mat-icon>
           </a>
@@ -20,10 +26,15 @@
     <mat-drawer-content>
       <div class="sidebar bg-mode">
         <ul class="app-menu-list">
-          <li [title]="item.name" (click)="goTo(item)" [ngClass]="{'link-active': isActive === item.link}"
-            *ngFor="let item of menuList" [routerLink]="item.link">
+          <li
+            [title]="item.name"
+            (click)="goTo(item)"
+            [ngClass]="{ 'link-active': isActive === item.link }"
+            *ngFor="let item of menuList"
+            [routerLink]="item.link"
+          >
             <a>
-              <mat-icon>{{item.icon}}</mat-icon>
+              <mat-icon>{{ item.icon }}</mat-icon>
             </a>
           </li>
           <li (click)="logout()" class="btn-logout">
@@ -33,16 +44,91 @@
           </li>
         </ul>
       </div>
-
       <div class="content-pages">
-        <mat-toolbar>
+        <div class="banner"></div>
+        <div class="search-toolbar">
+          <div class="container-toolbar">
+            <form (ngSubmit)="onSubmit()" class="form">
+              <mat-form-field class="field" appearance="outline">
+                <mat-icon
+                  (click)="drawer.toggle()"
+                  style="cursor: pointer"
+                  [svgIcon]="isDark ? 'menu_black_24dp' : 'menu_white_24dp'"
+                  matPrefix
+                >
+                </mat-icon>
+                <input
+                  type="text"
+                  [formControl]="searchTerms"
+                  [matAutocomplete]="auto"
+                  autocomplete="off"
+                  name="searchTerms"
+                  matInput
+                  placeholder="Procurar"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  (optionSelected)="setSearch($event)"
+                >
+                  <mat-option
+                    *ngFor="let option of autocomplete$ | async"
+                    [value]="option"
+                    >{{ option }}</mat-option
+                  >
+                </mat-autocomplete>
+                <mat-icon
+                  (click)="$event.stopPropagation()"
+                  [matMenuTriggerFor]="perfil"
+                  style="cursor: pointer"
+                  *ngIf="!searchTerms.value"
+                  [svgIcon]="
+                    isDark
+                      ? 'account_circle_black_24dp'
+                      : 'account_circle_white_24dp'
+                  "
+                  matSuffix
+                ></mat-icon>
+                <mat-icon
+                  [svgIcon]="isDark ? 'close_black_24dp' : 'close_white_24dp'"
+                  *ngIf="searchTerms.value"
+                  (click)="searchTerms.reset()"
+                  style="cursor: pointer"
+                  matSuffix
+                ></mat-icon>
+              </mat-form-field>
+            </form>
+            <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
+              <ul role="list">
+                <div class="img-perfil">
+                  <mat-icon svgIcon="account_circle_black_24dp"></mat-icon>
+                </div>
+                <li role="list-item">
+                  <p style="display: flex; flex-direction: column">
+                    <small> {{ user?.name }}</small>
+                    <small> {{ user?.email }}</small>
+                    <small> {{ user?.tel }}</small>
+                  </p>
+                </li>
+                <li class="divider">
+                  <mat-divider></mat-divider>
+                </li>
+                <li routerLink="/dashboard/settings" class="settings">
+                  <mat-icon>settings</mat-icon>
+                  <span>Configurações</span>
+                </li>
+                <li (click)="logout()" class="logout">
+                  <mat-icon>logout</mat-icon>
+                  <span>Sair</span>
+                </li>
+              </ul>
+            </mat-menu>
+          </div>
+        </div>
+        <!-- <mat-toolbar class="top-toolbar">
           <mat-toolbar-row class="app-custom-toolbar-row">
             <div class="button-menu">
-              <button title="sidebar" mat-icon-button (click)="drawer.open()">
-                <mat-icon>menu</mat-icon>
-              </button>
+              <img routerLink="/dashboard" [src]="logo" alt="logo">
             </div>
-
             <div *ngIf="!isMobile" class="menu-toolbar">
               <form (ngSubmit)="onSubmit()">
                 <mat-form-field class="form form-search" appearance="outline">
@@ -58,7 +144,7 @@
                 </mat-form-field>
               </form>
             </div>
-            <div class="perfil-menu" style="min-width: 280px;">
+            <div class="perfil-menu">
               <div class="prev-consolidado" title="Consolidado">
                 <span>Consolidado</span>
                 <span *ngIf="hideValues; else hide" [ngClass]="returnClass()">R$ {{ formatarValor(consolidado || 0)
@@ -69,15 +155,14 @@
                   </span>
                 </ng-template>
               </div>
-
               <button mat-icon-button title="Perfil" mat-icon-button [matMenuTriggerFor]="perfil">
-                <mat-icon>account_circle</mat-icon>
+                <mat-icon svgIcon="account_circle_black_24dp"></mat-icon>
               </button>
             </div>
             <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
               <ul role="list">
                 <div class="img-perfil">
-                  <mat-icon>account_circle</mat-icon>
+                  <mat-icon svgIcon="account_circle_black_24dp"></mat-icon>
                 </div>
                 <li role="list-item">
                   <p style="display: flex; flex-direction: column">
@@ -86,7 +171,6 @@
                     <small> {{user?.tel}}</small>
                   </p>
                 </li>
-
                 <li class="divider">
                   <mat-divider></mat-divider>
                 </li>
@@ -94,42 +178,43 @@
                   <mat-icon>settings</mat-icon>
                   <span>Configurações</span>
                 </li>
-                <!-- <li class="settings">
-                  <app-dark-theme></app-dark-theme>
-                </li> -->
                 <li (click)="logout()" class="logout">
                   <mat-icon>logout</mat-icon>
                   <span>Sair</span>
                 </li>
-                <!-- <mat-list role="list">
-                <mat-list-item role="list-item">
-                </mat-list-item>
-                <mat-list-item role="list-item">{{(user?.created_at * 1000)| date:'dd/MM/Y'}}</mat-list-item>
-                <mat-list-item role="list-item">{{user?.verified ? 'sim' : 'não'}}</mat-list-item>
-              </mat-list> -->
               </ul>
-              <!-- <button (click)="edit($event, item)" mat-menu-item>
-                <mat-icon style="color: #323232">edit</mat-icon>
-                <span style="font-weight: 500">EDITAR</span>
-              </button>
-      
-              <button (click)="del($event, item)" mat-menu-item>
-                <mat-icon style="color:black;" class="icon-mat-menu">delete</mat-icon>
-                <span style="font-weight: 500">DELETAR</span>
-              </button> -->
             </mat-menu>
           </mat-toolbar-row>
-        </mat-toolbar>
+        </mat-toolbar> -->
 
         <!-- router-outlet só funciona se existir router children -->
         <div class="pages">
-          <router-outlet></router-outlet>
+          <div class="container-pages">
+            <router-outlet></router-outlet>
+          </div>
         </div>
       </div>
     </mat-drawer-content>
   </mat-drawer-container>
-  <!-- <button (click)="goToTop()" *ngIf="buttonToTop" mat-fab color="primary" class="button-top">
-    <mat-icon>keyboard_arrow_up</mat-icon>
-  </button> -->
+  <button
+    (click)="$event.stopPropagation()"
+    [matMenuTriggerFor]="menu"
+    mat-fab
+    color="primary"
+    class="button-top"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu" overlapTrigger="true">
+    <button (click)="add('incoming')" mat-menu-item>
+      <mat-icon>add_circle_outline</mat-icon>
+      <span style="font-weight: 500">RECEITA</span>
+    </button>
+
+    <button (click)="add('outcoming')" mat-menu-item>
+      <mat-icon>add_circle_outline</mat-icon>
+      <span style="font-weight: 500">DESPESAS</span>
+    </button>
+  </mat-menu>
 </div>
-<app-loader *ngIf="isLoadingDashboard"></app-loader>
+<!-- <app-loader *ngIf="isLoadingDashboard"></app-loader> -->

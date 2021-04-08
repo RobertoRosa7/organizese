@@ -5,7 +5,9 @@
       <input [options]="{prefix:'R$ ', suffix:'', precison:'2', align:'left',  allowNegative:'false', decimal:',', 
       thousands:'.'}" autocomplete="off" formControlName="value" currencyMask matInput [placeholder]="placeholder">
     </mat-form-field>
+  </div>
 
+  <div class="form-inline">
     <mat-form-field (click)="$event.preventDefault(); picker.open()" class="form" floatLabel="always"
       appearance="outline">
       <mat-label>Data</mat-label>
@@ -14,9 +16,7 @@
       <mat-datepicker [touchUi]="isMobile" #picker>
       </mat-datepicker>
     </mat-form-field>
-  </div>
 
-  <div class="form-inline">
     <mat-form-field class="form" floatLabel="always" appearance="outline">
       <mat-label>Categoria</mat-label>
       <mat-select panelClass="custom-select" formControlName="category" placeholder="Categoria">
@@ -34,11 +34,10 @@
     </mat-form-field>
   </div>
 
-
-  <div *ngIf="edit" class="container-button">
-    <button mat-raised-button (click)="close(false)" color="accent" type="button">Fechar</button>
-    <button [disabled]="isDisabled" (click)="close(form.value)" mat-raised-button type="submit">Registrar</button>
+  <div class="container-button">
+    <button *ngIf="!edit" [disabled]="isDisabled" mat-raised-button type="submit">Registrar</button>
+    <button *ngIf="edit" [disabled]="isDisabled" (click)="close(form.value)" mat-raised-button
+      type="button">Atualizar</button>
+    <button mat-raised-button (click)="close(false)" color="accent" type="button">Cancelar</button>
   </div>
-
-  <button *ngIf="!edit" [disabled]="isDisabled" mat-raised-button type="submit">Registrar</button>
 </form>

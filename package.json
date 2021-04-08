@@ -7,7 +7,7 @@
   },
   "homepage": "https://robertorosa7.github.io/web-organizese/",
   "license": "MIT",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "main": "main.js",
   "description": "Organize seus gastos e tenha o controle do seu dinheiro.",
   "keywords": [
@@ -39,7 +39,6 @@
     "@types/electron": "^1.6.10",
     "angular-create-pdf": "^2.0.0",
     "aws-sdk": "^2.834.0",
-    "express": "^4.17.1",
     "highcharts": "^9.0.1",
     "html2canvas": "^1.0.0-rc.7",
     "jquery": "^3.6.0",

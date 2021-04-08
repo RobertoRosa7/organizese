@@ -1,12 +1,10 @@
-
-import { ActionReducerMap } from '@ngrx/store'
-import { reducer } from '../reducers/registers.reducers'
-import { reducerDashboard } from '../reducers/dashboard.reducers'
-import { reducerErrors } from '../reducers/errors.reducers'
-import { reducerApp } from '../reducers/app.reducer'
-import { reducerLogin } from '../reducers/login.reducer'
-import { reducerProfile } from '../reducers/profile.reducer'
-
+import { ActionReducerMap } from '@ngrx/store';
+import { reducerApp } from '../reducers/app.reducer';
+import { reducerDashboard } from '../reducers/dashboard.reducer';
+import { reducerErrors } from '../reducers/errors.reducer';
+import { reducerLogin } from '../reducers/login.reducer';
+import { reducerProfile } from '../reducers/profile.reducer';
+import { reducer } from '../reducers/registers.reducer';
 
 export const OrganizeseStore: ActionReducerMap<any> = {
   app: reducerApp,
@@ -14,5 +12,5 @@ export const OrganizeseStore: ActionReducerMap<any> = {
   profile: reducerProfile,
   registers: reducer,
   dashboard: reducerDashboard,
-  http_error: reducerErrors
-}
+  http_error: reducerErrors,
+};

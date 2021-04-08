@@ -1,24 +1,54 @@
 <div class="registers">
-  <app-tabs style="display: block; margin: 15px 0;">
-    <app-tab-header class="tabs" style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-      <div class="control" style="max-width: 390px;">
-        <app-tab-menu class="btn-menu" label="Listar" icon="list" target="read"></app-tab-menu>
-        <app-tab-menu class="btn-menu" label="Incluir" icon="add" target="create"></app-tab-menu>
-        <app-tab-menu class="btn-menu" label="Imprimir" icon="print" target="print"></app-tab-menu>
+  <app-tabs style="display: block; margin: 15px 0">
+    <app-tab-header
+      class="tabs"
+      style="display: flex; justify-content: space-between; flex-wrap: wrap"
+    >
+      <div class="control" style="max-width: 390px">
+        <app-tab-menu
+          class="btn-menu"
+          label="Listar"
+          icon="list"
+          target="read"
+        ></app-tab-menu>
+        <app-tab-menu
+          class="btn-menu"
+          label="Incluir"
+          icon="add"
+          target="create"
+        ></app-tab-menu>
+        <app-tab-menu
+          class="btn-menu"
+          label="Imprimir"
+          icon="print"
+          target="print"
+        ></app-tab-menu>
       </div>
 
-      <div *ngIf="tab === 'read'" style="width: 100%; max-width: 470px;">
+      <div *ngIf="tab === 'read'" style="width: 100%; max-width: 470px">
         <div *ngIf="!isMobile" class="control forms">
           <mat-form-field class="form" floatLabel="always" appearance="outline">
-            <mat-select panelClass="custom-select" [(value)]="orderby" (selectionChange)="orderbyChange($event)"
-              placeholder="Ordenar por">
-              <mat-option [value]="option" *ngFor="let option of displayedColumns">{{option}}</mat-option>
+            <mat-select
+              panelClass="custom-select"
+              [(value)]="orderby"
+              (selectionChange)="orderbyChange($event)"
+              placeholder="Ordenar por"
+            >
+              <mat-option
+                [value]="option"
+                *ngFor="let option of displayedColumns"
+                >{{ option }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="form" floatLabel="always" appearance="outline">
-            <mat-select panelClass="custom-select" [(value)]="filterByDays" placeholder="Ultimos 7 dias"
-              (selectionChange)="filterByDaysChange($event)">
+            <mat-select
+              panelClass="custom-select"
+              [(value)]="filterByDays"
+              placeholder="Ultimos 7 dias"
+              (selectionChange)="filterByDaysChange($event)"
+            >
               <mat-option value="7">Ultimos 7 dias</mat-option>
               <mat-option value="15">Ultimos 15 dias</mat-option>
               <mat-option value="30">Ultimos 30 dias</mat-option>
@@ -28,8 +58,12 @@
           </mat-form-field>
 
           <mat-form-field class="form" floatLabel="always" appearance="outline">
-            <mat-select panelClass="custom-select" [(value)]="inOutComing" (selectionChange)="inOutComingChange($event)"
-              placeholder="Entradas/Saídas">
+            <mat-select
+              panelClass="custom-select"
+              [(value)]="inOutComing"
+              (selectionChange)="inOutComingChange($event)"
+              placeholder="Entradas/Saídas"
+            >
               <mat-option value="incoming">Entradas</mat-option>
               <mat-option value="outcoming">Saídas</mat-option>
               <mat-option value="pending">Lançamentos</mat-option>
@@ -39,21 +73,46 @@
         </div>
 
         <div *ngIf="isMobile">
-          <button class="btn-classificar" type="button" mat-raised-button [matMenuTriggerFor]="menu">
+          <button
+            class="btn-classificar"
+            type="button"
+            mat-raised-button
+            [matMenuTriggerFor]="menu"
+          >
             <span>Classificar</span>
           </button>
           <mat-menu #menu="matMenu">
             <div class="control mobile">
-              <mat-form-field class="form" floatLabel="always" appearance="outline">
-                <mat-select panelClass="custom-select" [(value)]="orderby" (selectionChange)="orderbyChange($event)"
-                  placeholder="Ordenar por">
-                  <mat-option [value]="option" *ngFor="let option of displayedColumns">{{option}}</mat-option>
+              <mat-form-field
+                class="form"
+                floatLabel="always"
+                appearance="outline"
+              >
+                <mat-select
+                  panelClass="custom-select"
+                  [(value)]="orderby"
+                  (selectionChange)="orderbyChange($event)"
+                  placeholder="Ordenar por"
+                >
+                  <mat-option
+                    [value]="option"
+                    *ngFor="let option of displayedColumns"
+                    >{{ option }}</mat-option
+                  >
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field class="form" floatLabel="always" appearance="outline">
-                <mat-select panelClass="custom-select" [(value)]="filterByDays" placeholder="Ultimos 7 dias"
-                  (selectionChange)="filterByDaysChange($event)">
+              <mat-form-field
+                class="form"
+                floatLabel="always"
+                appearance="outline"
+              >
+                <mat-select
+                  panelClass="custom-select"
+                  [(value)]="filterByDays"
+                  placeholder="Ultimos 7 dias"
+                  (selectionChange)="filterByDaysChange($event)"
+                >
                   <mat-option value="7">Ultimos 7 dias</mat-option>
                   <mat-option value="15">Ultimos 15 dias</mat-option>
                   <mat-option value="30">Ultimos 30 dias</mat-option>
@@ -62,9 +121,17 @@
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field class="form" floatLabel="always" appearance="outline">
-                <mat-select panelClass="custom-select" [(value)]="inOutComing"
-                  (selectionChange)="inOutComingChange($event)" placeholder="Entradas/Saídas">
+              <mat-form-field
+                class="form"
+                floatLabel="always"
+                appearance="outline"
+              >
+                <mat-select
+                  panelClass="custom-select"
+                  [(value)]="inOutComing"
+                  (selectionChange)="inOutComingChange($event)"
+                  placeholder="Entradas/Saídas"
+                >
                   <mat-option value="incoming">Entradas</mat-option>
                   <mat-option value="outcoming">Saídas</mat-option>
                   <mat-option value="pending">Lançamento</mat-option>
@@ -77,42 +144,71 @@
       </div>
     </app-tab-header>
 
-    <app-tab-content style="display: block; margin: 15px 0; height: 100%;">
-      <div *ngIf="tab === 'read'" read style="margin-bottom: 70px;" #extrato id="extrato">
-
+    <app-tab-content style="display: block; margin: 15px 0; height: 100%">
+      <div
+        *ngIf="tab === 'read'"
+        read
+        style="margin-bottom: 70px"
+        #extrato
+        id="extrato"
+      >
         <!-- <div class="progress">
           <div class="encapsulate" [style.width]="totalPercent + '%'"></div>
         </div> -->
 
-        <app-panel-control [total]="total" [filterByDays]="days" [totalDespesa]="totalDespesa"
-          [totalReceita]="totalReceita" [aReceber]="aReceber" [aPagar]="aPagar" style="width: 100%;">
+        <app-panel-control
+          [total]="total"
+          [filterByDays]="days"
+          [totalDespesa]="totalDespesa"
+          [totalReceita]="totalReceita"
+          [aReceber]="aReceber"
+          [aPagar]="aPagar"
+          style="width: 100%"
+        >
         </app-panel-control>
 
         <ng-container *ngIf="ELEMENT_DATA.length > 0; else noneOfExtracts">
           <div *ngFor="let item of ELEMENT_DATA">
-            <span class="line-month">{{item.month | date:'MMMM' }}</span>
-            <app-list-registers (send)="onDelete($event)" *ngFor="let i of item.lista" [item]="i"></app-list-registers>
+            <span class="line-month">{{ item.month | date: 'MMMM' }}</span>
+            <app-list-registers
+              (send)="onDelete($event)"
+              *ngFor="let i of item.lista"
+              [item]="i"
+            ></app-list-registers>
           </div>
         </ng-container>
 
         <ng-template #noneOfExtracts>
-          <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7]"><br></ng-container>
+          <ng-container *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7]"
+            ><br
+          /></ng-container>
           <h2 class="welcome-subtitle">Não há registros</h2>
         </ng-template>
       </div>
 
-      <mat-tab-group *ngIf="tab === 'create'" create mat-stretch-tabs class="create">
+      <mat-card *ngIf="tab === 'create'" create style="padding: 16px">
+        <mat-tab-group mat-stretch-tabs class="create">
+          <mat-tab label="Entrada">
+            <app-form-incoming
+              (send)="listeningEventForm($event)"
+              type="incoming"
+              label="Entrada"
+              placeholder="R$ 0,00"
+            >
+            </app-form-incoming>
+          </mat-tab>
 
-        <mat-tab label="Entrada">
-          <app-form-incoming (send)="listeningEventForm($event)" type="incoming" label="Entrada" placeholder="R$ 0,00">
-          </app-form-incoming>
-        </mat-tab>
-
-        <mat-tab label="Saída">
-          <app-form-incoming (send)="listeningEventForm($event)" type="outcoming" label="Saída" placeholder="R$ 0,00">
-          </app-form-incoming>
-        </mat-tab>
-      </mat-tab-group>
+          <mat-tab label="Saída">
+            <app-form-incoming
+              (send)="listeningEventForm($event)"
+              type="outcoming"
+              label="Saída"
+              placeholder="R$ 0,00"
+            >
+            </app-form-incoming>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card>
 
       <!-- <mat-card *ngIf="tab === 'create'" class="create" create>
         <div class="form-group">
@@ -130,75 +226,115 @@
       <div *ngIf="tab === 'print'" print class="container-imprimir">
         <div class="hedaer-print">
           <div class="logo">
-            <img [src]="logo" alt="logo">
+            <img [src]="logo" alt="logo" />
           </div>
-          <small>{{dateNow | date:'medium'}}</small>
+          <small>{{ dateNow | date: 'medium' }}</small>
         </div>
         <div class="header-user">
           <p>
-            <span>{{user.name || ''}}</span>
-            <small>{{user.cpf || ''}}</small>
+            <span>{{ user.name || '' }}</span>
+            <small>{{ user.cpf || '' }}</small>
           </p>
           <p>
-            <span>{{user.email}}</span>
+            <span>{{ user.email }}</span>
           </p>
         </div>
-        <app-panel-control [total]="total" [filterByDays]="days" [totalDespesa]="totalDespesa"
-          [totalReceita]="totalReceita" [aReceber]="aReceber" [aPagar]="aPagar" style="width: 100%;">
+        <app-panel-control
+          [total]="total"
+          [filterByDays]="days"
+          [totalDespesa]="totalDespesa"
+          [totalReceita]="totalReceita"
+          [aReceber]="aReceber"
+          [aPagar]="aPagar"
+          style="width: 100%"
+        >
         </app-panel-control>
-        <ng-container *ngIf="ELEMENT_DATA.length > 0; else noneOfExtractsToPrint">
+        <ng-container
+          *ngIf="ELEMENT_DATA.length > 0; else noneOfExtractsToPrint"
+        >
           <table class="table-print">
             <thead>
               <th style="width: 150px">Data:</th>
               <th>Descrição:</th>
-              <th style="width: 150px;">Valor:</th>
-              <th style="width: 150px;">Categoria:</th>
+              <th style="width: 150px">Valor:</th>
+              <th style="width: 150px">Categoria:</th>
             </thead>
             <tbody>
               <tr *ngFor="let item of ELEMENT_ORDER">
                 <td data-label="Data">
-                  <span class="text-truncate" [title]="(item.created_at * 1000) | date:'dd/MM/yyyy'">
-                    {{(item.created_at * 1000) | date:'dd/MM/yyyy'}}
+                  <span
+                    class="text-truncate"
+                    [title]="item.created_at * 1000 | date: 'dd/MM/yyyy'"
+                  >
+                    {{ item.created_at * 1000 | date: 'dd/MM/yyyy' }}
                   </span>
                 </td>
                 <td data-label="Descrição">
-                  <span class="text-truncate" [title]="item.description">{{item.description}}</span>
+                  <span class="text-truncate" [title]="item.description">{{
+                    item.description
+                  }}</span>
                 </td>
                 <td data-label="Valor">
-                  <span class="text-truncate" [title]="formatarValor(item.value)" [ngStyle]="{
-                      'color': item.type == 'outcoming' ? 'var(--text-accent)' : 'var(--text-green)'
-                    }">
+                  <span
+                    class="text-truncate"
+                    [title]="formatarValor(item.value)"
+                    [ngStyle]="{
+                      color:
+                        item.type == 'outcoming'
+                          ? 'var(--text-accent)'
+                          : 'var(--text-green)'
+                    }"
+                  >
                     <small *ngIf="item.type === 'outcoming'">-</small>
-                    R$ {{formatarValor(item.value) }}
+                    R$ {{ formatarValor(item.value) }}
                   </span>
                 </td>
                 <td data-label="Categoria">
                   <p [title]="item.category" class="itens category">
                     <strong class="title-with-icon">
-                      <mat-icon style="font-size: 12px; height: inherit; margin-left: 8px;">{{item.cat_icon}}</mat-icon>
+                      <mat-icon
+                        style="
+                          font-size: 12px;
+                          height: inherit;
+                          margin-left: 8px;
+                        "
+                        >{{ item.cat_icon }}</mat-icon
+                      >
                     </strong>
-                    <span class="text-truncate">{{item.category}}</span>
+                    <span class="text-truncate">{{ item.category }}</span>
                   </p>
                 </td>
               </tr>
               <tr data-label="Total">
                 <td>
-                  <span>{{dateNow | date:'dd/MM/yyyy'}}</span>
+                  <span>{{ dateNow | date: 'dd/MM/yyyy' }}</span>
                 </td>
                 <td>
                   <span>Total Geral</span>
                 </td>
                 <td class="total-geral">
-                  <span style="color: var(--text-accent)" *ngIf="isNegative">- R$ {{formatarValor(totalGeral) }}</span>
-                  <span style="color: var(--text-green)" *ngIf="!isNegative">R$ {{formatarValor(totalGeral) }}</span>
+                  <span style="color: var(--text-accent)" *ngIf="isNegative"
+                    >- R$ {{ formatarValor(totalGeral) }}</span
+                  >
+                  <span style="color: var(--text-green)" *ngIf="!isNegative"
+                    >R$ {{ formatarValor(totalGeral) }}</span
+                  >
                 </td>
                 <td></td>
               </tr>
             </tbody>
           </table>
           <div class="container-buttons">
-            <button class="btn-print" mat-raised-button (click)="imprimir()">IMPRIMIR</button>
-            <button [matMenuTriggerFor]="menu" class="btn-print" mat-raised-button>EXPORTAR</button>
+            <button class="btn-print" mat-raised-button (click)="imprimir()">
+              IMPRIMIR
+            </button>
+            <button
+              [matMenuTriggerFor]="menu"
+              class="btn-print"
+              mat-raised-button
+            >
+              EXPORTAR
+            </button>
 
             <mat-menu #menu="matMenu" overlapTrigger="true" yPosition="above">
               <button (click)="exportExcel(ELEMENT_ORDER)" mat-menu-item>
@@ -210,11 +346,12 @@
         </ng-container>
 
         <ng-template #noneOfExtractsToPrint>
-          <ng-container *ngFor="let i of [0,1,2,3,4,5,6,7]"><br></ng-container>
+          <ng-container *ngFor="let i of [0, 1, 2, 3, 4, 5, 6, 7]"
+            ><br
+          /></ng-container>
           <h2 class="welcome-subtitle">Não há registros</h2>
         </ng-template>
       </div>
     </app-tab-content>
   </app-tabs>
 </div>
-<app-loader *ngIf="isLoadingRegisters"></app-loader>

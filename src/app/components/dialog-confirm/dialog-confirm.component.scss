@@ -8,7 +8,10 @@
   .header {
     width: 100%;
     display: flex;
-    padding: 0 15px;
+    padding: 16px;
+    .max-window span {
+      cursor: pointer;
+    }
   }
   .title {
     flex: 1;

@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Kanit:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Patua+One&display=swap");
 @import "~@angular/material/theming";
 @include mat-core();
 
@@ -9,6 +11,7 @@
   --text-middle-light: #585858;
   // --text-green: #00af91;
   --text-green: #009688;
+  --text-green-light: #00968850;
   // --text-green: rgb(144, 237, 125);
   --text-dark: #d65a31;
   --bg-light-color: #fafafa;
@@ -59,8 +62,11 @@ $text-accent: var(--text-accent);
 .dialog-default {
   width: 100%;
   height: 100%;
-  max-height: 568px;
-  max-width: 600px !important;
+  max-height: 500px;
+  max-width: 768px !important;
+  // background: rgba(255, 255, 255, 0.7);
+  // -webkit-backdrop-filter: blur(10px);
+  // backdrop-filter: blur(10px);
   .mat-dialog-container {
     padding: 0;
   }
@@ -80,9 +86,15 @@ $text-accent: var(--text-accent);
     list-style: none;
     text-align: center;
     width: 100%;
-
+    .img-perfil {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 85px;
+      margin: 0 auto;
+    }
     .img-perfil mat-icon {
-      font-size: 5em;
+      font-size: 3em;
       width: inherit;
       height: inherit;
     }
@@ -108,12 +120,17 @@ $text-accent: var(--text-accent);
   .form-search {
     background: $bg-light-mode;
   }
+  .mat-dialog-container {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+  }
   .hedaer-print {
     background-color: var(--color-whitesmoke);
   }
-  .dialog-header-mode {
-    background: var(--color-medium-white);
-  }
+  // .dialog-header-mode {
+  //   background: var(--color-medium-white);
+  // }
   .line-month {
     @include text;
     color: var(--text-middle-light);
@@ -159,7 +176,8 @@ $text-accent: var(--text-accent);
     background: linear-gradient(-90deg, var(--color-whitesmoke) 100%, transparent);
   }
   .bg-mode {
-    background: var(--color-whitesmoke);
+    // background: var(--color-whitesmoke);
+    background: transparent;
   }
   .bg-mode-custom {
     background: linear-gradient(-90deg, var(--color-whitesmoke), transparent);
@@ -187,9 +205,14 @@ $text-accent: var(--text-accent);
   .form-search {
     background: $bg-dark-mode;
   }
-  .dialog-header-mode {
-    background: var(--color-default-dark);
+  .mat-dialog-container {
+    background: rgba(35, 35, 35, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
   }
+  // .dialog-header-mode {
+  //   background: var(--color-default-dark);
+  // }
   .line-month {
     @include text;
     color: var(--color-medium-white);
@@ -235,7 +258,8 @@ $text-accent: var(--text-accent);
     background: linear-gradient(-90deg, #393939 100%, #42424290 0);
   }
   .bg-mode {
-    background: #212121;
+    // background: #212121;
+    background: transparent;
   }
   .bg-mode-custom {
     background: linear-gradient(-90deg, #393939, #42424290);
@@ -337,11 +361,23 @@ h2.welcome-subtitle {
       font-size: 0.9em;
     }
   }
+  .dark-mode .bg-mode {
+    background: #212121;
+  }
+  .light-mode .bg-mode {
+    background: var(--color-whitesmoke);
+  }
 }
 
 @media screen and (min-width: 557.98px) and (max-width: 768px) {
   .dialog-default {
     max-width: calc(100% - 211px) !important;
+  }
+  .dark-mode .bg-mode {
+    background: #212121;
+  }
+  .light-mode .bg-mode {
+    background: var(--color-whitesmoke);
   }
 }
 

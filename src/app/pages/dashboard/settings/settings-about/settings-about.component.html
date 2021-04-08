@@ -1,24 +1,24 @@
-<section class="settings-about">
+<mat-card class="settings-about">
   <div class="container-about">
     <button mat-icon-button routerLink="/dashboard/settings">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <p style="margin: 16px 0;">Sobre</p>
+    <p style="margin: 16px 0">Sobre</p>
     <p>
       <span>Versão: </span>
-      <small>{{version}}</small>
+      <small>{{ version }}</small>
     </p>
     <p>
       <span>Desenvolvedor: </span>
-      <small>{{author.name}}</small>
+      <small>{{ author.name }}</small>
     </p>
     <p>
       <span>Suporte: </span>
-      <small>{{author.email}}</small>
+      <small>{{ author.email }}</small>
     </p>
     <p>
       <span>Descrição: </span>
-      <small>{{description}}</small>
+      <small>{{ description }}</small>
     </p>
   </div>
-</section>
+</mat-card>

@@ -1,6 +1,6 @@
 @import "../../../styles.scss";
 
-$padding-size: 15px;
+$padding-size: 16px;
 .dialog {
   height: 100%;
   .dialog-container.login {
@@ -17,7 +17,10 @@ $padding-size: 15px;
     .header {
       width: 100%;
       display: flex;
-      padding: 0 $padding-size;
+      padding: $padding-size;
+      .max-window span {
+        cursor: pointer;
+      }
     }
     .title {
       flex: 1;

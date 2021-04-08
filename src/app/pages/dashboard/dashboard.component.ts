@@ -1,149 +1,163 @@
-import { Component, OnInit, DoCheck, KeyValueDiffers, AfterViewInit, HostListener } from '@angular/core'
-import { Router } from '@angular/router'
-import { ActionsSubject, Store } from '@ngrx/store'
-import { IpcService } from 'src/app/services/ipc.service'
-import * as actionsErrors from '../../actions/errors.actions'
-import * as actionsRegister from '../../actions/registers.actions'
-import * as actionsDashboard from '../../actions/dashboard.actions'
-import * as actionsLogin from '../../actions/login.actions'
-import * as actionsApp from '../../actions/app.actions'
-import * as actionsProfile from '../../actions/profile.actions'
-import { MatSnackBar } from '@angular/material/snack-bar'
-import { filter, map, startWith } from 'rxjs/operators'
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout'
-import { ScrollService } from 'src/app/services/scroll.service'
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
-import { Observable } from 'rxjs'
-import { FormControl } from '@angular/forms'
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete'
-import { LoadService } from 'src/app/services/load.service'
-import { UtilsService } from 'src/app/utils/utis.service'
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, DoCheck, KeyValueDiffers, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { ActionsSubject, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { filter, map, startWith } from 'rxjs/operators';
+import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
+import { Register } from 'src/app/models/models';
+import { IpcService } from 'src/app/services/ipc.service';
+import { LoadService } from 'src/app/services/load.service';
+import { ScrollService } from 'src/app/services/scroll.service';
+import { UtilsService } from 'src/app/utils/utis.service';
+import * as actionsApp from '../../actions/app.actions';
+import * as actionsDashboard from '../../actions/dashboard.actions';
+import * as actionsErrors from '../../actions/errors.actions';
+import * as actionsLogin from '../../actions/login.actions';
+import * as actionsProfile from '../../actions/profile.actions';
+import * as actionsRegister from '../../actions/registers.actions';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
-
-export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
+export class DashboardComponent implements OnInit, DoCheck {
   public menuList: any[] = [
     {
       link: '/',
       name: 'Home',
-      icon: 'home'
+      icon: 'home',
     },
     {
       link: '/dashboard',
       name: 'Dashboard',
-      icon: 'dashboard'
+      icon: 'dashboard',
     },
     {
       link: '/dashboard/registers',
       name: 'Registros',
-      icon: 'create'
+      icon: 'create',
     },
     {
       link: '/dashboard/settings',
       name: 'Configurações',
-      icon: 'settings'
+      icon: 'settings',
     },
-  ]
-  public logo: string = './assets/icon-default-transparent-512x512.svg'
-  public searchTerms: FormControl = new FormControl()
-  public consolidado: number = 0
-  public isMobile: boolean = false
-  public json: any
-  public scroll: number
-  public buttonToTop: boolean
-  public type: string
-  public value: number
-  public showErrors: boolean = false
-  public isActive: string = ''
-  public differ: any
-  public autocomplete: string[] = []
-  public autocomplete$: Observable<string[]>
-  public user: any
-  public isLoadingDashboard: boolean = true
-  private timeDelay: number = 1500
-  public hideValues: boolean
+  ];
+  public logo = './assets/icon-default-transparent-512x512.svg';
+  public searchTerms: FormControl = new FormControl();
+  public consolidado = 0;
+  public isMobile = false;
+  public json: any;
+  public scroll: number;
+  public buttonToTop: boolean;
+  public type: string;
+  public value: number;
+  public showErrors = false;
+  public isActive = '';
+  public differ: any;
+  public autocomplete: string[] = [];
+  public autocomplete$: Observable<string[]>;
+  public user: any;
+  public isLoadingDashboard = true;
+  private timeDelay = 1500;
+  public hideValues: boolean;
+  public isDark: boolean;
 
   constructor(
-    protected _ipcService?: IpcService,
-    protected _store?: Store,
-    protected _snackbar?: MatSnackBar,
-    protected _as?: ActionsSubject,
-    protected _breakpoint?: BreakpointObserver,
-    protected _scrollService?: ScrollService,
-    protected _router?: Router,
-    protected _differs?: KeyValueDiffers,
-    protected _dialog?: MatDialog,
-    protected _loadService?: LoadService,
-    protected _utilsService?: UtilsService
+    protected ipcService?: IpcService,
+    protected store?: Store,
+    protected snackbar?: MatSnackBar,
+    protected as?: ActionsSubject,
+    protected breakpoint?: BreakpointObserver,
+    protected scrollService?: ScrollService,
+    protected router?: Router,
+    protected differs?: KeyValueDiffers,
+    protected dialog?: MatDialog,
+    protected loadService?: LoadService,
+    protected utilsService?: UtilsService
   ) {
-    this.logo = './assets/' + this.getTheme()
-    this._router?.events.subscribe((u: any) => this.isActive = u.url)
-    this._breakpoint?.observe([Breakpoints.XSmall]).subscribe(result => this.isMobile = !!result.matches)
+    this.router?.events.subscribe((u: any) => (this.isActive = u.url));
+    this.breakpoint
+      ?.observe([Breakpoints.XSmall])
+      .subscribe((result) => (this.isMobile = !!result.matches));
 
-    this._store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }))
-    this.differ = this._differs?.find({}).create()
+    this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
+    this.differ = this.differs?.find({}).create();
 
     this.autocomplete$ = this.searchTerms.valueChanges.pipe(
       startWith(''),
-      map(value => value ? this.filterAutocomplete(value) : this.autocomplete)
-    )
+      map((value) =>
+        value ? this.filterAutocomplete(value) : this.autocomplete
+      )
+    );
   }
 
   public ngOnInit(): void {
-    this.initialize()
-    this._scrollService?.getScrollAsStream().subscribe(per => this.buttonToTop = (per >= 30))
-    this._store?.select(({ http_error, registers, dashboard, profile, app }: any) => ({
-      http_error,
-      consolidado: dashboard.consolidado,
-      autocomplete: dashboard.auto_complete,
-      profile: profile.user,
-      hide_values: app.hide_values
-    })).subscribe(async state => {
-      this.consolidado = state.consolidado.total_consolidado
-      this.hideValues = state.hide_values
-      this.autocomplete = await this.isEmpty(state.autocomplete)
-      this.user = await this.isEmpty(state.profile)
-      if (state.http_error.errors.length > 0) {
-        this.handleError(state.http_error.errors[0])
-      }
-    })
-    this._as?.pipe(filter(a => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
+    this.initialize();
+    this.scrollService
+      ?.getScrollAsStream()
+      .subscribe((per) => (this.buttonToTop = per >= 30));
+    this.store
+      ?.select(({ http_error, registers, dashboard, profile, app }: any) => ({
+        http_error,
+        consolidado: dashboard.consolidado,
+        autocomplete: dashboard.auto_complete,
+        theme: dashboard.dark_mode,
+        profile: profile.user,
+        hide_values: app.hide_values,
+      }))
+      .subscribe(async (state) => {
+        this.logo = './assets/' + this.getTheme(state.theme);
+        this.isDark = !(state.theme === 'dark-mode');
+        // this.consolidado = state.consolidado.total_consolidado
+        this.hideValues = state.hide_values;
+        this.autocomplete = state.autocomplete;
+        this.user = state.profile;
+
+        if (state.http_error.errors.length > 0) {
+          this.handleError(state.http_error.errors[0]);
+        }
+      });
+
+    this.as
+      ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
       .subscribe(({ payload }: any) => {
-        const name: string = this.fetchNames(payload)
-        this._snackbar?.open(`${name}`, 'Ok', { duration: 3000 })
-      })
+        const name: string = this.fetchNames(payload);
+        this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
+      });
   }
 
   public ngDoCheck() {
-    const change = this.differ.diff(this)
+    const change = this.differ.diff(this);
     if (change) {
       change.forEachChangedItem((item: any) => {
         if (item.key === 'isActive') {
-          this._store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }))
+          this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
         }
         if (item.key === 'consolidado') {
         }
-      })
+      });
     }
   }
 
-  public ngAfterViewInit() {
-  }
-
   private filterAutocomplete(value: string = ''): string[] {
-    return this.autocomplete.filter(option => option.toLowerCase().includes(value.toLowerCase())).sort()
+    return this.autocomplete
+      .filter((option) => option.toLowerCase().includes(value.toLowerCase()))
+      .sort();
   }
 
   public isEmpty(payload: any): Promise<any> {
-    return new Promise(resolve => {
-      if (!this._utilsService?.isEmpty(payload)) {
-        resolve(payload)
+    return new Promise((resolve) => {
+      if (!this.utilsService?.isEmpty(payload)) {
+        resolve(payload);
       }
-    })
+    });
   }
 
   private async initialize() {
@@ -151,128 +165,180 @@ export class DashboardComponent implements OnInit, DoCheck, AfterViewInit {
       this.fetchRegisters().then(() => {
         this.initDashboard().then(() => {
           this.fetchAutocomplete().then(() => {
-            this.isLoadingDashboard = false
-          })
-        })
-      })
-    })
+            this.isLoadingDashboard = false;
+          });
+        });
+      });
+    });
   }
 
   private async fetchUser(): Promise<any> {
-    return new Promise(resolve => setTimeout(() =>
-      resolve(this._store?.dispatch(actionsProfile.GET_PROFILE())), this.timeDelay))
+    return new Promise((resolve) =>
+      setTimeout(
+        () => resolve(this.store?.dispatch(actionsProfile.GET_PROFILE())),
+        this.timeDelay
+      )
+    );
   }
 
   private async initDashboard(): Promise<any> {
-    return new Promise(resolve => setTimeout(() =>
-      resolve(this._store?.dispatch(actionsDashboard.INIT_DASHBOARD())), this.timeDelay))
-
+    return new Promise((resolve) =>
+      setTimeout(
+        () => resolve(this.store?.dispatch(actionsDashboard.INIT_DASHBOARD())),
+        this.timeDelay
+      )
+    );
   }
 
   private async fetchRegisters(): Promise<any> {
-    return new Promise(resolve => setTimeout(() =>
-      resolve(this._store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))), this.timeDelay))
+    return new Promise((resolve) =>
+      setTimeout(
+        () =>
+          resolve(
+            this.store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))
+          ),
+        this.timeDelay
+      )
+    );
   }
 
   private async fetchAutocomplete(): Promise<any> {
-    return new Promise(resolve => setTimeout(() =>
-      resolve(this._store?.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE())), this.timeDelay))
+    return new Promise((resolve) =>
+      setTimeout(
+        () =>
+          resolve(this.store?.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE())),
+        this.timeDelay
+      )
+    );
   }
 
   public onSubmit(): void {
-    this._router?.navigate(['dashboard/result-search', { s: this.searchTerms.value }])
-    this.searchTerms.reset()
+    this.router?.navigate([
+      'dashboard/result-search',
+      { s: this.searchTerms.value },
+    ]);
+    this.searchTerms.reset();
   }
 
-  public setSearch(event: MatAutocompleteSelectedEvent) {
-    this._router?.navigate(['dashboard/result-search', { s: event.option.value }])
-    this.searchTerms.reset()
+  public setSearch(event: MatAutocompleteSelectedEvent): void {
+    this.router?.navigate([
+      'dashboard/result-search',
+      { s: event.option.value },
+    ]);
+    this.searchTerms.reset();
   }
 
   public handleError(error: any): void {
-    this.showErrors = true
-    const name: string = this.fetchNames(error.source)
-    this.notification(`Error: ${name} code: ${error.status}`)
+    this.showErrors = true;
+    const name: string = this.fetchNames(error.source);
+    this.notification(`Error: ${name} code: ${error.status}`);
   }
 
   public formatarValor(valor: number = 0): string {
-    return new Intl.NumberFormat('pt-BR', { currency: 'BRL', minimumFractionDigits: 2 })
-      .format(parseFloat(valor.toFixed(2)))
+    return new Intl.NumberFormat('pt-BR', {
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+    }).format(parseFloat(valor.toFixed(2)));
   }
 
   private fetchNames(name: string): string {
     switch (name) {
       case 'fetch_registers':
-        return 'Registros carregados'
+        return 'Registros carregados';
       case 'update_register':
-        return 'Registro atualizado'
+        return 'Registro atualizado';
       case 'delete_register':
-        return 'Registro excluído'
+        return 'Registro excluído';
       case 'new_register':
-        return 'Novo registro'
+        return 'Novo registro';
       case 'status_code':
-        return 'Status code: '
+        return 'Status code: ';
       case 'fetch_evolucao_detail':
-        return 'ao carregar gráfico'
+        return 'ao carregar gráfico';
       case 'signin':
-        return 'Login'
+        return 'Login';
       case 'login':
-        return 'Login sucesso'
+        return 'Login sucesso';
       default:
-        return ''
+        return '';
     }
   }
 
   public goToTop() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
   }
 
   public returnClass(): string {
     if (this.consolidado > 0) {
-      return 'cards-money cards-money-on'
+      return 'cards-money cards-money-on';
     } else if (this.consolidado > 0 && this.type === 'outcoming') {
-      return 'cards-money cards-debit'
+      return 'cards-money cards-debit';
     } else if (this.consolidado < 0) {
-      return 'cards-money cards-money-off'
+      return 'cards-money cards-money-off';
     } else {
-      return 'cards-money'
+      return 'cards-money';
     }
   }
 
   public notification(str: string, time: number = 3000): void {
-    this._snackbar?.open(str, 'ok', { duration: time })
+    this.snackbar?.open(str, 'ok', { duration: time });
   }
-
   public openDialog(component: any, data: MatDialogConfig = {}) {
-    const settings: MatDialogConfig = { ...data, panelClass: 'dialog-default' }
-    return this._dialog?.open(component, settings)
+    const settings: MatDialogConfig = { ...data, panelClass: 'dialog-default' };
+    return this.dialog?.open(component, settings);
   }
 
   public cleanText(text: string | undefined = ''): string {
-    return text.toLowerCase().replace(' ', '_').replace('&', 'e').replace('á', 'a').replace('ã', 'a')
-      .replace('ç', 'c').replace('õ', 'o')
+    return text
+      .toLowerCase()
+      .replace(' ', '_')
+      .replace('&', 'e')
+      .replace('á', 'a')
+      .replace('ã', 'a')
+      .replace('ç', 'c')
+      .replace('õ', 'o');
   }
 
   public logout() {
-    this._router?.navigateByUrl('/')
-    this._store?.dispatch(actionsLogin.LOGOUT())
+    this.router?.navigateByUrl('/');
+    this.store?.dispatch(actionsLogin.LOGOUT());
   }
 
-  public getTheme(): string {
-    if (localStorage.getItem('user-theme')) {
-      if (localStorage.getItem('user-theme') === 'dark-mode') {
-        return 'icon-default-dark-512x512.svg'
-      } else {
-        return 'icon-default-stroke-512x512.svg'
-      }
-    } else {
-      return 'icon-deffault-transparent-512x512.svg'
-    }
+  public getTheme(theme: string): string {
+    return theme === 'dark-mode'
+      ? 'icon-default-dark-512x512.svg'
+      : 'icon-default-stroke-512x512.svg';
   }
 
   public goTo(action: any): void {
     if (action.name === 'Home') {
-      this._store?.dispatch(actionsApp.RESET_ALL())
+      this.store?.dispatch(actionsApp.RESET_ALL());
     }
+  }
+
+  public add(type: string): void {
+    this.dialog
+      ?.open(DialogFormIncomingComponent, {
+        data: { type },
+        panelClass: 'dialog-default',
+      })
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          const payload: Register = {
+            category: res.category || 'Outros',
+            created_at: res.created_at,
+            updated_at: res.created_at,
+            type: res.type,
+            value: res.value,
+            status: 'pending',
+            brand: res.brand || '',
+            edit: false,
+            user: this.user,
+            description: res.description?.trim() || 'Sem descrição',
+          };
+          this.store?.dispatch(actionsRegister.ADD_REGISTERS({ payload }));
+        }
+      });
   }
 }
