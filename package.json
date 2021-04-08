@@ -20,6 +20,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
+    "build:release": "cordova build --release",
+    "build:debug": "cordova build",
     "build:android": "ng build --prod --aot"
   },
   "dependencies": {
