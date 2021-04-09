@@ -24,7 +24,7 @@
       </ul>
     </mat-drawer>
     <mat-drawer-content>
-      <div class="sidebar bg-mode">
+      <div class="sidebar bg-mode display-none">
         <ul class="app-menu-list">
           <li
             [title]="item.name"
@@ -51,7 +51,7 @@
             <form (ngSubmit)="onSubmit()" class="form">
               <mat-form-field class="field" appearance="outline">
                 <mat-icon
-                  (click)="drawer.toggle()"
+                  (click)="$event.stopPropagation(); drawer.toggle()"
                   style="cursor: pointer"
                   [svgIcon]="isDark ? 'menu_black_24dp' : 'menu_white_24dp'"
                   matPrefix

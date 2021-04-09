@@ -80,7 +80,6 @@ const dashboardReducers = createReducer(
     ...states,
     dates: payload,
   })),
-
   on(actions.SET_DASHBOARD, (states, { payload }) => {
     const totals: any = utils.total(payload.data.results);
     return {
@@ -99,7 +98,6 @@ const dashboardReducers = createReducer(
       all_days_period: payload.data.days <= 0 ? 1 : payload.data.days,
     };
   }),
-
   on(actions.SET_GRAPH_CATEGORY, (states, { payload }) => {
     const payloadFormated: any = utils.formatDataToGraphCategory({
       ...payload,
