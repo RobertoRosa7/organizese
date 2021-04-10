@@ -122,6 +122,7 @@ export class MainComponent
       });
     });
   }
+
   private initMain(): Promise<any> {
     return new Promise((resolve) =>
       resolve(this.store.dispatch(actionsDashboard.FETCH_DASHBOARD()))
@@ -178,7 +179,7 @@ export class MainComponent
   }
 
   private mapToProps(st: any): any {
-    this.ELEMENT_DATA = st.all.splice(0, 7);
+    this.ELEMENT_DATA = st.all;
     // this.total = st.total;
     // this.totalDespesa = st.despesas;
     // this.totalReceita = st.receita;
