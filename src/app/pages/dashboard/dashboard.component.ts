@@ -114,7 +114,6 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.initialize();
     this.scrollService
       ?.getScrollAsStream()
-
       // tslint:disable-next-line: deprecation
       .subscribe((currentScroll) => {
         if (currentScroll > this.previousScroll) {
@@ -131,7 +130,7 @@ export class DashboardComponent implements OnInit, DoCheck {
         this.previousScroll = currentScroll;
       });
     this.store
-      ?.select(({ http_error, registers, dashboard, profile, app }: any) => ({
+      ?.select(({ http_error, dashboard, profile, app }: any) => ({
         http_error,
         consolidado: dashboard.consolidado,
         autocomplete: dashboard.auto_complete,

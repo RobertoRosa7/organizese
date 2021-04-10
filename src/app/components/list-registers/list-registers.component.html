@@ -1,41 +1,74 @@
 <section class="list">
   <div *ngIf="!isMobile" class="container-cards">
-    <mat-card class="cards" (click)="details($event, item)" [ngStyle]="{
-        'border-left': (item.type === 'outcoming' && item.status === 'concluído') ? '1px solid var(--text-accent)' : 
-        (item.type === 'incoming' && item.status === 'concluído') ? '1px solid var(--text-green)' : '1px solid orange',
-        'opacity': item.status === 'concluído' ? '1' : '0.5'
-      }">
+    <mat-card
+      class="cards"
+      (click)="details($event, item)"
+      [ngStyle]="{
+        'border-left':
+          item.type === 'outcoming' && item.status === 'concluído'
+            ? '1px solid var(--text-accent)'
+            : item.type === 'incoming' && item.status === 'concluído'
+            ? isDark
+              ? '1px solid var(--text-dark-green)'
+              : '1px solid var(--text-green)'
+            : '1px solid orange',
+        opacity: item.status === 'concluído' ? '1' : '0.5'
+      }"
+    >
       <div class="itens date">
         <strong>Data:</strong>
-        <span class="text-truncate" [title]="(item.created_at * 1000) | date:'dd/MM/yyyy'">
-          {{(item.created_at * 1000) | date:'dd/MM/yyyy'}}
+        <span
+          class="text-truncate"
+          [title]="item.created_at * 1000 | date: 'dd/MM/yyyy'"
+        >
+          {{ item.created_at * 1000 | date: 'dd/MM/yyyy' }}
         </span>
       </div>
 
       <div class="itens description">
         <strong>Descrição:</strong>
-        <span class="text-truncate" [title]="item.description">{{item.description}}</span>
+        <span class="text-truncate" [title]="item.description">{{
+          item.description
+        }}</span>
       </div>
 
       <div class="itens value">
         <strong>Valor:</strong>
-        <span class="text-truncate" [title]="formatarValor(item.value)"
-          [ngStyle]="{'color': item.type == 'outcoming' ? 'var(--text-accent)' : 'var(--text-green)'}">
+        <span
+          class="text-truncate"
+          [title]="formatarValor(item.value)"
+          [ngStyle]="{
+            color:
+              item.type === 'outcoming'
+                ? 'var(--text-accent)'
+                : isDark
+                ? 'var(--text-dark-green)'
+                : 'var(--text-green)'
+          }"
+        >
           <small *ngIf="item.type === 'outcoming'">-</small>
-          R$ {{formatarValor(item.value) }}
+          R$ {{ formatarValor(item.value) }}
         </span>
       </div>
 
       <div [title]="item.category" class="itens category">
         <strong class="title-with-icon">
           <strong>Categoria:</strong>
-          <mat-icon style="font-size: 12px; height: inherit; margin-left: 8px;">{{item.cat_icon}}</mat-icon>
+          <mat-icon
+            style="font-size: 12px; height: inherit; margin-left: 8px"
+            >{{ item.cat_icon }}</mat-icon
+          >
         </strong>
-        <span class="text-truncate">{{item.category}}</span>
+        <span class="text-truncate">{{ item.category }}</span>
       </div>
 
       <div class="itens actions">
-        <button (click)="$event.stopPropagation()" title="Menu" mat-icon-button [matMenuTriggerFor]="menu">
+        <button
+          (click)="$event.stopPropagation()"
+          title="Menu"
+          mat-icon-button
+          [matMenuTriggerFor]="menu"
+        >
           <mat-icon>more_vert</mat-icon>
         </button>
       </div>
@@ -47,7 +80,7 @@
         </button>
 
         <button (click)="del($event, item)" mat-menu-item>
-          <mat-icon style="color:black;" class="icon-mat-menu">delete</mat-icon>
+          <mat-icon style="color: black" class="icon-mat-menu">delete</mat-icon>
           <span style="font-weight: 500">DELETAR</span>
         </button>
       </mat-menu>
@@ -56,28 +89,47 @@
 
   <!-- novo layout pra mobile -->
   <ul *ngIf="isMobile" class="container-cards-mobile">
-    <mat-card class="cards" (click)="details($event, item)" [ngStyle]="{
-      'border-left': (item.type === 'outcoming' && item.status === 'concluído') ? '1px solid var(--text-accent)' : 
-      (item.type === 'incoming' && item.status === 'concluído') ? '1px solid var(--text-green)' : '1px solid orange',
-      'opacity': item.status === 'concluído' ? '1' : '0.5'
-    }">
-
+    <mat-card
+      class="cards"
+      (click)="details($event, item)"
+      [ngStyle]="{
+        'border-left':
+          item.type === 'outcoming' && item.status === 'concluído'
+            ? '1px solid var(--text-accent)'
+            : item.type === 'incoming' && item.status === 'concluído'
+            ? '1px solid var(--text-green)'
+            : '1px solid orange',
+        opacity: item.status === 'concluído' ? '1' : '0.5'
+      }"
+    >
       <li class="line">
         <p class="value">
           <strong>Valor:</strong>
-          <span [ngStyle]="{'color': item.type == 'outcoming' ? 'var(--text-accent)' : 'var(--text-green)'}">
+          <span
+            [ngStyle]="{
+              color:
+                item.type == 'outcoming'
+                  ? 'var(--text-accent)'
+                  : 'var(--text-green)'
+            }"
+          >
             <span *ngIf="item.type === 'outcoming'">-</span>
-            R$ {{formatarValor(item.value) }}
+            R$ {{ formatarValor(item.value) }}
           </span>
         </p>
 
         <p class="date">
           <strong>Data:</strong>
-          <span>{{(item.created_at * 1000) | date:'dd/MM/yyyy'}}</span>
+          <span>{{ item.created_at * 1000 | date: 'dd/MM/yyyy' }}</span>
         </p>
 
         <p class="menu">
-          <button (click)="$event.stopPropagation()" type="button" mat-icon-button [matMenuTriggerFor]="menu">
+          <button
+            (click)="$event.stopPropagation()"
+            type="button"
+            mat-icon-button
+            [matMenuTriggerFor]="menu"
+          >
             <mat-icon>more_vert</mat-icon>
           </button>
         </p>
@@ -90,7 +142,7 @@
         </button>
 
         <button (click)="del($event, item)" mat-menu-item>
-          <mat-icon style="color:black;" class="icon-mat-menu">delete</mat-icon>
+          <mat-icon style="color: black" class="icon-mat-menu">delete</mat-icon>
           <span style="font-weight: 500">DELETAR</span>
         </button>
       </mat-menu>

@@ -11,6 +11,7 @@
   --text-middle-light: #585858;
   // --text-green: #00af91;
   --text-green: #009688;
+  --text-dark-green: #0ff5e6;
   --text-green-light: #00968850;
   // --text-green: rgb(144, 237, 125);
   --text-dark: #d65a31;
@@ -20,7 +21,8 @@
   --color-white: white;
   --color-whitesmoke: whitesmoke;
   --color-medium-white: #fafafa;
-  --color-default-dark: #303030;
+  // --color-default-dark: #303030;
+  --color-default-dark: #151825;
   --color-dark: #212121;
 }
 
@@ -207,20 +209,15 @@ $text-accent: var(--text-accent);
     background: $bg-dark-mode;
   }
   .mat-dialog-container {
-    background: rgba(35, 35, 35, 1);
-    // backdrop-filter: blur(15px);
-    // -webkit-backdrop-filter: blur(15px);
+    background: var(--color-default-dark);
   }
-  // .dialog-header-mode {
-  //   background: var(--color-default-dark);
-  // }
   .line-month {
     @include text;
     color: var(--color-medium-white);
   }
   .link-active {
     background: var(--text-light);
-    color: var(--text-green);
+    color: var(--text-dark-green);
   }
   li:active {
     background: #10101050;
@@ -235,11 +232,11 @@ $text-accent: var(--text-accent);
   }
   mat-card span.cards-money-on {
     @include span-cash;
-    color: var(--text-green);
+    color: var(--text-dark-green);
   }
   span.cards-money-on {
     @include span-cash;
-    color: var(--text-green);
+    color: var(--text-dark-green);
   }
   mat-card span.cards-money-off {
     @include span-cash;
