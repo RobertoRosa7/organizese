@@ -6,7 +6,8 @@
 
 :root {
   --text-accent: #ff4081;
-  --text-light: #303030;
+  // --text-light: #303030;
+  --text-light: #08090c50;
   --text-middle-orange: #e67e22;
   --text-middle-light: #585858;
   // --text-green: #00af91;
@@ -201,10 +202,10 @@ $text-accent: var(--text-accent);
   @include angular-material-theme($app-dark-theme);
   background: $bg-dark-mode;
   color: $color-dark-mode;
-  .hedaer-print {
-    // background-color: var(--color-dark);
-    background: linear-gradient(-90deg, #393939 100%, #42424290 0);
-  }
+  // .hedaer-print {
+  //   background-color: var(--color-dark);
+  //   background: linear-gradient(-90deg, #393939 100%, #42424290 0);
+  // }
   .form-search {
     background: $bg-dark-mode;
   }
@@ -219,9 +220,9 @@ $text-accent: var(--text-accent);
     background: var(--text-light);
     color: var(--text-dark-green);
   }
-  li:active {
-    background: #10101050;
-  }
+  // li:active {
+  //   background: #10101050;
+  // }
   mat-card span.cards-money {
     @include span-cash;
     color: #eee;
@@ -250,17 +251,29 @@ $text-accent: var(--text-accent);
     color: $bg-light-mode;
   }
   .table-print tbody tr:nth-child(even) {
-    background: linear-gradient(-90deg, #393939 100%, #42424290 0);
+    background: linear-gradient(
+      -90deg,
+      var(--color-default-dark) 100%,
+      var(--color-dark) 0
+    );
   }
   .histories table tr:nth-child(even) {
-    background: linear-gradient(-90deg, #393939 100%, #42424290 0);
+    background: linear-gradient(
+      -90deg,
+      var(--color-default-dark) 100%,
+      var(--color-dark) 0
+    );
   }
   .bg-mode {
     // background: #212121;
     background: transparent;
   }
   .bg-mode-custom {
-    background: linear-gradient(-90deg, #393939, #42424290);
+    background: linear-gradient(
+      -90deg,
+      var(--color-default-dark),
+      var(--color-dark)
+    );
     button:hover {
       background: $bg-dark-mode;
     }
