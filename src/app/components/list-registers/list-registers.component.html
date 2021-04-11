@@ -75,13 +75,13 @@
 
       <mat-menu #menu="matMenu" overlapTrigger="true">
         <button (click)="edit($event, item)" mat-menu-item>
-          <mat-icon style="color: #323232">edit</mat-icon>
-          <span style="font-weight: 500">EDITAR</span>
+          <mat-icon>edit</mat-icon>
+          <span>EDITAR</span>
         </button>
 
         <button (click)="del($event, item)" mat-menu-item>
-          <mat-icon style="color: black" class="icon-mat-menu">delete</mat-icon>
-          <span style="font-weight: 500">DELETAR</span>
+          <mat-icon class="icon-mat-menu">delete</mat-icon>
+          <span>DELETAR</span>
         </button>
       </mat-menu>
     </mat-card>
@@ -97,7 +97,9 @@
           item.type === 'outcoming' && item.status === 'concluído'
             ? '1px solid var(--text-accent)'
             : item.type === 'incoming' && item.status === 'concluído'
-            ? '1px solid var(--text-green)'
+            ? isDark
+              ? '1px solid var(--text-dark-green)'
+              : '1px solid var(--text-green)'
             : '1px solid orange',
         opacity: item.status === 'concluído' ? '1' : '0.5'
       }"
@@ -110,6 +112,8 @@
               color:
                 item.type == 'outcoming'
                   ? 'var(--text-accent)'
+                  : isDark
+                  ? 'var(--text-dark-green)'
                   : 'var(--text-green)'
             }"
           >
@@ -137,13 +141,13 @@
 
       <mat-menu #menu="matMenu" overlapTrigger="true">
         <button (click)="edit($event, item)" mat-menu-item>
-          <mat-icon style="color: #323232">edit</mat-icon>
-          <span style="font-weight: 500">EDITAR</span>
+          <mat-icon>edit</mat-icon>
+          <span>EDITAR</span>
         </button>
 
         <button (click)="del($event, item)" mat-menu-item>
-          <mat-icon style="color: black" class="icon-mat-menu">delete</mat-icon>
-          <span style="font-weight: 500">DELETAR</span>
+          <mat-icon>delete</mat-icon>
+          <span>DELETAR</span>
         </button>
       </mat-menu>
     </mat-card>

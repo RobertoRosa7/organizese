@@ -373,7 +373,7 @@ h2.welcome-subtitle {
     }
   }
   .dark-mode .bg-mode {
-    background: #212121;
+    background: var(--color-default-dark);
   }
   .light-mode .bg-mode {
     background: var(--color-whitesmoke);
@@ -385,7 +385,7 @@ h2.welcome-subtitle {
     max-width: calc(100% - 211px) !important;
   }
   .dark-mode .bg-mode {
-    background: #212121;
+    background: var(--color-default-dark);
   }
   .light-mode .bg-mode {
     background: var(--color-whitesmoke);
