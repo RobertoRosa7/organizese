@@ -55,6 +55,7 @@ export class AppComponent implements OnInit, AfterViewInit {
         errors: http_error.errors,
         online: app.online,
       }))
+      // tslint:disable-next-line: deprecation
       .subscribe((state) => {
         if (state.errors.length > 0) {
           this.handlerError(state.errors[0]);

@@ -56,6 +56,7 @@ export class RegistersEffect {
         return SET_ERRORS({ payload: source });
       } else {
         this.store.dispatch(SET_SUCCESS({ payload: this.props.new_register }));
+        this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
         this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
         this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
         this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
@@ -93,6 +94,7 @@ export class RegistersEffect {
         this.store.dispatch(
           SET_SUCCESS({ payload: this.props.delete_register })
         );
+        this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
         this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
         this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
         this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
@@ -134,6 +136,7 @@ export class RegistersEffect {
         this.store.dispatch(
           SET_SUCCESS({ payload: this.props.update_register })
         );
+        this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
         this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
         this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
         this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());

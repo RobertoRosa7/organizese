@@ -40,7 +40,7 @@ const INITIAL_STATE = {
   a_pagar: 0,
   all_days_period: 1,
   result_search: [],
-  tabList: tabList,
+  tabList,
 };
 const registersReducers = createReducer(
   INITIAL_STATE,
@@ -101,6 +101,6 @@ const registersReducers = createReducer(
   }))
 );
 
-export function reducer(state: any, action: any) {
+export function reducer(state: any, action: any): any {
   return registersReducers(state, action);
 }

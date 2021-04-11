@@ -3,7 +3,7 @@
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
-  height: 100%;
+  // height: 100%;
   width: 100%;
   .button-top {
     position: fixed;
@@ -27,50 +27,49 @@
     .mat-drawer-side {
       border: none;
     }
-    .app-menu-list {
-      list-style: none;
-      flex-direction: column;
+  }
+  .app-menu-list {
+    list-style: none;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    li:active,
+    li:focus,
+    li a:focus,
+    li a:active {
+      outline: none;
+      border: none;
+    }
+    li {
+      width: 100%;
+      text-align: center;
+      min-height: 64px;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100%;
-      li:active,
-      li:focus,
-      li a:focus,
-      li a:active {
-        outline: none;
-        border: none;
-      }
-      li {
-        width: 100%;
-        text-align: center;
-        min-height: 64px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        padding: 0 16px;
-        overflow: hidden;
-      }
-      li a {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 40px;
-        width: 40px;
-      }
-      li span {
-        font-size: 12px;
-        white-space: nowrap;
-        text-transform: uppercase;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        display: inline-block;
-        max-width: 200px;
-      }
-      li.drawer-item {
-        justify-content: flex-start;
-      }
+      cursor: pointer;
+      padding: 0 16px;
+      overflow: hidden;
+    }
+    li a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      width: 40px;
+    }
+    li span {
+      font-size: 12px;
+      white-space: nowrap;
+      text-transform: uppercase;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      display: inline-block;
+      max-width: 200px;
+    }
+    li.drawer-item {
+      justify-content: flex-start;
     }
   }
   .content-pages {
@@ -95,7 +94,6 @@
     .search-toolbar {
       margin-left: 64px;
       margin-top: 16px;
-      margin-bottom: 16px;
       padding: 0 30px 0 30px;
       width: inherit;
       .container-toolbar {
@@ -241,6 +239,7 @@
     // margin-top: 125px;
     padding: 0 30px 0 30px;
     margin-left: 64px;
+    height: inherit;
     .container-pages {
       max-width: 1024px;
       margin-left: auto;
@@ -254,6 +253,7 @@
     position: fixed;
     z-index: 10;
     width: 64px;
+    display: flex;
   }
 }
 
@@ -275,11 +275,16 @@
     bottom: 0;
     height: 64px;
     width: 100%;
+    transition: all 0.3s;
+    display: block;
     .app-menu-list {
       display: flex;
       justify-content: space-between;
       flex-direction: row;
     }
+  }
+  .dashboard .sidebar.display-none {
+    bottom: -100%;
   }
   .dashboard .content-pages .app-custom-toolbar-row {
     padding: 0 16px;

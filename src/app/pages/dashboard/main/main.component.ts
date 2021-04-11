@@ -122,6 +122,7 @@ export class MainComponent
       });
     });
   }
+
   private initMain(): Promise<any> {
     return new Promise((resolve) =>
       resolve(this.store.dispatch(actionsDashboard.FETCH_DASHBOARD()))
@@ -161,15 +162,15 @@ export class MainComponent
 
       evoucao_despesas: dashboard.evolucao_despesas,
       graph_category: dashboard.graph_category,
-      a_pagar: dashboard.a_pagar,
+      // a_pagar: dashboard.a_pagar,
 
-      a_receber: dashboard.a_receber,
-      total_credit: dashboard.total_credit,
-      total_debit: dashboard.total_debit,
+      // a_receber: dashboard.a_receber,
+      // total_credit: dashboard.total_credit,
+      // total_debit: dashboard.total_debit,
 
-      despesas: dashboard.total_despesas,
-      receita: dashboard.total_receita,
-      all_days_period: dashboard.all_days_period,
+      // despesas: dashboard.total_despesas,
+      // receita: dashboard.total_receita,
+      // all_days_period: dashboard.all_days_period,
 
       dates: dashboard.dates,
       total: dashboard.total,
@@ -178,11 +179,11 @@ export class MainComponent
   }
 
   private mapToProps(st: any): any {
-    this.ELEMENT_DATA = st.all.splice(0, 7);
-    this.total = st.total;
-    this.totalDespesa = st.despesas;
-    this.totalReceita = st.receita;
-    this.filterByDays = st.all_days_period;
+    this.ELEMENT_DATA = st.all;
+    // this.total = st.total;
+    // this.totalDespesa = st.despesas;
+    // this.totalReceita = st.receita;
+    // this.filterByDays = st.all_days_period;
 
     this.dates = st.dates;
     this.CATEGORY_DATA = st.graph_category;

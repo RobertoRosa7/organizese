@@ -1,13 +1,19 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, DoCheck, KeyValueDiffers, OnInit } from '@angular/core';
+import {
+  Component,
+  DoCheck,
+  KeyValueDiffers,
+  OnInit,
+  RendererFactory2,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { filter, map, startWith } from 'rxjs/operators';
+import { fromEvent, Observable } from 'rxjs';
+import { debounceTime, filter, map, startWith } from 'rxjs/operators';
 import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
 import { Register } from 'src/app/models/models';
 import { IpcService } from 'src/app/services/ipc.service';
@@ -68,6 +74,8 @@ export class DashboardComponent implements OnInit, DoCheck {
   private timeDelay = 1500;
   public hideValues: boolean;
   public isDark: boolean;
+  public renderer: any;
+  private previousScroll = 0;
 
   constructor(
     protected ipcService?: IpcService,
@@ -80,11 +88,15 @@ export class DashboardComponent implements OnInit, DoCheck {
     protected differs?: KeyValueDiffers,
     protected dialog?: MatDialog,
     protected loadService?: LoadService,
-    protected utilsService?: UtilsService
+    protected utilsService?: UtilsService,
+    protected rendereFactory?: RendererFactory2
   ) {
+    this.renderer = this.rendereFactory?.createRenderer(null, null);
+    // tslint:disable-next-line: deprecation
     this.router?.events.subscribe((u: any) => (this.isActive = u.url));
     this.breakpoint
       ?.observe([Breakpoints.XSmall])
+      // tslint:disable-next-line: deprecation
       .subscribe((result) => (this.isMobile = !!result.matches));
 
     this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
@@ -102,9 +114,23 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.initialize();
     this.scrollService
       ?.getScrollAsStream()
-      .subscribe((per) => (this.buttonToTop = per >= 30));
+      // tslint:disable-next-line: deprecation
+      .subscribe((currentScroll) => {
+        if (currentScroll > this.previousScroll) {
+          this.renderer.addClass(
+            document.querySelector('.dashboard .sidebar'),
+            'display-none'
+          );
+        } else {
+          this.renderer.removeClass(
+            document.querySelector('.dashboard .sidebar'),
+            'display-none'
+          );
+        }
+        this.previousScroll = currentScroll;
+      });
     this.store
-      ?.select(({ http_error, registers, dashboard, profile, app }: any) => ({
+      ?.select(({ http_error, dashboard, profile, app }: any) => ({
         http_error,
         consolidado: dashboard.consolidado,
         autocomplete: dashboard.auto_complete,
@@ -112,6 +138,7 @@ export class DashboardComponent implements OnInit, DoCheck {
         profile: profile.user,
         hide_values: app.hide_values,
       }))
+      // tslint:disable-next-line: deprecation
       .subscribe(async (state) => {
         this.logo = './assets/' + this.getTheme(state.theme);
         this.isDark = !(state.theme === 'dark-mode');
@@ -127,13 +154,14 @@ export class DashboardComponent implements OnInit, DoCheck {
 
     this.as
       ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
+      // tslint:disable-next-line: deprecation
       .subscribe(({ payload }: any) => {
         const name: string = this.fetchNames(payload);
         this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
       });
   }
 
-  public ngDoCheck() {
+  public ngDoCheck(): void {
     const change = this.differ.diff(this);
     if (change) {
       change.forEachChangedItem((item: any) => {
@@ -160,7 +188,7 @@ export class DashboardComponent implements OnInit, DoCheck {
     });
   }
 
-  private async initialize() {
+  private async initialize(): Promise<any> {
     this.fetchUser().then(() => {
       this.fetchRegisters().then(() => {
         this.initDashboard().then(() => {
@@ -264,7 +292,7 @@ export class DashboardComponent implements OnInit, DoCheck {
     }
   }
 
-  public goToTop() {
+  public goToTop(): void {
     window.scrollTo(0, 0);
   }
 
@@ -283,7 +311,7 @@ export class DashboardComponent implements OnInit, DoCheck {
   public notification(str: string, time: number = 3000): void {
     this.snackbar?.open(str, 'ok', { duration: time });
   }
-  public openDialog(component: any, data: MatDialogConfig = {}) {
+  public openDialog(component: any, data: MatDialogConfig = {}): any {
     const settings: MatDialogConfig = { ...data, panelClass: 'dialog-default' };
     return this.dialog?.open(component, settings);
   }
@@ -299,7 +327,7 @@ export class DashboardComponent implements OnInit, DoCheck {
       .replace('õ', 'o');
   }
 
-  public logout() {
+  public logout(): void {
     this.router?.navigateByUrl('/');
     this.store?.dispatch(actionsLogin.LOGOUT());
   }
@@ -323,6 +351,7 @@ export class DashboardComponent implements OnInit, DoCheck {
         panelClass: 'dialog-default',
       })
       .afterClosed()
+      // tslint:disable-next-line: deprecation
       .subscribe((res) => {
         if (res) {
           const payload: Register = {
