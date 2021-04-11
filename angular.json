@@ -20,6 +20,11 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "babel",
+              "raf",
+              "@babel/runtime-corejs3"
+            ],
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
