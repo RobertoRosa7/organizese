@@ -1,6 +1,7 @@
+import { AnyAaaaRecord } from 'dns';
 import { Register } from '../models/models';
 
-export function updateAll(all: any) {
+export function updateAll(all: any): AnyAaaaRecord {
   return all.map((s: Register) => ({
     ...s,
     status: statusTrans(s.status, s.type),
@@ -8,16 +9,17 @@ export function updateAll(all: any) {
   }));
 }
 
-export function total(lista: any) {
-  const total: any = { despesa: 0, receita: 0 };
+export function total(lista: any): any {
+  const totals: any = { despesa: 0, receita: 0 };
+
   lista.forEach((v: any) => {
     if (v.type === 'outcoming') {
-      total['despesa'] += v.value;
+      totals.despesa += v.value;
     } else if (v.type === 'incoming') {
-      total['receita'] += v.value;
+      totals.receita += v.value;
     }
   });
-  return total;
+  return totals;
 }
 
 export function returnIcon(text: string = ''): string {
@@ -45,7 +47,7 @@ export function returnIcon(text: string = ''): string {
   }
 }
 
-export function statusTrans(text: string = '', type: string) {
+export function statusTrans(text: string = '', type: string): string {
   switch (text) {
     case 'pending':
     case 'pendente a pagar':
@@ -70,12 +72,20 @@ export function cleanText(text: string | undefined = ''): string {
     .replace('õ', 'o');
 }
 
-export function formatDataToGraphCategory(payload: any) {
+export function formatDataToGraphCategory(payload: any): any {
   return Object.values(payload.category)
     .map((v: any) => ({ name: v, sliced: true }))
-    .map((val: any, i) => ({
+    .map((v: any, index) => ({
+      ...v,
+      total: abstract(payload.total, index),
+    }))
+    .map((val: any, index) => ({
       ...val,
       name: val.name,
-      y: Object.values(payload.each_percent).map((v: any) => ({ v: v }))[i].v,
+      y: abstract(payload.each_percent, index),
     }));
+}
+
+function abstract(payload: any, index: number): any {
+  return Object.values(payload).map((v: any) => ({ v }))[index].v;
 }

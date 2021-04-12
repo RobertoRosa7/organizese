@@ -65,7 +65,8 @@ export class HighchartsComponent implements OnInit, DoCheck {
   @Input() public dtEnd: Date;
   @Input() public tabChanged: number;
   @Input() public minDate: Date = new Date('1920-01-01');
-  @Output() public onDates: EventEmitter<any> = new EventEmitter();
+
+  @Output() public send = new EventEmitter();
 
   public chartLine: any = {
     chart: {
@@ -184,7 +185,20 @@ export class HighchartsComponent implements OnInit, DoCheck {
       text: '',
     },
     tooltip: {
-      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
+      // tslint:disable-next-line: object-literal-shorthand
+      formatter: function () {
+        const self: any = this;
+        return `
+          <small>${self.key}: <b>${self.percentage.toFixed(2)}%</b></small>
+          <br>
+          <small>Total: <b>R$ ${Intl.NumberFormat('pt-BR', {
+            currency: 'BRL',
+            minimumFractionDigits: 2,
+          }).format(self.point.options.total.toFixed(2))}</b>
+          </small>
+        </div>
+        `;
+      },
     },
     legend: {
       enabled: true,
@@ -241,7 +255,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
             ? 'var(--color-medium-white)'
             : 'var(--color-default-dark)';
         const themeInverse =
-          state.mode != 'light-mode'
+          state.mode !== 'light-mode'
             ? 'var(--color-medium-white)'
             : 'var(--color-default-dark)';
 
@@ -275,7 +289,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
           });
         }
 
-        if (item.key === 'tabChanged') {
+        if (item.key === 'tabChanged' || item.key === 'evolucao') {
           if (this.tabChanged === 1 && this.operation === 'despesas') {
             this.instanceHighchart().then(() => {
               Highcharts.chart(
@@ -312,27 +326,20 @@ export class HighchartsComponent implements OnInit, DoCheck {
       switch (this.operation) {
         case 'despesas':
           this.setDataOnGraph();
-          const outcome = this.evolucao.graph_evolution;
-          !this.utilsService.isEmpty(outcome) && outcome.dates.length > 0
-            ? this.setDatesAndEnableButton()
-            : this.resetDatesAndEnableButton();
+          this.setDatesAndEnableButton();
           break;
         case 'receita':
           this.setDataOnGraph();
-          const income = this.evolucao.graph_evolution;
-          !this.utilsService.isEmpty(income) && income.dates.length > 0
-            ? this.setDatesAndEnableButton()
-            : this.resetDatesAndEnableButton();
+          this.setDatesAndEnableButton();
           break;
         case 'categoria':
           this.chartPie.series[0].data = this.category.map((v: any) => ({
             name: v.name,
             y: v.y,
+            total: v.total,
             sliced: v.sliced,
           }));
-          this.category.length > 0
-            ? this.setDatesAndEnableButton()
-            : this.resetDatesAndEnableButton();
+          this.setDatesAndEnableButton();
           break;
       }
       resolve(true);
@@ -394,13 +401,13 @@ export class HighchartsComponent implements OnInit, DoCheck {
         payload.action = actionsDashboard.FETCH_EVOLUCAO;
         break;
     }
-    this.onDates.emit(payload);
+    this.send.emit(payload);
   }
 
   private setDatesAndEnableButton(): void {
     this.setDtEnd = this.dtEnd;
     this.setDtStart = this.dtStart;
-    this.enableButtonFilter = false;
+    // this.enableButtonFilter = false;
   }
 
   private resetDatesAndEnableButton(): void {

@@ -1,29 +1,53 @@
 <div class="highcharts">
   <form class="date" (ngSubmit)="onSubmit()">
     <div class="form-inline">
-      <mat-form-field (click)="$event.preventDefault(); !enableButtonFilter ? pickerStart.open() : undefined"
-        class="form">
+      <mat-form-field
+        (click)="$event.preventDefault(); pickerStart.open()"
+        class="form"
+      >
         <mat-label>Data Início</mat-label>
-        <input [min]="minDate" [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
-          [(ngModel)]="setDtStart" matInput [matDatepickerFilter]="filterStart" [matDatepicker]="pickerStart">
-        <mat-datepicker-toggle [disabled]="enableButtonFilter" matSuffix [for]="pickerStart"></mat-datepicker-toggle>
-        <mat-datepicker [touchUi]="isMobile" #pickerStart>
-        </mat-datepicker>
+        <input
+          [min]="minDate"
+          [readonly]="enableButtonFilter"
+          autocomplete="off"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="setDtStart"
+          matInput
+          [matDatepickerFilter]="filterStart"
+          [matDatepicker]="pickerStart"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerStart"
+        ></mat-datepicker-toggle>
+        <mat-datepicker [touchUi]="isMobile" #pickerStart> </mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field (click)="$event.preventDefault(); !enableButtonFilter ? pickerEnd.open() : undefined"
-        class="form">
+      <mat-form-field
+        (click)="$event.preventDefault(); pickerEnd.open()"
+        class="form"
+      >
         <mat-label>Data Fim</mat-label>
-        <input [min]="minDate" [readonly]="enableButtonFilter" autocomplete="off" [ngModelOptions]="{standalone:true}"
-          [(ngModel)]="setDtEnd" [matDatepickerFilter]="filterEnd" matInput [matDatepicker]="pickerEnd">
-        <mat-datepicker-toggle [disabled]="enableButtonFilter" matSuffix [for]="pickerEnd"></mat-datepicker-toggle>
-        <mat-datepicker [touchUi]="isMobile" #pickerEnd>
-        </mat-datepicker>
+        <input
+          [min]="minDate"
+          [readonly]="enableButtonFilter"
+          autocomplete="off"
+          [ngModelOptions]="{ standalone: true }"
+          [(ngModel)]="setDtEnd"
+          [matDatepickerFilter]="filterEnd"
+          matInput
+          [matDatepicker]="pickerEnd"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="pickerEnd"
+        ></mat-datepicker-toggle>
+        <mat-datepicker [touchUi]="isMobile" #pickerEnd> </mat-datepicker>
       </mat-form-field>
     </div>
 
     <div class="buttons">
-      <button [disabled]="enableButtonFilter" type="submit" mat-raised-button>Filtrar</button>
+      <button type="submit" mat-raised-button>Filtrar</button>
     </div>
   </form>
   <div #highchartEvoution></div>

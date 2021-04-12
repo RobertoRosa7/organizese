@@ -34,7 +34,7 @@
     <mat-tab label="Categoria">
       <app-highcharts
         [minDate]="minDate"
-        (onDates)="onDatesListening($event)"
+        (send)="onDatesListening($event)"
         [dtEnd]="dates?.category.dt_end"
         [dtStart]="dates?.category.dt_start"
         [tabChanged]="tabChanged"
@@ -46,7 +46,7 @@
     <mat-tab label="Despesas">
       <app-highcharts
         [minDate]="minDate"
-        (onDates)="onDatesListening($event)"
+        (send)="onDatesListening($event)"
         [dtEnd]="dates?.outcome.dt_end"
         [dtStart]="dates?.outcome.dt_start"
         [tabChanged]="tabChanged"
@@ -58,7 +58,7 @@
     <mat-tab label="Receita">
       <app-highcharts
         [minDate]="minDate"
-        (onDates)="onDatesListening($event)"
+        (send)="onDatesListening($event)"
         [dtEnd]="dates?.income.dt_end"
         [dtStart]="dates?.income.dt_start"
         [tabChanged]="tabChanged"
