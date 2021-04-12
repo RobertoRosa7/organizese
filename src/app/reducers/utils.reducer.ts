@@ -1,7 +1,6 @@
-import { AnyAaaaRecord } from 'dns';
 import { Register } from '../models/models';
 
-export function updateAll(all: any): AnyAaaaRecord {
+export function updateAll(all: any): any {
   return all.map((s: Register) => ({
     ...s,
     status: statusTrans(s.status, s.type),
