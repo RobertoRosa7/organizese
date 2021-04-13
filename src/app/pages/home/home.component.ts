@@ -106,8 +106,8 @@ export class HomeComponent implements OnInit {
   public getLogo(): string {
     if (localStorage.getItem('user-theme')) {
       return this.isDark()
-        ? 'icon-default-dark-512x512'
-        : 'icon-default-stroke-512x512';
+        ? 'icon-default-stroke-512x512'
+        : 'icon-default-dark-512x512';
     } else {
       return 'icon-default-transparent-512x512';
     }
