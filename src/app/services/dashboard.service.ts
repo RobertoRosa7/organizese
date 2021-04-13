@@ -32,12 +32,12 @@ export function download(
   return (source: Observable<HttpEvent<Blob>>) =>
     source.pipe(
       scan(
-        (download: Download, event): Download => {
+        (down: Download, event): Download => {
           if (isHttpProgressEvent(event)) {
             return {
               progress: event.total
                 ? Math.round((100 * event.loaded) / event.total)
-                : download.progress,
+                : down.progress,
               state: 'IN_PROGRESS',
               content: null,
             };
@@ -54,7 +54,7 @@ export function download(
             };
           }
 
-          return download;
+          return down;
         },
         { state: 'PENDING', progress: 0, content: null }
       ),
@@ -78,7 +78,9 @@ export class DashboardService {
   ) {}
 
   private convertJsonToUrl(payload: any): string {
-    if (!payload) return '';
+    if (!payload) {
+      return '';
+    }
     return (
       '?' +
       Object.entries(payload)
@@ -87,7 +89,7 @@ export class DashboardService {
     );
   }
 
-  private convertDates(dates: any) {
+  private convertDates(dates: any): object {
     return {
       dt_start: new Date(dates.dt_start).getTime() / 1000,
       dt_end: new Date(dates.dt_end).getTime() / 1000,

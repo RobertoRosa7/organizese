@@ -79,10 +79,10 @@ export class LoginComponent implements OnInit, DoCheck {
         }
       });
 
-    this.isLoginText = this.dialog == 'page-login' ? 'voltar' : 'fechar';
+    this.isLoginText = this.dialog === 'page-login' ? 'voltar' : 'fechar';
   }
 
-  public ngDoCheck() {
+  public ngDoCheck(): void {
     const change = this.differ.diff(this);
     if (change) {
       change.forEachChangedItem((item: any) => {});
@@ -97,11 +97,11 @@ export class LoginComponent implements OnInit, DoCheck {
   }
 
   public changeVisibility(str: string): void {
-    this.textIcon = str == 'password' ? 'text' : 'password';
-    this.changeIcon = str == 'password' ? 'visibility' : 'visibility_off';
+    this.textIcon = str === 'password' ? 'text' : 'password';
+    this.changeIcon = str === 'password' ? 'visibility' : 'visibility_off';
   }
 
-  public forgetPassword(event: any) {
+  public forgetPassword(event: any): void {
     if (this.isLoading) {
       event.preventDefault();
     } else {
@@ -110,7 +110,7 @@ export class LoginComponent implements OnInit, DoCheck {
     }
   }
 
-  public noAccount(event: any) {
+  public noAccount(event: any): void {
     if (this.isLoading) {
       event.preventDefault();
     } else {

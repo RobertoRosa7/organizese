@@ -57,7 +57,7 @@ export interface StatusCode {
   text: string;
 }
 
-export interface DIALOG_DATA {
+export interface DialogData {
   type: string;
   data: any;
 }

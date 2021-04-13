@@ -3,26 +3,25 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
-  styleUrls: ['./loader.component.scss']
+  styleUrls: ['./loader.component.scss'],
 })
 export class LoaderComponent implements OnInit {
-  public logo: string = './assets/icon-deffault-transparent-512x512.svg'
+  public logo = './assets/icon-deffault-transparent-512x512.svg';
   constructor() {
-    this.logo = './assets/' + this.getLogo()
+    this.logo = './assets/' + this.getLogo();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public getLogo(): string {
     if (localStorage.getItem('user-theme')) {
       if (localStorage.getItem('user-theme') === 'dark-mode') {
-        return 'icon-default-dark-512x512.svg'
+        return 'icon-default-dark-512x512.svg';
       } else {
-        return 'icon-default-stroke-512x512.svg'
+        return 'icon-default-stroke-512x512.svg';
       }
     } else {
-      return 'icon-deffault-transparent-512x512.svg'
+      return 'icon-deffault-transparent-512x512.svg';
     }
   }
 }

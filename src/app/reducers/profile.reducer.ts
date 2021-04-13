@@ -16,6 +16,6 @@ const profileReducer = createReducer(
   on(actionsApp.RESET_ALL, (states) => ({ ...states, user: {} }))
 );
 
-export function reducerProfile(state: any, action: any) {
+export function reducerProfile(state: any, action: any): any {
   return profileReducer(state, action);
 }

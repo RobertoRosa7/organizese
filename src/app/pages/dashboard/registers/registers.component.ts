@@ -118,7 +118,7 @@ export class RegistersComponent
         this.allDaysPeriod = state.allDaysPeriod;
 
         if (this.filterByDays !== 'todos') {
-          this.days = parseInt(this.filterByDays);
+          this.days = parseFloat(this.filterByDays);
         }
 
         if (this.totalGeral < 0) {
@@ -134,28 +134,6 @@ export class RegistersComponent
           ? this.makingOrdering(this.orderby)
           : (this.ELEMENT_DATA = this.classificar(state.all));
         this.isLoadingRegisters = false;
-
-        // this.user = state.user
-        // this.tab = state.tab
-        // this.total = state.total
-        // this.totalDespesa = state.despesas
-        // this.totalReceita = state.receita
-        // this.aPagar = state.a_pagar
-        // this.aReceber = state.a_receber
-        // this.ELEMENT_ORDER = state.all
-
-        // this.totalPercent = ((state.total_debit / state.total_credit) * 100) >= 100 ? 100 : (state.total_debit / state.total_credit) * 100
-        // this.totalGeral = (this.totalReceita - this.totalDespesa)
-        // this.allDaysPeriod = state.allDaysPeriod
-
-        // if (this.filterByDays !== 'todos') this.days = parseInt(this.filterByDays)
-        // if (this.totalGeral < 0) {
-        //   this.isNegative = true
-        //   this.totalGeral = Math.abs(this.totalGeral)
-        // } else {
-        //   this.isNegative = false
-        // }
-        // this.orderby ? this.makingOrdering(this.orderby) : this.ELEMENT_DATA = this.classificar(state.all)
       });
   }
 
@@ -222,10 +200,10 @@ export class RegistersComponent
     const payload: any = {};
     if (event.value === 'todos') {
       this.days = this.allDaysPeriod;
-      payload['todos'] = event.value;
+      payload.todos = event.value;
     } else {
-      this.days = parseInt(event.value);
-      payload['days'] = parseInt(event.value);
+      this.days = parseFloat(event.value);
+      payload.days = parseFloat(event.value);
     }
     this.store.dispatch(actionsRegister.INIT({ payload }));
     this.isLoadingRegisters = true;
@@ -256,7 +234,9 @@ export class RegistersComponent
   }
 
   private makingOrdering(value: string, registers?: Register[]): void {
-    if (registers) this.ELEMENT_ORDER = registers;
+    if (registers) {
+      this.ELEMENT_ORDER = registers;
+    }
     const t = this.ELEMENT_ORDER.sort((a: any, b: any) => {
       switch (value) {
         case 'Data + crescente':
@@ -296,7 +276,7 @@ export class RegistersComponent
       .reduce((prev: any, current: any) => {
         let index = prev.findIndex(
           (i: any) =>
-            new Date(i.month).getMonth() == new Date(current.month).getMonth()
+            new Date(i.month).getMonth() === new Date(current.month).getMonth()
         );
         if (index < 0) {
           index = prev.length;

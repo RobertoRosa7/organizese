@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import html2canvas from 'html2canvas';
-import { DIALOG_DATA, Register } from 'src/app/models/models';
+import { DialogData, Register } from 'src/app/models/models';
 
 @Component({
   selector: 'app-dialogs',
@@ -25,7 +25,7 @@ export class DialogsComponent implements OnInit {
   public isLoading = true;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public dialogData: DIALOG_DATA,
+    @Inject(MAT_DIALOG_DATA) public dialogData: DialogData,
     private dialogRef: MatDialogRef<DialogsComponent>
   ) {}
 
@@ -76,13 +76,13 @@ export class DialogsComponent implements OnInit {
 
   public btnDownload(detail: Register): void {
     const currentTheme = localStorage.getItem('user-theme');
-    const color: string = currentTheme == 'light-mode' ? '#fafafa' : '#303030';
+    const color: string = currentTheme === 'light-mode' ? '#fafafa' : '#303030';
     const al: HTMLElement = document.createElement('div');
     const el: HTMLElement = document.querySelector('.dialog') || al;
     if (el) {
       html2canvas(el, { backgroundColor: color }).then((canvas) => {
         // document.body.appendChild(canvas)
-        var a = document.createElement('a');
+        const a = document.createElement('a');
         a.href = canvas.toDataURL();
         a.download = `${detail.description}-${new Date().getTime()}.png`;
         a.click();

@@ -77,10 +77,10 @@ export class SettingsNewPasswordComponent implements OnInit {
 
       if (control.value !== matchingControl.value) {
         matchingControl.setErrors({ mustMatch: true });
-        this.isPasswordSame = matchingControl.status == 'VALID' ? true : false;
+        this.isPasswordSame = matchingControl.status === 'VALID' ? true : false;
       } else {
         matchingControl.setErrors(null);
-        this.isPasswordSame = matchingControl.status == 'VALID' ? true : false;
+        this.isPasswordSame = matchingControl.status === 'VALID' ? true : false;
       }
     };
   }

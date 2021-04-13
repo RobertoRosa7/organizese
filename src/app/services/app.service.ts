@@ -5,15 +5,10 @@ import { Observable } from 'rxjs';
 import { Constants } from './constants';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class AppService {
-
-  constructor(
-    private http: HttpClient,
-    private constants: Constants,
-  ) { }
+  constructor(private http: HttpClient, private constants: Constants) {}
 
   public isOnline(): Observable<boolean> {
     return this.http.get<any>(this.constants.get('fetch_is_online'));
@@ -27,12 +22,20 @@ export class AppService {
     if (!payload) {
       return '';
     }
-    return '?' + Object.entries(payload).map(e => e.join('=')).join('&');
+    return (
+      '?' +
+      Object.entries(payload)
+        .map((e) => e.join('='))
+        .join('&')
+    );
   }
 
   public getImages(params?: any): Observable<any> {
-    const content = { 'Content-Type': 'image/svg+xml' }
-    return this.http.get<any>(`${this.constants.get('file_images')}${this.convertJsonToUrl(params)}`, { headers: content });
+    const content = { 'Content-Type': 'image/svg+xml' };
+    return this.http.get<any>(
+      `${this.constants.get('file_images')}${this.convertJsonToUrl(params)}`,
+      { headers: content }
+    );
   }
 
   public downloadList(): Observable<any> {

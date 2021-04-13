@@ -65,7 +65,7 @@ export class SettingsComponent
 
   public ngOnInit(): void {}
 
-  public ngDoCheck() {
+  public ngDoCheck(): any {
     const change = this.differ.diff(this);
     if (change) {
       change.forEachChangedItem((item: any) => {});

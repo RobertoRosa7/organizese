@@ -12,45 +12,53 @@ import { Constants } from 'src/app/services/constants';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  public logo: string = '';
-  public isLogged: boolean = false;
-  public background: string =
-    this._constants.get('file_images') + 'background-home-6';
-  public iconName: string = '';
-  public currentOS: string = '';
+  public logo = '';
+  public isLogged = false;
+  public background = this.constants.get('file_images') + 'background-home-6';
+  public iconName = '';
+  public currentOS = '';
   public downloadList: any = {};
-  public isLoading: boolean = true;
+  public isLoading = true;
 
   constructor(
-    private _dialog: MatDialog,
-    private _router: Router,
-    private _appService: AppService,
-    private _constants: Constants
+    private dialog: MatDialog,
+    private router: Router,
+    private appService: AppService,
+    private constants: Constants
   ) {
-    this.logo = this._constants.get('file_images') + this.getLogo();
-    if (window.navigator.userAgent.indexOf('Windows NT 10.0') != -1)
+    this.logo = this.constants.get('file_images') + this.getLogo();
+    if (window.navigator.userAgent.indexOf('Windows NT 10.0') !== -1) {
       this.currentOS = 'Windows 10';
-    if (window.navigator.userAgent.indexOf('Windows NT 6.2') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('Windows NT 6.2') !== -1) {
       this.currentOS = 'Windows 8';
-    if (window.navigator.userAgent.indexOf('Windows NT 6.1') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('Windows NT 6.1') !== -1) {
       this.currentOS = 'Windows 7';
-    if (window.navigator.userAgent.indexOf('Windows NT 6.0') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('Windows NT 6.0') !== -1) {
       this.currentOS = 'Windows Vista';
-    if (window.navigator.userAgent.indexOf('Windows NT 5.1') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('Windows NT 5.1') !== -1) {
       this.currentOS = 'Windows XP';
-    if (window.navigator.userAgent.indexOf('Windows NT 5.0') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('Windows NT 5.0') !== -1) {
       this.currentOS = 'Windows 2000';
-    if (window.navigator.userAgent.indexOf('Mac') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('Mac') !== -1) {
       this.currentOS = 'Mac/iOS';
-    if (window.navigator.userAgent.indexOf('X11') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('X11') !== -1) {
       this.currentOS = 'UNIX';
-    if (window.navigator.userAgent.indexOf('Linux') != -1)
+    }
+    if (window.navigator.userAgent.indexOf('Linux') !== -1) {
       this.currentOS = 'Linux';
+    }
   }
 
   public ngOnInit(): void {
     this.downloadList.current_os = this.currentOS;
-    this._appService
+    this.appService
       .downloadList()
       .pipe(map(({ download_list }) => this.addIconOnPayload(download_list)))
       .subscribe(
@@ -64,33 +72,33 @@ export class HomeComponent implements OnInit {
       );
   }
 
-  private addIconOnPayload(payload: any) {
+  private addIconOnPayload(payload: any): any {
     return {
       ...payload,
       current_os: this.currentOS,
-      linux: payload['linux'].map((v: any) => ({
+      linux: payload.linux.map((v: any) => ({
         ...v,
         icon: this.isDark()
-          ? this._constants.get('file_images') + 'logo-linux'
-          : this._constants.get('file_images') + 'logo-linux-white',
+          ? this.constants.get('file_images') + 'logo-linux'
+          : this.constants.get('file_images') + 'logo-linux-white',
       })),
-      windows: payload['windows'].map((v: any) => ({
+      windows: payload.windows.map((v: any) => ({
         ...v,
         icon: this.isDark()
-          ? this._constants.get('file_images') + 'logo-windows-black'
-          : this._constants.get('file_images') + 'logo-windows-white',
+          ? this.constants.get('file_images') + 'logo-windows-black'
+          : this.constants.get('file_images') + 'logo-windows-white',
       })),
       // mac: payload['mac'].map((v: any) => ({
       //   ...v,
       //   icon: this.isDark()
-      //     ? this._constants.get('file_images') + 'logo-mac-black'
-      //     : this._constants.get('file_images') + 'logo-mac-white'
+      //     ? this.constants.get('file_images') + 'logo-mac-black'
+      //     : this.constants.get('file_images') + 'logo-mac-white'
       // }))
     };
   }
 
   public login(): void {
-    this._dialog
+    this.dialog
       .open(DialogsComponent, {
         data: { type: 'login', data: {} },
         panelClass: 'dialog-default',
@@ -114,7 +122,7 @@ export class HomeComponent implements OnInit {
   }
 
   public download(): void {
-    this._dialog.open(DialogsComponent, {
+    this.dialog.open(DialogsComponent, {
       data: { type: 'download', data: this.downloadList },
       panelClass: 'dialog-default',
     });
@@ -125,6 +133,6 @@ export class HomeComponent implements OnInit {
   }
 
   private goto(path: string): void {
-    this._router.navigateByUrl(path);
+    this.router.navigateByUrl(path);
   }
 }

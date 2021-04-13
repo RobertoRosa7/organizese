@@ -11,15 +11,13 @@ export class DownloadsComponent implements OnInit {
 
   constructor(private constants: Constants) {}
 
-  ngOnInit(): void {
-    // console.log(this.downloadItem)
-  }
+  ngOnInit(): void {}
 
   public isDark(): boolean {
     return localStorage.getItem('user-theme') === 'light-mode';
   }
 
-  public download(release: string, system: string) {
+  public download(release: string, system: string): any {
     // fatura-Fevereiro_21-0043795374
     const a = document.createElement('a');
     a.href = `${this.constants.get(

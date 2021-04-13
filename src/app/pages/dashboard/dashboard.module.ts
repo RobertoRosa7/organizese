@@ -35,21 +35,25 @@ import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   {
-    path: '', component: DashboardComponent, children: [
+    path: '',
+    component: DashboardComponent,
+    children: [
       { path: '', component: MainComponent },
       {
-        path: 'settings', component: SettingsComponent, children: [
+        path: 'settings',
+        component: SettingsComponent,
+        children: [
           { path: '', component: SettingsMenuComponent },
           { path: 'profile', component: SettingsProfileComponent },
           { path: 'about', component: SettingsAboutComponent },
           { path: 'new-password', component: SettingsNewPasswordComponent },
-        ]
+        ],
       },
       { path: 'registers', component: RegistersComponent },
       { path: 'result-search', component: ResultSearchComponent },
-    ]
+    ],
   },
-]
+];
 
 export const MY_FORMATS = {
   parse: { dateInput: 'DD MM YYYY' },
@@ -58,10 +62,10 @@ export const MY_FORMATS = {
     monthYearLabel: 'MMM YYYY',
     dateA11yLabel: 'LL',
     monthYearA11yLabel: 'MMMM YYYY',
-  }
-}
+  },
+};
 
-registerLocaleData(localePt, 'pt')
+registerLocaleData(localePt, 'pt');
 
 @NgModule({
   declarations: [
@@ -88,7 +92,7 @@ registerLocaleData(localePt, 'pt')
     DarkThemeComponent,
     SettingsAboutComponent,
     SettingsProfileComponent,
-    SettingsNewPasswordComponent
+    SettingsNewPasswordComponent,
   ],
   exports: [
     LoaderComponent,
@@ -96,24 +100,28 @@ registerLocaleData(localePt, 'pt')
     TabMenuComponent,
     TabContentComponent,
     TabHeaderComponent,
-    DarkThemeComponent
+    DarkThemeComponent,
   ],
   imports: [
     MaterialModule,
     OwlModule,
     RouterModule.forChild(routes),
-    NgxMaskModule.forChild()
+    NgxMaskModule.forChild(),
   ],
   entryComponents: [
     DialogFormIncomingComponent,
     DialogConfirmComponent,
-    DialogsComponent
+    DialogsComponent,
   ],
   // exports: [],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE],
+    },
     { provide: LOCALE_ID, useValue: 'pt' },
   ],
   // entryComponents: []
 })
-export class DashboardModule { }
+export class DashboardModule {}

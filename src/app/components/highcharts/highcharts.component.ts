@@ -40,6 +40,8 @@ const MY_FORMATS = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
+export function teste(): any {}
 @Component({
   selector: 'app-highcharts',
   templateUrl: './highcharts.component.html',
@@ -113,7 +115,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
       crosshair: true,
       labels: {
         // tslint:disable-next-line: object-literal-shorthand
-        formatter: function (): any {
+        formatter(): any {
           const self: any = this;
           return Highcharts.dateFormat('%m/%Y', self.value * 1000);
         },
@@ -132,7 +134,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
       shared: true,
       crosshairs: true,
       // tslint:disable-next-line: object-literal-shorthand
-      formatter: function (): any {
+      formatter(): any {
         const self: any = this;
         let s = `
             <div class="highchart-tooltip">
@@ -186,7 +188,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
     },
     tooltip: {
       // tslint:disable-next-line: object-literal-shorthand
-      formatter: function () {
+      formatter(): any {
         const self: any = this;
         return `
           <small>${self.key}: <b>${self.percentage.toFixed(2)}%</b></small>
@@ -235,8 +237,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
   constructor(
     private store: Store,
     private differs: KeyValueDiffers,
-    private breakpoint: BreakpointObserver,
-    private utilsService: UtilsService
+    private breakpoint: BreakpointObserver
   ) {
     this.breakpoint
       ?.observe([Breakpoints.XSmall])

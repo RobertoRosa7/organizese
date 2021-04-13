@@ -35,28 +35,28 @@ export class AppEffect {
     catchError((err) => of(err))
   );
 
-  @Effect()
-  public getStatusCodes$: Observable<Actions> = this.action.pipe(
-    ofType(GET_STATUS_CODE),
-    mergeMap(() => this.indexedb.getById('status_code_id')),
-    mergeMap((statusCode) => {
-      if (statusCode) {
-        return [SET_STATUS_CODE({ payload: statusCode.status_code })];
-      } else {
-        return this.appService.getStatusCode().pipe(
-          map((statusCode: any) => {
-            if (statusCode) {
-              this.indexedb.create({ id: 'status_code_id', statusCode });
-            }
-            return SET_STATUS_CODE({ payload: statusCode });
-          }),
-          catchError((e) => {
-            const source = { ...e, source: 'status_code' };
-            return [SET_ERRORS({ payload: source })];
-          })
-        );
-      }
-    }),
-    catchError((err) => of(err))
-  );
+  // @Effect()
+  // public getStatusCodes$: Observable<Actions> = this.action.pipe(
+  //   ofType(GET_STATUS_CODE),
+  //   mergeMap(() => this.indexedb.getById('status_code_id')),
+  //   mergeMap((statusCode) => {
+  //     if (statusCode) {
+  //       return [SET_STATUS_CODE({ payload: statusCode.status_code })];
+  //     } else {
+  //       return this.appService.getStatusCode().pipe(
+  //         map((statusCodes: any) => {
+  //           if (statusCodes) {
+  //             this.indexedb.create({ id: 'status_code_id', statusCodes });
+  //           }
+  //           return SET_STATUS_CODE({ payload: statusCodes });
+  //         }),
+  //         catchError((e) => {
+  //           const source = { ...e, source: 'status_code' };
+  //           return [SET_ERRORS({ payload: source })];
+  //         })
+  //       );
+  //     }
+  //   }),
+  //   catchError((err) => of(err))
+  // );
 }

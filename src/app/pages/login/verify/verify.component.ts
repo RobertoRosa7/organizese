@@ -7,37 +7,40 @@ import { LoginService } from 'src/app/services/login.service';
 @Component({
   selector: 'app-verify',
   templateUrl: './verify.component.html',
-  styleUrls: ['./verify.component.scss']
+  styleUrls: ['./verify.component.scss'],
 })
 export class VerifyComponent implements OnInit {
-  public token: string | null = null
-  public text: string = 'E-mail não verificado!'
-  public isVerified: boolean = false
+  public token: string | null = null;
+  public text = 'E-mail não verificado!';
+  public isVerified = false;
 
   constructor(
-    private _activatedRoute: ActivatedRoute,
-    private _loginService: LoginService
-  ) {
-  }
+    private activatedRoute: ActivatedRoute,
+    private loginService: LoginService
+  ) {}
 
   public ngOnInit(): void {
-    this._activatedRoute.queryParams.pipe(
-      switchMap((params: any) => {
-        if (params) {
-          return this._loginService.loginVerified({ token: params['token'] })
-        } else {
-          return of(null)
+    this.activatedRoute.queryParams
+      .pipe(
+        switchMap((params: any) => {
+          if (params) {
+            return this.loginService.loginVerified({ token: params.token });
+          } else {
+            return of(null);
+          }
+        })
+      )
+      .subscribe(
+        (res) => {
+          if (res) {
+            this.text = 'E-mail verificado!';
+            this.isVerified = true;
+          }
+        },
+        (err) => {
+          this.text = 'E-mail não verificado, token inválido ou expirado!';
+          this.isVerified = false;
         }
-      })
-    ).subscribe(res => {
-      if (res) {
-        this.text = 'E-mail verificado!'
-        this.isVerified = true
-      }
-    },
-      err => {
-        this.text = 'E-mail não verificado, token inválido ou expirado!'
-        this.isVerified = false
-      })
+      );
   }
 }
