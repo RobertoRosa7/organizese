@@ -23,7 +23,9 @@
   --color-whitesmoke: whitesmoke;
   --color-medium-white: #fafafa;
   // --color-default-dark: #303030;
-  --color-default-dark: #151825;
+  // --color-default-dark: #151825;
+  --color-default-dark: #0b0d14;
+  --color-dark-secondary: #12181f;
   --color-dark: #212121;
 }
 
@@ -206,12 +208,12 @@ $text-accent: var(--text-accent);
   //   background-color: var(--color-dark);
   //   background: linear-gradient(-90deg, #393939 100%, #42424290 0);
   // }
-  .form-search {
-    background: $bg-dark-mode;
-  }
-  .mat-dialog-container {
-    background: var(--color-default-dark);
-  }
+  // .form-search {
+  //   background: $bg-dark-mode;
+  // }
+  // .mat-dialog-container {
+  //   background: var(--color-dark-secondary);
+  // }
   .line-month {
     @include text;
     color: var(--color-medium-white);
@@ -285,6 +287,18 @@ $text-accent: var(--text-accent);
   .highchart-text {
     color: var(--color-medium-white);
   }
+  .mat-dialog-container,
+  .mat-card,
+  .mat-raised-button,
+  .mat-menu-panel,
+  .mat-datepicker-content,
+  .mat-select-panel,
+  .mat-expansion-panel,
+  .mat-autocomplete-panel,
+  .mat-autocomplete-panel
+    .mat-option.mat-selected:not(.mat-active):not(:hover) {
+    background-color: var(--color-dark-secondary);
+  }
 }
 * {
   box-sizing: border-box;
@@ -344,6 +358,9 @@ h2.welcome-subtitle {
   .mat-option-text {
     padding: 0 16px;
   }
+}
+.cdk-global-scrollblock {
+  position: static;
 }
 ::-webkit-scrollbar-track {
   background: #ff408190;

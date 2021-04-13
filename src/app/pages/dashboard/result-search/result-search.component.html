@@ -1,9 +1,14 @@
 <section class="result-search">
   <div class="container-search">
-    <app-title
-      title="Resultado:"
-      [subtitle]="TOTAL_RESULT$ | async"
-    ></app-title>
+    <div class="result-search-title">
+      <button routerLink="/dashboard" type="button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <app-title
+        title="Resultado:"
+        [subtitle]="TOTAL_RESULT$ | async"
+      ></app-title>
+    </div>
 
     <ng-container *ngIf="TOTAL_RESULT$ | async">
       <app-list-registers
