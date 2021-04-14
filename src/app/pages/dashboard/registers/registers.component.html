@@ -1,4 +1,15 @@
 <div class="registers">
+  <app-panel-control
+    *ngIf="tab === 'read'"
+    [total]="total"
+    [filterByDays]="days"
+    [totalDespesa]="totalDespesa"
+    [totalReceita]="totalReceita"
+    [aReceber]="aReceber"
+    [aPagar]="aPagar"
+    style="width: 100%"
+  >
+  </app-panel-control>
   <app-tabs style="display: block; margin: 15px 0">
     <app-tab-header
       class="tabs"
@@ -64,10 +75,11 @@
               (selectionChange)="inOutComingChange($event)"
               placeholder="Entradas/Saídas"
             >
-              <mat-option value="incoming">Entradas</mat-option>
-              <mat-option value="outcoming">Saídas</mat-option>
-              <mat-option value="pending">Lançamentos</mat-option>
-              <mat-option value="all">Entrada/Saídas</mat-option>
+              <mat-option
+                [value]="option.type"
+                *ngFor="let option of categoriesList"
+                >{{ option.label }}</mat-option
+              >
             </mat-select>
           </mat-form-field>
         </div>
@@ -148,28 +160,18 @@
       <div
         *ngIf="tab === 'read'"
         read
-        style="margin-bottom: 70px"
+        style="margin-bottom: 70px; margin-top: 16px"
         #extrato
         id="extrato"
       >
-        <!-- <div class="progress">
-          <div class="encapsulate" [style.width]="totalPercent + '%'"></div>
-        </div> -->
-
-        <app-panel-control
-          [total]="total"
-          [filterByDays]="days"
-          [totalDespesa]="totalDespesa"
-          [totalReceita]="totalReceita"
-          [aReceber]="aReceber"
-          [aPagar]="aPagar"
-          style="width: 100%"
-        >
-        </app-panel-control>
-
         <ng-container *ngIf="ELEMENT_DATA.length > 0; else noneOfExtracts">
           <div *ngFor="let item of ELEMENT_DATA">
-            <span class="line-month">{{ item.month | date: 'MMMM' }}</span>
+            <span class="line-month">
+              {{ item.month | date: 'MMMM' }}
+              <small [title]="item.lista?.length">{{
+                registersThanTen(item.lista?.length || 0)
+              }}</small>
+            </span>
             <app-list-registers
               (send)="onDelete($event)"
               *ngFor="let i of item.lista"

@@ -42,7 +42,6 @@ export class RegistersComponent
   public total = 0;
   public detail: Register;
   public differ: any;
-  private onlyComing = '';
   public evolucaoDetail: any;
   public totalDespesa = 0;
   public totalReceita = 0;
@@ -56,6 +55,8 @@ export class RegistersComponent
   public days = 0;
   public user: User;
   public isLoadingRegisters = false;
+  public categoriesList: any[] = [];
+  private onlyComing = '';
 
   public displayedColumns: string[] = [
     'Valor + crescente',
@@ -89,19 +90,9 @@ export class RegistersComponent
 
   public ngOnInit(): void {
     this.store
-      .select(({ registers, dashboard, profile }: any) => ({
-        all: [...registers.all],
-        tab: registers.tab,
-        total: registers.total,
-        despesas: registers.total_despesas,
-        receita: registers.total_receita,
-        a_pagar: dashboard.consolidado.a_pagar,
-        a_receber: dashboard.consolidado.a_receber,
-        total_credit: dashboard.consolidado.total_credit,
-        total_debit: dashboard.consolidado.total_debit,
-        allDaysPeriod: registers.allDaysPeriod,
-        user: profile.user,
-      }))
+      .select(({ registers, dashboard, profile }: any) =>
+        this.abastractStates({ registers, dashboard, profile })
+      )
       .subscribe(async (state) => {
         this.tab = state.tab;
         this.total = state.total;
@@ -109,6 +100,7 @@ export class RegistersComponent
         this.totalReceita = state.receita;
         this.aPagar = state.a_pagar;
         this.aReceber = state.a_receber;
+        this.categoriesList = state.categories;
 
         this.totalPercent =
           (state.total_debit / state.total_credit) * 100 >= 100
@@ -160,6 +152,23 @@ export class RegistersComponent
     }
   }
 
+  private abastractStates({ registers, dashboard, profile }: any): any {
+    return {
+      all: [...registers.all],
+      tab: registers.tab,
+      total: registers.total,
+      despesas: registers.total_despesas,
+      receita: registers.total_receita,
+      a_pagar: dashboard.consolidado.a_pagar,
+      a_receber: dashboard.consolidado.a_receber,
+      total_credit: dashboard.consolidado.total_credit,
+      total_debit: dashboard.consolidado.total_debit,
+      allDaysPeriod: registers.allDaysPeriod,
+      user: profile.user,
+      categories: [...registers.categoriesToOptions],
+    };
+  }
+
   public isEmpty(user: any): Promise<any> {
     return new Promise((resolve) => {
       if (!this.utilsService.isEmpty(user)) {
@@ -196,8 +205,13 @@ export class RegistersComponent
     this.makingInOutComing(event.value);
   }
 
+  public registersThanTen(number: number): string {
+    return number <= 10 ? number.toString() : '10+';
+  }
+
   public filterByDaysChange(event: MatSelectChange): void {
     const payload: any = {};
+
     if (event.value === 'todos') {
       this.days = this.allDaysPeriod;
       payload.todos = event.value;
@@ -226,7 +240,10 @@ export class RegistersComponent
           );
         } else {
           this.ELEMENT_DATA = this.classificar(
-            registers.filter((v: any) => v.type === value)
+            registers.filter(
+              (v: any) =>
+                v.type === value || value === this.cleanText(v.category)
+            )
           );
           this.onlyComing = value;
         }

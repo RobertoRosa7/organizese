@@ -12,6 +12,7 @@ const categories: string[] = [
   'Internet',
   'Pessoal',
   'Trabalho',
+  'Outros',
 ].sort();
 
 const tabList: string[] = [
@@ -23,6 +24,24 @@ const tabList: string[] = [
   'theme',
   'about',
   'account',
+];
+const optionsFilterCategories: any[] = [
+  {
+    label: 'Entradas',
+    type: 'incoming',
+  },
+  {
+    label: 'Saídas',
+    type: 'outcoming',
+  },
+  {
+    label: 'Lançamentos',
+    type: 'pending',
+  },
+  {
+    label: 'Entrada/Saída',
+    type: 'all',
+  },
 ];
 
 const INITIAL_STATE = {
@@ -41,6 +60,12 @@ const INITIAL_STATE = {
   all_days_period: 1,
   result_search: [],
   tabList,
+  categoriesToOptions: categories
+    .map((value: string) => ({
+      label: value,
+      type: utils.cleanText(value),
+    }))
+    .concat(optionsFilterCategories),
 };
 const registersReducers = createReducer(
   INITIAL_STATE,

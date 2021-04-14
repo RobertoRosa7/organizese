@@ -18,7 +18,7 @@
     "e2e": "ng e2e",
     "electron": "electron .",
     "build:web": "ng build --prod",
-    "build:electron": "ng build --prod --base-href ./ && electron .",
+    "build:electron": "ng build --prod --base-href ./",
     "build:linux": "electron-builder --linux",
     "build:win": "electron-builder --win",
     "build:mac": "electron-builder --mac",
