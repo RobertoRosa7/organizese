@@ -138,13 +138,6 @@ export class RegistersComponent
         if (item.key === 'total') {
           this.notification(`Total de registros: ${this.total}`);
         }
-        if (item.key === 'onlyComing') {
-          const text =
-            this.onlyComing === 'incoming'
-              ? 'Somente entrada'
-              : 'Somente saída';
-          this.notification(text);
-        }
         if (item.key === 'ELEMENT_ORDER') {
           this.isLoadingRegisters = false;
         }

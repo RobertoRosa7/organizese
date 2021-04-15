@@ -7,6 +7,7 @@ import {
   MAT_DATE_FORMATS,
   MAT_DATE_LOCALE,
 } from '@angular/material/core';
+import { Store } from '@ngrx/store';
 import { Register } from 'src/app/models/models';
 
 const MY_FORMATS = {
@@ -45,18 +46,13 @@ export class FormIncomingComponent implements OnInit {
   public isMobile = false;
   public charTotal = 50;
   public charCount = 50;
-  public categories: string[] = [
-    'Banco',
-    'Alimentação',
-    'Vestuário',
-    'Transporte',
-    'Água & Luz',
-    'Internet',
-    'Pessoal',
-    'Trabalho',
-  ].sort();
+  public categories: string[] = [];
 
-  constructor(private fb: FormBuilder, private breakpoint: BreakpointObserver) {
+  constructor(
+    private fb: FormBuilder,
+    private breakpoint: BreakpointObserver,
+    private store: Store
+  ) {
     this.form = this.fb.group({
       value: [''],
       date: [new Date()],
@@ -69,6 +65,14 @@ export class FormIncomingComponent implements OnInit {
   }
 
   public ngOnInit(): void {
+    this.store
+      .select(({ registers }: any) => ({
+        categories: registers.categories,
+      }))
+      .subscribe((states) => {
+        this.categories = states.categories;
+      });
+
     if (this.edit) {
       this.form.patchValue({
         value: this.payload.value,
