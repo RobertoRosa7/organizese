@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@import '../../../styles.scss';
 .cards {
   min-height: 140px;
   overflow: hidden;
@@ -76,7 +76,7 @@
     position: relative;
   }
   .loading-waves::before {
-    content: "";
+    content: '';
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.02);
@@ -86,7 +86,6 @@
     top: 0;
   }
 }
-
 @keyframes waves {
   to {
     transform: translateX(100%);

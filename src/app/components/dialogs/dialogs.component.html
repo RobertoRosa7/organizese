@@ -3,16 +3,13 @@
     <div class="header dialog-header-mode">
       <small class="title">{{ detail.description }}</small>
       <div class="max-window">
-        <!-- <button type="button" mat-icon-button disableRipple="true" (click)="close()">
-          <mat-icon>close</mat-icon>
-        </button> -->
         <span (click)="close()">
           <mat-icon>close</mat-icon>
         </span>
       </div>
     </div>
 
-    <div class="content-dialog">
+    <div mat-dialog-content class="content-dialog">
       <div class="line">
         <p class="categoria">
           <span
@@ -58,16 +55,6 @@
             <mat-icon>download</mat-icon>
           </button>
         </p>
-        <!-- <p class="save" title="salvar">
-          <button disabled (click)="btnSave()" mat-icon-button type="button">
-            <mat-icon>save</mat-icon>
-          </button>
-        </p> -->
-        <!-- <p class="share" title="compartilhar">
-          <button disabled (click)="btnShare()" mat-icon-button type="button">
-            <mat-icon>share</mat-icon>
-          </button>
-        </p> -->
         <p class="save" title="salvar">
           <button
             disableRipple="true"
@@ -91,27 +78,20 @@
         <span> {{ downloadList.current_os }}</span>
       </div>
       <div class="max-window">
-        <!-- <button type="button" mat-icon-button disableRipple="true" (click)="close()">
-          <mat-icon>close</mat-icon>
-        </button> -->
         <span (click)="close()">
           <mat-icon>close</mat-icon>
         </span>
       </div>
     </div>
     <mat-list role="list" style="height: inherit">
-      <!-- <p>Linux</p> -->
       <app-downloads
         *ngFor="let i of downloadList?.linux"
         [downloadItem]="i"
       ></app-downloads>
-      <!-- <p>Windows</p> -->
       <app-downloads
         *ngFor="let i of downloadList?.windows"
         [downloadItem]="i"
       ></app-downloads>
-      <!-- <p>Mac</p> -->
-      <!-- <app-downloads *ngFor="let i of downloadList.mac" [downloadItem]="i"></app-downloads> -->
     </mat-list>
   </div>
   <div
@@ -129,7 +109,6 @@
         <small>Acesse sua conta</small>
       </div>
       <div class="max-window">
-        <!-- <button type="button" mat-icon-button disableRipple="true"></button> -->
         <span (click)="close()">
           <mat-icon>close</mat-icon>
         </span>

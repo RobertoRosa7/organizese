@@ -26,6 +26,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgxElectronModule } from 'ngx-electron';
 
@@ -66,6 +67,7 @@ import { NgxElectronModule } from 'ngx-electron';
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatTabsModule,
+    MatTooltipModule,
   ],
 })
 export class MaterialModule {}

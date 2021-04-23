@@ -32,6 +32,7 @@ import { SettingsMenuComponent } from './settings/settings-menu/settings-menu.co
 import { SettingsNewPasswordComponent } from './settings/settings-new-password/settings-new-password.component';
 import { SettingsProfileComponent } from './settings/settings-profile/settings-profile.component';
 import { SettingsComponent } from './settings/settings.component';
+import { SidepanelComponent } from '../../components/sidepanel/sidepanel.component';
 
 const routes: Routes = [
   {
@@ -93,6 +94,7 @@ registerLocaleData(localePt, 'pt');
     SettingsAboutComponent,
     SettingsProfileComponent,
     SettingsNewPasswordComponent,
+    SidepanelComponent,
   ],
   exports: [
     LoaderComponent,

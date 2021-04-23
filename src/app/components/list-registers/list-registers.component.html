@@ -19,7 +19,7 @@
         <strong>Data:</strong>
         <span
           class="text-truncate"
-          [title]="item.created_at * 1000 | date: 'dd/MM/yyyy'"
+          [matTooltip]="(item.created_at * 1000 | date: 'dd/MM/yyyy') || ''"
         >
           {{ item.created_at * 1000 | date: 'dd/MM/yyyy' }}
         </span>
@@ -27,7 +27,7 @@
 
       <div class="itens description">
         <strong>Descrição:</strong>
-        <span class="text-truncate" [title]="item.description">{{
+        <span class="text-truncate" [matTooltip]="item.description || ''">{{
           item.description
         }}</span>
       </div>
@@ -36,7 +36,7 @@
         <strong>Valor:</strong>
         <span
           class="text-truncate"
-          [title]="formatarValor(item.value)"
+          [matTooltip]="formatarValor(item.value)"
           [ngStyle]="{
             color:
               item.type === 'outcoming'
@@ -51,7 +51,7 @@
         </span>
       </div>
 
-      <div [title]="item.category" class="itens category">
+      <div [matTooltip]="item.category || ''" class="itens category">
         <strong class="title-with-icon">
           <strong>Categoria:</strong>
           <mat-icon
@@ -64,6 +64,7 @@
 
       <div class="itens actions">
         <button
+          disableRipple="true"
           (click)="$event.stopPropagation()"
           title="Menu"
           mat-icon-button
@@ -74,12 +75,12 @@
       </div>
 
       <mat-menu #menu="matMenu" overlapTrigger="true">
-        <button (click)="edit($event, item)" mat-menu-item>
+        <button disableRipple="true" (click)="edit($event, item)" mat-menu-item>
           <mat-icon>edit</mat-icon>
           <span>EDITAR</span>
         </button>
 
-        <button (click)="del($event, item)" mat-menu-item>
+        <button disableRipple="true" (click)="del($event, item)" mat-menu-item>
           <mat-icon class="icon-mat-menu">delete</mat-icon>
           <span>DELETAR</span>
         </button>
@@ -129,6 +130,7 @@
 
         <p class="menu">
           <button
+            disableRipple="true"
             (click)="$event.stopPropagation()"
             type="button"
             mat-icon-button
@@ -140,12 +142,12 @@
       </li>
 
       <mat-menu #menu="matMenu" overlapTrigger="true">
-        <button (click)="edit($event, item)" mat-menu-item>
+        <button disableRipple="true" (click)="edit($event, item)" mat-menu-item>
           <mat-icon>edit</mat-icon>
           <span>EDITAR</span>
         </button>
 
-        <button (click)="del($event, item)" mat-menu-item>
+        <button disableRipple="true" (click)="del($event, item)" mat-menu-item>
           <mat-icon>delete</mat-icon>
           <span>DELETAR</span>
         </button>

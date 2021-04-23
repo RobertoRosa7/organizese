@@ -168,7 +168,7 @@
           <div *ngFor="let item of ELEMENT_DATA">
             <span class="line-month">
               {{ item.month | date: 'MMMM' }}
-              <small [title]="item.lista?.length">{{
+              <small [matTooltip]="registersThanTen(item.lista?.length || 0)">{{
                 registersThanTen(item.lista?.length || 0)
               }}</small>
             </span>

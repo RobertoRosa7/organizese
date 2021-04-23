@@ -1,21 +1,26 @@
 <section class="dialog">
   <div class="header dialog-header-mode">
     <div class="title">
-      <!-- <app-title title="Excluir registro"></app-title> -->
       <small>Excluir</small>
     </div>
     <div class="max-window">
-      <!-- <button mat-icon-button (click)="close()">
-        <mat-icon>close</mat-icon>
-      </button> -->
       <span (click)="close()"><mat-icon>close</mat-icon></span>
     </div>
   </div>
-  <div class="container-dialog">
+  <div mat-dialog-content class="container-dialog">
     <h2 class="welcome-subtitle">Tem certeza que quer excluir?</h2>
     <div class="container-buttons">
-      <button color="accent" mat-raised-button (click)="close(false)">Fechar</button>
-      <button mat-raised-button (click)="close(true)">Confirmar</button>
+      <button
+        disableRipple="true"
+        color="accent"
+        mat-raised-button
+        (click)="close(false)"
+      >
+        Fechar
+      </button>
+      <button disableRipple="true" mat-raised-button (click)="close(true)">
+        Confirmar
+      </button>
     </div>
   </div>
 </section>

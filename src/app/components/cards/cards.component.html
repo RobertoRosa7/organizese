@@ -1,35 +1,44 @@
-<mat-card *ngIf="!isLoading" class="cards" [title]="item.title">
+<mat-card *ngIf="!isLoading" class="cards">
   <div class="cards-header">
     <div class="cards-title">
       <div class="value-percent">
-        <span>{{item.title}}</span>
-        <small title="{{formatarPercent(item.percent)}} %"
-          *ngIf="showValues; else hidePercent">{{formatarPercent(item.percent)}} %</small>
+        <span>{{ item.title }}</span>
+        <small
+          matTooltip="{{ formatarPercent(item.percent) }} %"
+          *ngIf="showValues; else hidePercent"
+          >{{ formatarPercent(item.percent) }} %</small
+        >
         <ng-template #hidePercent>
           <small>-</small>
         </ng-template>
       </div>
-      <div title="esonder/mostar" (click)="hideShowValue($event)" class="eyes">
-        <mat-icon>{{changeTextHide}}</mat-icon>
+      <div
+        matTooltip="esonder/mostar"
+        (click)="hideShowValue($event)"
+        class="eyes"
+      >
+        <mat-icon>{{ changeTextHide }}</mat-icon>
       </div>
     </div>
   </div>
   <div class="cards-content">
     <div class="cards-cash">
       <span class="cards-label">Total:</span>
-      <span title="R$ {{formatarValor(value || 0)}}" *ngIf="showValues; else hideValues" [ngClass]="returnClass()">
+      <span
+        matTooltip="R$ {{ formatarValor(value || 0) }}"
+        *ngIf="showValues; else hideValues"
+        [ngClass]="returnClass()"
+      >
         R$ {{ formatarValor(value || 0) }}
       </span>
       <ng-template #hideValues>
-        <span class="hide-value">
-          R$&nbsp;<span></span>
-        </span>
+        <span class="hide-value"> R$&nbsp;<span></span> </span>
       </ng-template>
     </div>
   </div>
 </mat-card>
 
-<mat-card *ngIf="isLoading" class="cards" [title]="item.title">
+<mat-card *ngIf="isLoading" class="cards" [matTooltip]="item.title">
   <div class="cards-header loading-waves">
     <div class="cards-title">
       <div class="value-percent">
@@ -39,7 +48,7 @@
     </div>
   </div>
   <div class="cards-content loading-waves">
-    <div class="cards-cash ">
+    <div class="cards-cash">
       <span class="cards-label"></span>
       <span class="hide-value"></span>
     </div>

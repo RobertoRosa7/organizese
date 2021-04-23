@@ -1,43 +1,106 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit($event, type)" class="form-incoming">
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit($event, type)"
+  class="form-incoming"
+>
   <div class="form-inline">
     <mat-form-field class="form" floatLabel="always" appearance="outline">
-      <mat-label>{{label}}</mat-label>
-      <input [options]="{prefix:'R$ ', suffix:'', precison:'2', align:'left',  allowNegative:'false', decimal:',', 
-      thousands:'.'}" autocomplete="off" formControlName="value" currencyMask matInput [placeholder]="placeholder">
+      <mat-label>{{ label }}</mat-label>
+      <input
+        [options]="{
+          prefix: 'R$ ',
+          suffix: '',
+          precison: '2',
+          align: 'left',
+          allowNegative: 'false',
+          decimal: ',',
+          thousands: '.'
+        }"
+        autocomplete="off"
+        formControlName="value"
+        currencyMask
+        matInput
+        [placeholder]="placeholder"
+      />
     </mat-form-field>
   </div>
 
   <div class="form-inline">
-    <mat-form-field (click)="$event.preventDefault(); picker.open()" class="form" floatLabel="always"
-      appearance="outline">
+    <mat-form-field
+      (click)="$event.preventDefault(); picker.open()"
+      class="form"
+      floatLabel="always"
+      appearance="outline"
+    >
       <mat-label>Data</mat-label>
-      <input autocomplete="off" formControlName="date" matInput [matDatepicker]="picker" placeholder="Data">
+      <input
+        autocomplete="off"
+        formControlName="date"
+        matInput
+        [matDatepicker]="picker"
+        placeholder="Data"
+      />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker [touchUi]="isMobile" #picker>
-      </mat-datepicker>
+      <mat-datepicker [touchUi]="isMobile" #picker> </mat-datepicker>
     </mat-form-field>
 
     <mat-form-field class="form" floatLabel="always" appearance="outline">
       <mat-label>Categoria</mat-label>
-      <mat-select panelClass="custom-select" formControlName="category" placeholder="Categoria">
-        <mat-option [value]="option" *ngFor="let option of categories">{{option}}</mat-option>
+      <mat-select
+        panelClass="custom-select"
+        formControlName="category"
+        placeholder="Categoria"
+      >
+        <mat-option [value]="option" *ngFor="let option of categories">{{
+          option
+        }}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
 
   <div class="form-inline">
-    <mat-form-field class="form-textarea" floatLabel="always" appearance="outline">
+    <mat-form-field
+      class="form-textarea"
+      floatLabel="always"
+      appearance="outline"
+    >
       <mat-label>Descrição</mat-label>
-      <!-- <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1" cdkAutosizeMaxRows="5"></textarea> -->
-      <textarea [maxLength]="charTotal" formControlName="description" matInput></textarea>
-      <mat-hint>caracteres restantes: {{charCount}}</mat-hint>
+      <textarea
+        [maxLength]="charTotal"
+        formControlName="description"
+        matInput
+      ></textarea>
+      <mat-hint>caracteres restantes: {{ charCount }}</mat-hint>
     </mat-form-field>
   </div>
 
   <div class="container-button">
-    <button *ngIf="!edit" [disabled]="isDisabled" mat-raised-button type="submit">Registrar</button>
-    <button *ngIf="edit" [disabled]="isDisabled" (click)="close(form.value)" mat-raised-button
-      type="button">Atualizar</button>
-    <button mat-raised-button (click)="close(false)" color="accent" type="button">Cancelar</button>
+    <button
+      disableRipple="true"
+      *ngIf="!edit"
+      [disabled]="isDisabled"
+      mat-raised-button
+      type="submit"
+    >
+      Registrar
+    </button>
+    <button
+      disableRipple="true"
+      *ngIf="edit"
+      [disabled]="isDisabled"
+      (click)="close(form.value)"
+      mat-raised-button
+      type="button"
+    >
+      Atualizar
+    </button>
+    <button
+      disableRipple="true"
+      mat-raised-button
+      (click)="close(false)"
+      type="button"
+    >
+      Cancelar
+    </button>
   </div>
 </form>

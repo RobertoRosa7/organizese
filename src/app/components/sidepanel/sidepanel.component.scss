@@ -1,0 +1,34 @@
+.side-panel {
+  width: 100%;
+  position: relative;
+  height: 758px;
+  .container {
+    width: inherit;
+    height: inherit;
+    .cards {
+      width: inherit;
+      height: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      .card {
+        position: relative;
+        width: inherit;
+        height: inherit;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .card-title-type {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 0.9em;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}

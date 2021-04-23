@@ -12,8 +12,8 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
-import { fromEvent, Observable } from 'rxjs';
-import { debounceTime, filter, map, startWith } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { filter, map, startWith } from 'rxjs/operators';
 import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
 import { Register } from 'src/app/models/models';
 import { IpcService } from 'src/app/services/ipc.service';
@@ -92,11 +92,9 @@ export class DashboardComponent implements OnInit, DoCheck {
     protected rendereFactory?: RendererFactory2
   ) {
     this.renderer = this.rendereFactory?.createRenderer(null, null);
-    // tslint:disable-next-line: deprecation
     this.router?.events.subscribe((u: any) => (this.isActive = u.url));
     this.breakpoint
       ?.observe([Breakpoints.XSmall])
-      // tslint:disable-next-line: deprecation
       .subscribe((result) => (this.isMobile = !!result.matches));
 
     this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
@@ -112,23 +110,20 @@ export class DashboardComponent implements OnInit, DoCheck {
 
   public ngOnInit(): void {
     this.initialize();
-    this.scrollService
-      ?.getScrollAsStream()
-      // tslint:disable-next-line: deprecation
-      .subscribe((currentScroll) => {
-        if (currentScroll > this.previousScroll) {
-          this.renderer.addClass(
-            document.querySelector('.dashboard .sidebar'),
-            'display-none'
-          );
-        } else {
-          this.renderer.removeClass(
-            document.querySelector('.dashboard .sidebar'),
-            'display-none'
-          );
-        }
-        this.previousScroll = currentScroll;
-      });
+    // this.scrollService?.getScrollAsStream().subscribe((currentScroll) => {
+    //   if (currentScroll > this.previousScroll) {
+    //     this.renderer.addClass(
+    //       document.querySelector('.dashboard .sidebar'),
+    //       'display-none'
+    //     );
+    //   } else {
+    //     this.renderer.removeClass(
+    //       document.querySelector('.dashboard .sidebar'),
+    //       'display-none'
+    //     );
+    //   }
+    //   this.previousScroll = currentScroll;
+    // });
     this.store
       ?.select(({ http_error, dashboard, profile, app }: any) => ({
         http_error,
@@ -138,11 +133,9 @@ export class DashboardComponent implements OnInit, DoCheck {
         profile: profile.user,
         hide_values: app.hide_values,
       }))
-      // tslint:disable-next-line: deprecation
       .subscribe(async (state) => {
         this.logo = './assets/' + this.getTheme(state.theme);
         this.isDark = !(state.theme === 'dark-mode');
-        // this.consolidado = state.consolidado.total_consolidado
         this.hideValues = state.hide_values;
         this.autocomplete = state.autocomplete;
         this.user = state.profile;
@@ -154,7 +147,6 @@ export class DashboardComponent implements OnInit, DoCheck {
 
     this.as
       ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
-      // tslint:disable-next-line: deprecation
       .subscribe(({ payload }: any) => {
         const name: string = this.fetchNames(payload);
         this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
@@ -167,8 +159,6 @@ export class DashboardComponent implements OnInit, DoCheck {
       change.forEachChangedItem((item: any) => {
         if (item.key === 'isActive') {
           this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
-        }
-        if (item.key === 'consolidado') {
         }
       });
     }

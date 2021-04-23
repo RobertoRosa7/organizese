@@ -1,0 +1,15 @@
+<section class="side-panel">
+  <div class="container">
+    <div class="cards">
+      <div class="card" *ngFor="let item of cards">
+        <!-- <p class="card-title-type">
+          <span>{{ returnFormatterType(item.type) }}</span>
+        </p> -->
+        <span [ngClass]="returnClass(item.value, item.type)">
+          <small *ngIf="item.value > 0 && item.type === 'outcoming'">-</small>
+          R$ {{ formatarValor(item.value || 0) }}</span
+        >
+      </div>
+    </div>
+  </div>
+</section>

@@ -8,7 +8,7 @@ const categories: string[] = [
   'Alimentação',
   'Vestuário',
   'Transporte',
-  'Água & Luz',
+  'Contas',
   'Internet',
   'Pessoal',
   'Trabalho',

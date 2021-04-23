@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@import '../../../styles.scss';
 
 .form-incoming {
   display: flex;
@@ -34,6 +34,9 @@
   }
   button {
     @include custom-button-icon-width-text;
+  }
+  button:disabled {
+    background: transparent;
   }
 }
 

@@ -1,12 +1,12 @@
 <div class="custom-snackbar">
   <div *ngIf="progress$ | async as download" class="container">
-    <!-- <mat-progress-bar *ngIf="progress$ | async as download"
-    [mode]="download?.state == 'PENDING' ? 'buffer' : 'determinate'" [value]="download?.progress">
-  </mat-progress-bar> -->
-    <mat-spinner diameter="35" [mode]="download?.state == 'PENDING' ? 'indeterminate' : 'determinate'"
-      [value]="download?.progress">
+    <mat-spinner
+      diameter="35"
+      [mode]="download?.state == 'PENDING' ? 'indeterminate' : 'determinate'"
+      [value]="download?.progress"
+    >
     </mat-spinner>
-    <span>{{download?.progress}} %</span>
+    <span>{{ download?.progress }} %</span>
   </div>
   <button mat-button (click)="dismiss()">fechar</button>
 </div>

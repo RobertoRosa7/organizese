@@ -1,136 +1,23 @@
-<div class="dashboard">
-  <!-- <mat-drawer-container class="container">
-    <mat-drawer class="drawer" #drawer mode="over" opened="false">
-      <ul class="app-menu-list">
-        <li
-          class="drawer-item"
-          [title]="item.name"
-          (click)="drawer.toggle(); goTo(item)"
-          [ngClass]="{ 'link-active': isActive === item.link }"
-          *ngFor="let item of menuList"
-          [routerLink]="item.link"
-        >
-          <a>
-            <mat-icon>{{ item.icon }}</mat-icon>
-          </a>
-          <span>{{ item.name }}</span>
-        </li>
-        <li (click)="logout()" class="btn-logout drawer-item">
-          <a>
-            <mat-icon>logout</mat-icon>
-          </a>
-          <span>Sair</span>
-        </li>
-      </ul>
-    </mat-drawer>
-    <mat-drawer-content>
-      <div class="sidebar bg-mode display-none">
-        <ul class="app-menu-list">
-          <li
-            [title]="item.name"
-            (click)="goTo(item)"
-            [ngClass]="{ 'link-active': isActive === item.link }"
-            *ngFor="let item of menuList"
-            [routerLink]="item.link"
-          >
-            <a>
-              <mat-icon>{{ item.icon }}</mat-icon>
-            </a>
-          </li>
-          <li (click)="logout()" class="btn-logout">
-            <a>
-              <mat-icon>logout</mat-icon>
-            </a>
-          </li>
-        </ul>
-      </div>
-      <div class="content-pages">
-        <div class="search-toolbar">
-          <div class="container-toolbar">
-            <form (ngSubmit)="onSubmit()" class="form">
-              <mat-form-field class="field" appearance="outline">
-                <mat-icon
-                  (click)="$event.stopPropagation(); drawer.toggle()"
-                  style="cursor: pointer"
-                  [svgIcon]="isDark ? 'menu_black_24dp' : 'menu_white_24dp'"
-                  matPrefix
-                >
-                </mat-icon>
-                <input
-                  type="text"
-                  [formControl]="searchTerms"
-                  [matAutocomplete]="auto"
-                  autocomplete="off"
-                  name="searchTerms"
-                  matInput
-                  placeholder="Procurar"
-                />
-                <mat-autocomplete
-                  #auto="matAutocomplete"
-                  (optionSelected)="setSearch($event)"
-                >
-                  <mat-option
-                    *ngFor="let option of autocomplete$ | async"
-                    [value]="option"
-                    >{{ option }}</mat-option
-                  >
-                </mat-autocomplete>
-                <mat-icon
-                  (click)="$event.stopPropagation()"
-                  [matMenuTriggerFor]="perfil"
-                  style="cursor: pointer"
-                  *ngIf="!searchTerms.value"
-                  [svgIcon]="
-                    isDark
-                      ? 'account_circle_black_24dp'
-                      : 'account_circle_white_24dp'
-                  "
-                  matSuffix
-                ></mat-icon>
-                <mat-icon
-                  [svgIcon]="isDark ? 'close_black_24dp' : 'close_white_24dp'"
-                  *ngIf="searchTerms.value"
-                  (click)="searchTerms.reset()"
-                  style="cursor: pointer"
-                  matSuffix
-                ></mat-icon>
-              </mat-form-field>
-            </form>
-            <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
-              <ul role="list">
-                <div class="img-perfil">
-                  <mat-icon svgIcon="account_circle_black_24dp"></mat-icon>
-                </div>
-                <li role="list-item">
-                  <p style="display: flex; flex-direction: column">
-                    <small> {{ user?.name }}</small>
-                    <small> {{ user?.email }}</small>
-                    <small> {{ user?.tel }}</small>
-                  </p>
-                </li>
-                <li class="divider">
-                  <mat-divider></mat-divider>
-                </li>
-                <li routerLink="/dashboard/settings" class="settings">
-                  <mat-icon>settings</mat-icon>
-                  <span>Configurações</span>
-                </li>
-                <li (click)="logout()" class="logout">
-                  <mat-icon>logout</mat-icon>
-                  <span>Sair</span>
-                </li>
-              </ul>
-            </mat-menu>
-          </div>
-        </div>
-        <div class="pages">
-          <div class="container-pages">
-            <router-outlet></router-outlet>
-          </div>
-        </div>
-      </div>
-    </mat-drawer-content>
-  </mat-drawer-container> -->
+<section class="dashboard">
+  <div class="container">
+    <div class="top"></div>
+    <div class="side-left">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="side-right">
+      <app-sidepanel></app-sidepanel>
+      <!-- <div class="chart" style="max-height: 450px; overflow: hidden auto">
+        <app-list-registers
+          *ngFor="let item of ELEMENT_DATA"
+          [item]="item"
+        ></app-list-registers>
+      </div> -->
+    </div>
+    <div class="footer"></div>
+  </div>
+</section>
+
+<!-- <div class="dashboard">
   <div class="sidebar bg-mode display-none">
     <ul class="app-menu-list">
       <li
@@ -152,18 +39,10 @@
     </ul>
   </div>
   <div class="content-pages">
-    <!-- <div class="banner"></div> -->
     <div class="search-toolbar">
       <div class="container-toolbar">
         <form (ngSubmit)="onSubmit()" class="form">
           <mat-form-field class="field" appearance="outline">
-            <!-- <mat-icon
-              (click)="$event.stopPropagation(); drawer.toggle()"
-              style="cursor: pointer"
-              [svgIcon]="isDark ? 'menu_black_24dp' : 'menu_white_24dp'"
-              matPrefix
-            >
-            </mat-icon> -->
             <input
               type="text"
               [formControl]="searchTerms"
@@ -263,5 +142,4 @@
       <span style="font-weight: 500">DESPESAS</span>
     </button>
   </mat-menu>
-</div>
-<!-- <app-loader *ngIf="isLoadingDashboard"></app-loader> -->
+</div> -->

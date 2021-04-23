@@ -1,25 +1,28 @@
 <section class="dialog">
   <div class="header dialog-header-mode">
     <div class="title">
-      <!-- <app-title [title]="type === 'incoming' ? 'Receita' : 'Despesa'"
-        [subtitle]="type === 'incoming' ?  data.description || '': data.description || ''"></app-title> -->
       <p>
-        <span>{{type === 'incoming' ? 'Receita' : 'Despesa'}}</span>
+        <span>{{ type === 'incoming' ? 'Receita' : 'Despesa' }}</span>
         &nbsp;
-        <small>{{type === 'incoming' ? data.description || '': data.description || ''}}</small>
+        <small>{{
+          type === 'incoming' ? data.description || '' : data.description || ''
+        }}</small>
       </p>
     </div>
     <div class="max-window">
-      <!-- <button mat-icon-button (click)="close()">
-        <mat-icon>close</mat-icon>
-      </button> -->
       <span (click)="close()"><mat-icon>close</mat-icon></span>
     </div>
   </div>
 
   <div class="container-form-incoming">
-    <app-form-incoming [type]="type" (send)="listeningEventForm($event)" [label]="label" [payload]="payload"
-      placeholder="R$ 0,00" [edit]="payload.edit || false">
+    <app-form-incoming
+      [type]="type"
+      (send)="listeningEventForm($event)"
+      [label]="label"
+      [payload]="payload"
+      placeholder="R$ 0,00"
+      [edit]="payload.edit || false"
+    >
     </app-form-incoming>
   </div>
 </section>
