@@ -1,25 +1,51 @@
+$min-height: 80px;
 .dashboard {
   width: 100%;
-  overflow: hidden auto;
+  display: flex;
   height: 100vh;
-  .container,
-  .side-left,
-  .side-right {
-    height: inherit;
-    height: inherit;
-    height: inherit;
+  padding: 1.2%;
+  .aside {
+    height: 100%;
+    width: 25%;
   }
   .container {
-    display: flex;
-    .side-right {
-      width: 30%;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    .content {
+      width: 100%;
     }
-    .side-left {
-      width: 70%;
-      overflow-y: auto;
+    .main,
+    .toolbar,
+    .content,
+    .footer {
+      display: flex;
+      width: 75%;
+    }
+    .main {
+      overflow: hidden auto;
+      flex-direction: column;
+      position: relative;
+      .toolbar,
+      .footer {
+        min-height: $min-height;
+        align-items: center;
+        position: fixed;
+        z-index: 999;
+      }
+
+      .footer {
+        bottom: 0;
+      }
+      .toolbar {
+        top: 0;
+      }
     }
   }
 }
+
+// version antiga
 
 // .dashboard {
 //   position: relative;

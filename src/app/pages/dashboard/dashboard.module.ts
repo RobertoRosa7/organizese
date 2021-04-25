@@ -19,10 +19,12 @@ import { DialogsComponent } from '../../components/dialogs/dialogs.component';
 import { HighchartsComponent } from '../../components/highcharts/highcharts.component';
 import { ListRegistersComponent } from '../../components/list-registers/list-registers.component';
 import { PanelControlComponent } from '../../components/panel-control/panel-control.component';
+import { SidepanelComponent } from '../../components/sidepanel/sidepanel.component';
 import { TabContentComponent } from '../../components/tabs/tab-content/tab-content.component';
 import { TabHeaderComponent } from '../../components/tabs/tab-header/tab-header.component';
 import { TabMenuComponent } from '../../components/tabs/tab-menu/tab-menu.component';
 import { TabsComponent } from '../../components/tabs/tabs.component';
+import { ToolbarComponent } from '../../components/toolbar/toolbar.component';
 import { DashboardComponent } from './dashboard.component';
 import { MainComponent } from './main/main.component';
 import { RegistersComponent } from './registers/registers.component';
@@ -32,7 +34,6 @@ import { SettingsMenuComponent } from './settings/settings-menu/settings-menu.co
 import { SettingsNewPasswordComponent } from './settings/settings-new-password/settings-new-password.component';
 import { SettingsProfileComponent } from './settings/settings-profile/settings-profile.component';
 import { SettingsComponent } from './settings/settings.component';
-import { SidepanelComponent } from '../../components/sidepanel/sidepanel.component';
 
 const routes: Routes = [
   {
@@ -95,6 +96,8 @@ registerLocaleData(localePt, 'pt');
     SettingsProfileComponent,
     SettingsNewPasswordComponent,
     SidepanelComponent,
+    ToolbarComponent,
+    // WindowsHackerComponent,
   ],
   exports: [
     LoaderComponent,
@@ -103,6 +106,7 @@ registerLocaleData(localePt, 'pt');
     TabContentComponent,
     TabHeaderComponent,
     DarkThemeComponent,
+    // WindowsHackerComponent,
   ],
   imports: [
     MaterialModule,

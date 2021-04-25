@@ -6,6 +6,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
 import html2canvas from 'html2canvas';
 import { DialogData, Register } from 'src/app/models/models';
 
@@ -23,13 +24,22 @@ export class DialogsComponent implements OnInit {
   public showProgressbar = false;
   public downloadList: any;
   public isLoading = true;
+  public isDark: boolean;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: DialogData,
-    private dialogRef: MatDialogRef<DialogsComponent>
+    private dialogRef: MatDialogRef<DialogsComponent>,
+    private store: Store
   ) {}
 
   public ngOnInit(): void {
+    this.store
+      .select(({ dashboard }: any) => ({
+        theme: dashboard.dark_mode,
+      }))
+      .subscribe(async (state) => {
+        this.isDark = !(state.theme === 'dark-mode');
+      });
     switch (this.dialogData.type) {
       case 'details':
         this.type = this.dialogData.type;
@@ -108,5 +118,19 @@ export class DialogsComponent implements OnInit {
     } else {
       this.dialogRef.close(event);
     }
+  }
+
+  public returnColor(): string {
+    if (this.dialogData.type === 'details') {
+      if (
+        this.detail.type === 'outcoming' &&
+        this.detail.status !== 'pendente a pagar'
+      ) {
+        return this.isDark ? '#e91e63' : '#FF4081';
+      } else if (this.detail.status === 'pendente a pagar') {
+        return 'rgb(247, 163, 92)';
+      }
+    }
+    return 'inset';
   }
 }

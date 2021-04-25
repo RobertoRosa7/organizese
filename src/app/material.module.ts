@@ -29,9 +29,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgxElectronModule } from 'ngx-electron';
+import { WindowsHackerComponent } from './components/windows-hacker/windows-hacker.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [WindowsHackerComponent],
   imports: [CommonModule],
   exports: [
     CommonModule,
@@ -68,6 +69,7 @@ import { NgxElectronModule } from 'ngx-electron';
     MatProgressSpinnerModule,
     MatTabsModule,
     MatTooltipModule,
+    WindowsHackerComponent,
   ],
 })
 export class MaterialModule {}

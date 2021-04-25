@@ -1,4 +1,7 @@
 .list {
+  &:hover {
+    opacity: 0.5;
+  }
   .container-cards {
     .cards {
       display: flex;
@@ -6,6 +9,8 @@
       align-items: center;
       padding: 5px 16px;
       cursor: pointer;
+      background-color: inherit;
+      border-radius: 0;
     }
     .value,
     .category,
@@ -59,6 +64,7 @@
   .container-cards-mobile {
     mat-card {
       margin: 8px 0;
+      background-color: inherit;
     }
     strong {
       font-weight: 100;

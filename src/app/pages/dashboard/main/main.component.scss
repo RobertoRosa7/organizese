@@ -1,26 +1,19 @@
 .main {
-  overflow-y: auto;
-  .container {
-    display: flex;
-    flex-wrap: wrap;
-    .chart {
-      width: 100%;
-    }
-    .chart-group {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      align-items: center;
-    }
-  }
-
   ::ng-deep .mat-tab-labels {
     justify-content: space-between;
   }
+  .container-charts {
+    display: flex;
+    .charts {
+      flex: 1;
+    }
+  }
+
   ::ng-deep .mat-tab-label {
     padding: 0;
-    width: 32.33%;
+    // width: 32.33%;
     flex-grow: 0 !important;
+    justify-content: flex-start;
   }
   ::ng-deep .mat-tab-label.mat-tab-label-active {
     // background: var(--text-green-light);
@@ -31,7 +24,9 @@
   }
   ::ng-deep .mat-tab-header {
     border: none;
+    padding: 0;
   }
+
   ::ng-deep .owl-theme .owl-dots .owl-dot span {
     background: var(--color-medium-white);
   }

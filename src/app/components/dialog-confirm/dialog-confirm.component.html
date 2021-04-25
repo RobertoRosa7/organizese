@@ -1,26 +1,33 @@
-<section class="dialog">
-  <div class="header dialog-header-mode">
-    <div class="title">
-      <small>Excluir</small>
+<app-windows-hacker
+  [bodyBorderLeftColor]="returnColor()"
+  [bodyBorderRightColor]="returnColor()"
+  [topBorderColor]="returnColor()"
+  [footerBorderColor]="returnColor()"
+>
+  <section class="dialog">
+    <div class="header dialog-header-mode">
+      <div class="title">
+        <small>Excluir</small>
+      </div>
+      <div class="max-window">
+        <span (click)="close()"><mat-icon>close</mat-icon></span>
+      </div>
     </div>
-    <div class="max-window">
-      <span (click)="close()"><mat-icon>close</mat-icon></span>
+    <div mat-dialog-content class="container-dialog">
+      <h2 class="welcome-subtitle">Tem certeza que quer excluir?</h2>
+      <div class="container-buttons">
+        <button
+          disableRipple="true"
+          color="accent"
+          mat-raised-button
+          (click)="close(false)"
+        >
+          Fechar
+        </button>
+        <button disableRipple="true" mat-raised-button (click)="close(true)">
+          Confirmar
+        </button>
+      </div>
     </div>
-  </div>
-  <div mat-dialog-content class="container-dialog">
-    <h2 class="welcome-subtitle">Tem certeza que quer excluir?</h2>
-    <div class="container-buttons">
-      <button
-        disableRipple="true"
-        color="accent"
-        mat-raised-button
-        (click)="close(false)"
-      >
-        Fechar
-      </button>
-      <button disableRipple="true" mat-raised-button (click)="close(true)">
-        Confirmar
-      </button>
-    </div>
-  </div>
-</section>
+  </section>
+</app-windows-hacker>

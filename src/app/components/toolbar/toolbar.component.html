@@ -1,0 +1,73 @@
+<!-- <div class="search-toolbar">
+  <div class="container-toolbar">
+    <form (ngSubmit)="onSubmit()" class="form">
+      <mat-form-field class="field" appearance="outline">
+        <input
+          type="text"
+          [formControl]="searchTerms"
+          [matAutocomplete]="auto"
+          autocomplete="off"
+          name="searchTerms"
+          matInput
+          placeholder="Procurar"
+        />
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="setSearch($event)"
+        >
+          <mat-option
+            *ngFor="let option of autocomplete$ | async"
+            [value]="option"
+            >{{ option }}</mat-option
+          >
+        </mat-autocomplete>
+        <mat-icon
+          (click)="$event.stopPropagation()"
+          [matMenuTriggerFor]="perfil"
+          style="cursor: pointer"
+          *ngIf="!searchTerms.value"
+          [svgIcon]="
+            isDark ? 'account_circle_black_24dp' : 'account_circle_white_24dp'
+          "
+          matSuffix
+        ></mat-icon>
+        <mat-icon
+          [svgIcon]="isDark ? 'close_black_24dp' : 'close_white_24dp'"
+          *ngIf="searchTerms.value"
+          (click)="searchTerms.reset()"
+          style="cursor: pointer"
+          matSuffix
+        ></mat-icon>
+      </mat-form-field>
+    </form>
+    <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
+      <ul role="list">
+        <div class="img-perfil">
+          <mat-icon
+            [svgIcon]="
+              isDark ? 'account_circle_black_24dp' : 'account_circle_white_24dp'
+            "
+          ></mat-icon>
+        </div>
+        <li role="list-item">
+          <p style="display: flex; flex-direction: column">
+            <small> {{ user?.name }}</small>
+            <small> {{ user?.email }}</small>
+            <small> {{ user?.tel }}</small>
+          </p>
+        </li>
+        <li class="divider">
+          <mat-divider></mat-divider>
+        </li>
+        <li routerLink="/dashboard/settings" class="settings">
+          <mat-icon>settings</mat-icon>
+          <span>Configurações</span>
+        </li>
+        <li (click)="logout()" class="logout">
+          <mat-icon>logout</mat-icon>
+          <span>Sair</span>
+        </li>
+      </ul>
+    </mat-menu>
+  </div>
+</div> -->

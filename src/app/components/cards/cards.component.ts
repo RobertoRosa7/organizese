@@ -17,13 +17,22 @@ export class CardsComponent implements OnInit {
   @Input() public isLoading: boolean;
 
   public showValues = true;
+  public isDark: boolean;
   public changeTextHide: string = this.showValues
     ? 'visibility'
     : 'visibility_off';
 
   constructor(private store: Store) {}
 
-  public ngOnInit(): void {}
+  public ngOnInit(): void {
+    this.store
+      .select(({ dashboard }: any) => ({
+        theme: dashboard.dark_mode,
+      }))
+      .subscribe(async (state) => {
+        this.isDark = !(state.theme === 'dark-mode');
+      });
+  }
 
   public returnClass(): string {
     if (this.value > 0 && this.item.type === 'incoming') {
@@ -35,6 +44,17 @@ export class CardsComponent implements OnInit {
     } else {
       return 'cards-money';
     }
+  }
+
+  public returnColor(): string {
+    if (this.item.type === 'outcoming') {
+      return this.isDark ? '#e91e63' : '#FF4081';
+    } else if (this.item.type === 'incoming') {
+      return this.isDark ? '#009688' : '#0FF5E6';
+    } else if (this.item.type === 'consolidado') {
+      return this.isDark ? '#8e8e8e' : '#EEE';
+    }
+    return 'inset';
   }
 
   public formatarValor(valor: number): string {

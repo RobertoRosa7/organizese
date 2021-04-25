@@ -1,6 +1,7 @@
 <section class="main">
   <!-- <app-title title="Dashboard" subtitle="geral"></app-title> -->
-  <!-- <div *ngIf="!isMobile" class="cards-main">
+
+  <div *ngIf="!isMobile" class="cards-main">
     <app-cards
       [isLoading]="isMainLoading"
       *ngFor="let item of cards"
@@ -8,7 +9,7 @@
       [value]="item.value || 0"
     >
     </app-cards>
-  </div> -->
+  </div>
 
   <!-- <div *ngIf="!isMobile && isMainLoading" class="cards-main">
     <app-cards [isLoading]="isMainLoading" *ngFor="let item of cards" [item]="item" [value]="item.value"></app-cards>
@@ -29,58 +30,6 @@
       ></app-cards>
     </owl-carousel>
   </div> -->
-
-  <div class="container">
-    <div class="chart">
-      <app-title title="Gráfico de despesas"></app-title>
-      <app-highcharts
-        [minDate]="minDate"
-        (send)="onDatesListening($event)"
-        [dtEnd]="dates?.outcome.dt_end"
-        [dtStart]="dates?.outcome.dt_start"
-        [tabChanged]="tabChanged"
-        operation="despesas"
-        [evolucao]="EVOLUCAO_DESPESAS_DATA"
-      >
-      </app-highcharts>
-    </div>
-
-    <div class="chart-group">
-      <div class="chart">
-        <app-title title="Gráficos de receitas"></app-title>
-        <app-highcharts
-          [minDate]="minDate"
-          (send)="onDatesListening($event)"
-          [dtEnd]="dates?.income.dt_end"
-          [dtStart]="dates?.income.dt_start"
-          [tabChanged]="tabChanged"
-          operation="receita"
-          [evolucao]="EVOLUCAO_DATA"
-        >
-        </app-highcharts>
-      </div>
-
-      <div class="chart">
-        <app-title title="Gráfico de categorias"></app-title>
-        <app-highcharts
-          [minDate]="minDate"
-          (send)="onDatesListening($event)"
-          [dtEnd]="dates?.category.dt_end"
-          [dtStart]="dates?.category.dt_start"
-          [tabChanged]="tabChanged"
-          operation="categoria"
-          [category]="CATEGORY_DATA"
-        >
-        </app-highcharts>
-      </div>
-    </div>
-    <div style="width: 100%; max-height: 400px; overflow: hidden auto">
-      <app-list-registers
-        *ngFor="let item of ELEMENT_DATA"
-        [item]="item"
-      ></app-list-registers>
-    </div>
-  </div>
 
   <!-- <mat-tab-group (selectedTabChange)="onTabChange($event)">
     <mat-tab label="Categoria">
@@ -159,15 +108,54 @@
     </owl-carousel>
   </div> -->
 
-  <!-- <div style="margin-bottom: 80px; max-height: 450px; overflow: hidden auto">
+  <div class="container-charts">
+    <div class="charts">
+      <app-highcharts
+        [minDate]="minDate"
+        (send)="onDatesListening($event)"
+        [dtEnd]="dates?.outcome.dt_end"
+        [dtStart]="dates?.outcome.dt_start"
+        operation="despesas"
+        [evolucao]="EVOLUCAO_DESPESAS_DATA"
+      >
+      </app-highcharts>
+    </div>
+
+    <div class="charts">
+      <app-highcharts
+        [minDate]="minDate"
+        (send)="onDatesListening($event)"
+        [dtEnd]="dates?.income.dt_end"
+        [dtStart]="dates?.income.dt_start"
+        operation="receita"
+        [evolucao]="EVOLUCAO_DATA"
+      >
+      </app-highcharts>
+    </div>
+  </div>
+  <div class="container-charts">
+    <div class="charts">
+      <app-highcharts
+        [minDate]="minDate"
+        (send)="onDatesListening($event)"
+        [dtEnd]="dates?.category.dt_end"
+        [dtStart]="dates?.category.dt_start"
+        operation="categoria"
+        [category]="CATEGORY_DATA"
+      >
+      </app-highcharts>
+    </div>
+  </div>
+
+  <app-windows-hacker
+    [bodyBorderLeftColor]="returnColor()"
+    [bodyBorderRightColor]="returnColor()"
+    [topBorderColor]="returnColor()"
+    [footerBorderColor]="returnColor()"
+  >
     <app-list-registers
       *ngFor="let item of ELEMENT_DATA"
       [item]="item"
     ></app-list-registers>
-  </div> -->
-
-  <!-- <div class="col-7">
-    <app-title title="Categoria"></app-title>
-    <app-highcharts operation="categoria" [evolucao]="EVOLUCAO_DATA"></app-highcharts>
-  </div> -->
+  </app-windows-hacker>
 </section>

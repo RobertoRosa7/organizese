@@ -232,4 +232,8 @@ export class MainComponent
         break;
     }
   }
+
+  public returnColor(): string {
+    return '#7d99ed';
+  }
 }

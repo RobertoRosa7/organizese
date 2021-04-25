@@ -19,6 +19,7 @@ import {
 import { Store } from '@ngrx/store';
 import * as Highcharts from 'highcharts';
 import * as moment from 'moment';
+import { UtilsService } from 'src/app/utils/utis.service';
 import * as actionsDashboard from '../../actions/dashboard.actions';
 
 const Boost = require('highcharts/modules/boost');
@@ -72,8 +73,8 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public chartLine: any = {
     chart: {
       type: 'column',
-      height: 300,
-      spacingTop: 50,
+      height: 350,
+      spacingTop: 20,
     },
     navigator: { enabled: false },
     scrollbar: { enabled: false },
@@ -162,11 +163,6 @@ export class HighchartsComponent implements OnInit, DoCheck {
       },
     },
     plotOptions: {
-      events: {
-        mouseover() {
-          console.log(this);
-        },
-      },
       series: {
         pointPadding: 0,
       },
@@ -185,13 +181,14 @@ export class HighchartsComponent implements OnInit, DoCheck {
       plotBorderWidth: null,
       plotShadow: false,
       type: 'pie',
-      spacingTop: 30,
-      height: 300,
+      spacingTop: 20,
+      height: 350,
     },
     title: {
       text: '',
     },
     tooltip: {
+      // tslint:disable-next-line: object-literal-shorthand
       formatter(): any {
         const self: any = this;
         return `
@@ -273,7 +270,6 @@ export class HighchartsComponent implements OnInit, DoCheck {
 
         this.chartPie.chart.backgroundColor = theme;
         this.chartPie.legend.itemStyle.color = themeInverse;
-        this.chartPie.tooltip.backgroundColor = theme;
       });
   }
 
@@ -295,7 +291,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
           });
         }
 
-        if (item.key === 'tabChanged' || item.key === 'evolucao') {
+        if (item.key === 'evolucao') {
           if (this.operation === 'despesas') {
             this.instanceHighchart().then(() => {
               Highcharts.chart(

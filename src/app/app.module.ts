@@ -65,6 +65,7 @@ const indexedConfig: DBConfig = {
       DashboardEffect,
     ]),
   ],
+  // exports: [WindowsHackerComponent],
   entryComponents: [
     // DialogsComponent
   ],

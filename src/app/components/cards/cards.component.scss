@@ -2,12 +2,13 @@
 .cards {
   min-height: 140px;
   overflow: hidden;
-  margin: 8px 0;
-  padding: 16px;
+  // margin: 8px 0;
+  // padding: 16px;
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: inherit;
   h1 {
     font-weight: 500;
   }

@@ -1,22 +1,15 @@
 <section class="dashboard">
-  <div class="container">
-    <div class="top"></div>
-    <div class="side-left">
-      <router-outlet></router-outlet>
-    </div>
-    <div class="side-right">
+  <div class="aside">
+    <app-windows-hacker>
       <app-sidepanel></app-sidepanel>
-      <!-- <div class="chart" style="max-height: 450px; overflow: hidden auto">
-        <app-list-registers
-          *ngFor="let item of ELEMENT_DATA"
-          [item]="item"
-        ></app-list-registers>
-      </div> -->
-    </div>
-    <div class="footer"></div>
+    </app-windows-hacker>
+  </div>
+  <div class="container">
+    <router-outlet></router-outlet>
   </div>
 </section>
 
+<!-- versão antigga -->
 <!-- <div class="dashboard">
   <div class="sidebar bg-mode display-none">
     <ul class="app-menu-list">
