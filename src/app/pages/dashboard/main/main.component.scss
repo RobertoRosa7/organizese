@@ -1,9 +1,12 @@
 .main {
+  padding-left: 40px;
+  padding-right: 40px;
   ::ng-deep .mat-tab-labels {
     justify-content: space-between;
   }
   .container-charts {
     display: flex;
+    gap: 20px;
     .charts {
       flex: 1;
     }

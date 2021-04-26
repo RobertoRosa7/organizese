@@ -1,6 +1,14 @@
-<!-- <div class="search-toolbar">
+<div class="search-toolbar">
+  <button
+    (click)="hideMenu()"
+    disableRipple="true"
+    mat-icon-button
+    type="button"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
   <div class="container-toolbar">
-    <form (ngSubmit)="onSubmit()" class="form">
+    <!-- <form (ngSubmit)="onSubmit()" class="form">
       <mat-form-field class="field" appearance="outline">
         <input
           type="text"
@@ -39,35 +47,49 @@
           matSuffix
         ></mat-icon>
       </mat-form-field>
-    </form>
-    <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
-      <ul role="list">
-        <div class="img-perfil">
-          <mat-icon
-            [svgIcon]="
-              isDark ? 'account_circle_black_24dp' : 'account_circle_white_24dp'
-            "
-          ></mat-icon>
-        </div>
-        <li role="list-item">
-          <p style="display: flex; flex-direction: column">
-            <small> {{ user?.name }}</small>
-            <small> {{ user?.email }}</small>
-            <small> {{ user?.tel }}</small>
-          </p>
-        </li>
-        <li class="divider">
-          <mat-divider></mat-divider>
-        </li>
-        <li routerLink="/dashboard/settings" class="settings">
-          <mat-icon>settings</mat-icon>
-          <span>Configurações</span>
-        </li>
-        <li (click)="logout()" class="logout">
-          <mat-icon>logout</mat-icon>
-          <span>Sair</span>
-        </li>
-      </ul>
-    </mat-menu>
+    </form> -->
+    <div class="perfil">
+      <button disableRipple="true" mat-icon-button type="button">
+        <mat-icon
+          (click)="$event.stopPropagation()"
+          [matMenuTriggerFor]="perfil"
+          style="cursor: pointer"
+          [svgIcon]="
+            isDark ? 'account_circle_black_24dp' : 'account_circle_white_24dp'
+          "
+        ></mat-icon>
+      </button>
+      <mat-menu #perfil="matMenu" overlapTrigger="true" class="profile">
+        <ul role="list">
+          <div class="img-perfil">
+            <mat-icon
+              [svgIcon]="
+                isDark
+                  ? 'account_circle_black_24dp'
+                  : 'account_circle_white_24dp'
+              "
+            ></mat-icon>
+          </div>
+          <li role="list-item">
+            <p style="display: flex; flex-direction: column">
+              <small> {{ user?.name }}</small>
+              <small> {{ user?.email }}</small>
+              <small> {{ user?.tel }}</small>
+            </p>
+          </li>
+          <li class="divider">
+            <mat-divider></mat-divider>
+          </li>
+          <li routerLink="/dashboard/settings" class="settings">
+            <mat-icon>settings</mat-icon>
+            <span>Configurações</span>
+          </li>
+          <li (click)="logout()" class="logout">
+            <mat-icon>logout</mat-icon>
+            <span>Sair</span>
+          </li>
+        </ul>
+      </mat-menu>
+    </div>
   </div>
-</div> -->
+</div>

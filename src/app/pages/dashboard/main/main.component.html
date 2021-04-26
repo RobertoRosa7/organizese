@@ -1,6 +1,4 @@
 <section class="main">
-  <!-- <app-title title="Dashboard" subtitle="geral"></app-title> -->
-
   <div *ngIf="!isMobile" class="cards-main">
     <app-cards
       [isLoading]="isMainLoading"
@@ -9,6 +7,49 @@
       [value]="item.value || 0"
     >
     </app-cards>
+  </div>
+  <div class="container-charts">
+    <div class="charts">
+      <app-windows-hacker>
+        <app-highcharts
+          [minDate]="minDate"
+          (send)="onDatesListening($event)"
+          [dtEnd]="dates?.income.dt_end"
+          [dtStart]="dates?.income.dt_start"
+          operation="receita"
+          [evolucao]="EVOLUCAO_DATA"
+        >
+        </app-highcharts>
+      </app-windows-hacker>
+    </div>
+  </div>
+  <div class="container-charts">
+    <div class="charts">
+      <app-windows-hacker>
+        <app-highcharts
+          [minDate]="minDate"
+          (send)="onDatesListening($event)"
+          [dtEnd]="dates?.category.dt_end"
+          [dtStart]="dates?.category.dt_start"
+          operation="categoria"
+          [category]="CATEGORY_DATA"
+        >
+        </app-highcharts>
+      </app-windows-hacker>
+    </div>
+    <div class="charts">
+      <app-windows-hacker>
+        <app-highcharts
+          [minDate]="minDate"
+          (send)="onDatesListening($event)"
+          [dtEnd]="dates?.outcome.dt_end"
+          [dtStart]="dates?.outcome.dt_start"
+          operation="despesas"
+          [evolucao]="EVOLUCAO_DESPESAS_DATA"
+        >
+        </app-highcharts>
+      </app-windows-hacker>
+    </div>
   </div>
 
   <!-- <div *ngIf="!isMobile && isMainLoading" class="cards-main">
@@ -108,7 +149,7 @@
     </owl-carousel>
   </div> -->
 
-  <div class="container-charts">
+  <!-- <div class="container-charts">
     <div class="charts">
       <app-highcharts
         [minDate]="minDate"
@@ -145,17 +186,12 @@
       >
       </app-highcharts>
     </div>
-  </div>
+  </div> -->
 
-  <app-windows-hacker
-    [bodyBorderLeftColor]="returnColor()"
-    [bodyBorderRightColor]="returnColor()"
-    [topBorderColor]="returnColor()"
-    [footerBorderColor]="returnColor()"
-  >
+  <!-- <app-windows-hacker>
     <app-list-registers
       *ngFor="let item of ELEMENT_DATA"
       [item]="item"
     ></app-list-registers>
-  </app-windows-hacker>
+  </app-windows-hacker> -->
 </section>

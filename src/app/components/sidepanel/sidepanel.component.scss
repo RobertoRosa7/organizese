@@ -1,7 +1,50 @@
+@import '../../../themes/mixins';
+
 .side-panel {
-  .top {
-    min-height: 80px;
+  height: 100%;
+  span {
+    @include text-span;
+  }
+  .side-panel-top,
+  .app-menu-list,
+  .app-menu-list li {
     display: flex;
+  }
+  .side-panel-top,
+  .app-menu-list li {
+    cursor: pointer;
+    overflow: hidden;
+    min-height: 64px;
+    width: 100%;
     align-items: center;
+  }
+  .app-menu-list {
+    list-style: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    li:active,
+    li:focus,
+    li a:focus,
+    li a:active {
+      outline: none;
+      border: none;
+    }
+    li a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 40px;
+      width: 40px;
+    }
+    li.drawer-item {
+      justify-content: flex-start;
+    }
+  }
+  .item-menu {
+    justify-content: flex-start;
+  }
+  .item-menu button {
+    min-width: 64px;
   }
 }

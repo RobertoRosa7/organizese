@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import * as actionsApp from '../../actions/app.actions';
+import * as actionsLogin from '../../actions/login.actions';
 
 @Component({
   selector: 'app-sidepanel',
@@ -7,6 +11,9 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./sidepanel.component.scss'],
 })
 export class SidepanelComponent implements OnInit {
+  @Input() showText: boolean = true;
+  @Output() send = new EventEmitter();
+
   public cards: any[] = [
     {
       title: 'Consolidado',
@@ -30,7 +37,39 @@ export class SidepanelComponent implements OnInit {
       percent: 0,
     },
   ];
-  constructor(protected store: Store) {}
+  public menuList: any[] = [
+    {
+      link: '/',
+      name: 'Home',
+      icon: 'home',
+    },
+    {
+      link: '/dashboard',
+      name: 'Dashboard',
+      icon: 'dashboard',
+    },
+    {
+      link: '/dashboard/registers',
+      name: 'Registros',
+      icon: 'create',
+    },
+    {
+      link: '/dashboard/settings',
+      name: 'Configurações',
+      icon: 'settings',
+    },
+  ];
+  public isActive = '';
+  public isMobile: boolean;
+  constructor(
+    private store: Store,
+    private router: Router,
+    protected breakpoint: BreakpointObserver
+  ) {
+    this.breakpoint
+      ?.observe([Breakpoints.XSmall])
+      .subscribe((result) => (this.isMobile = !!result.matches));
+  }
 
   ngOnInit(): void {
     this.store
@@ -87,5 +126,47 @@ export class SidepanelComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  public goTo(action: any): void {
+    if (action.name === 'Home') {
+      this.store?.dispatch(actionsApp.RESET_ALL());
+    }
+    this.send.emit('hide');
+  }
+
+  public logout(): void {
+    this.router?.navigateByUrl('/');
+    this.store.dispatch(actionsLogin.LOGOUT());
+  }
+
+  public returnColor(name: string): string {
+    // if (name === 'logout') {
+    //   // return '#FF4081';
+    //   return 'rgb(124, 181, 236)';
+    // } else if (name === 'Registros') {
+    //   // return 'rgb(247, 163, 92)';
+    //   return 'rgb(124, 181, 236)';
+    // } else if (name === 'Configurações') {
+    //   return 'rgb(124, 181, 236)';
+    // } else if (name === 'Home') {
+    //   // return '#EEE';
+    //   return 'rgb(124, 181, 236)';
+    // } else if (name === 'Dashboard') {
+    //   // return '#0ff5e6';
+    //   return 'rgb(124, 181, 236)';
+    // }
+    // return 'inset';
+    return '#0ff5e6';
+  }
+
+  public search(event: Event): void {
+    event.stopPropagation();
+    this.send.emit('hide');
+  }
+
+  public closeSidePanel(event: Event): void {
+    event.stopPropagation();
+    this.send.emit('hide');
   }
 }

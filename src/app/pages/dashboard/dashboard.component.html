@@ -1,12 +1,37 @@
-<section class="dashboard">
-  <div class="aside">
-    <app-windows-hacker>
-      <app-sidepanel></app-sidepanel>
-    </app-windows-hacker>
+<section class="dashboard" [ngClass]="{ shadow: !hide }">
+  <div class="aside mobile" [ngStyle]="{ width: returnSizePanel() }">
+    <app-sidepanel (send)="hideMenu($event)" [showText]="!hide"></app-sidepanel>
   </div>
+
   <div class="container">
+    <div class="toolbar">
+      <app-toolbar (send)="hideMenu($event)"></app-toolbar>
+    </div>
     <router-outlet></router-outlet>
   </div>
+
+  <div class="button-top">
+    <button
+      (click)="$event.stopPropagation()"
+      [matMenuTriggerFor]="menu"
+      mat-mini-fab
+      color="primary"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <mat-menu #menu="matMenu" overlapTrigger="true">
+    <button (click)="add('incoming')" mat-menu-item>
+      <mat-icon>add_circle_outline</mat-icon>
+      <span style="font-weight: 500">RECEITA</span>
+    </button>
+
+    <button (click)="add('outcoming')" mat-menu-item>
+      <mat-icon>add_circle_outline</mat-icon>
+      <span style="font-weight: 500">DESPESAS</span>
+    </button>
+  </mat-menu>
 </section>
 
 <!-- versão antigga -->

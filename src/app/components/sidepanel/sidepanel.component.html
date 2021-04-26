@@ -1,5 +1,48 @@
 <section class="side-panel">
-  <div class="top">
-    <span>aside</span>
+  <div class="side-panel-top item-menu">
+    <button
+      (click)="search($event)"
+      disableRipple="true"
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+    <span *ngIf="showText">Buscar</span>
+
+    <button
+      *ngIf="isMobile"
+      (click)="closeSidePanel($event)"
+      style="margin-left: auto"
+      disableRipple="true"
+      mat-icon-button
+      type="button"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+  </div>
+  <div class="sidebar bg-mode display-none">
+    <ul class="app-menu-list">
+      <li
+        [title]="item.name"
+        (click)="goTo(item)"
+        [ngClass]="{ 'link-active': isActive === item.link }"
+        *ngFor="let item of menuList"
+        [routerLink]="item.link"
+        class="item-menu"
+      >
+        <button disableRipple="true" mat-icon-button type="button">
+          <mat-icon>{{ item.icon }}</mat-icon>
+        </button>
+        <span *ngIf="showText">{{ item.name }}</span>
+      </li>
+
+      <li (click)="logout()" class="btn-logout item-menu">
+        <button disableRipple="true" mat-icon-button type="button">
+          <mat-icon>logout</mat-icon>
+        </button>
+        <span *ngIf="showText">Sair</span>
+      </li>
+    </ul>
   </div>
 </section>

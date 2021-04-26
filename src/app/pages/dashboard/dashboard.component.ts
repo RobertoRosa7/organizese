@@ -12,7 +12,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { fromEvent, Observable } from 'rxjs';
 import { filter, map, startWith } from 'rxjs/operators';
 import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
 import { Register } from 'src/app/models/models';
@@ -76,6 +76,7 @@ export class DashboardComponent implements OnInit, DoCheck {
   public isDark: boolean;
   public renderer: any;
   private previousScroll = 0;
+  public hide = true;
 
   constructor(
     protected ipcService?: IpcService,
@@ -96,7 +97,6 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.breakpoint
       ?.observe([Breakpoints.XSmall])
       .subscribe((result) => (this.isMobile = !!result.matches));
-
     this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
     this.differ = this.differs?.find({}).create();
 
@@ -124,6 +124,12 @@ export class DashboardComponent implements OnInit, DoCheck {
     //   }
     //   this.previousScroll = currentScroll;
     // });
+    fromEvent(window, 'keypress').subscribe((ev: any) => {
+      if (ev.ctrlKey && ev.code === 'KeyB') {
+        this.hide = !this.hide;
+      }
+    });
+
     this.store
       ?.select(({ http_error, dashboard, profile, app }: any) => ({
         http_error,
@@ -282,10 +288,6 @@ export class DashboardComponent implements OnInit, DoCheck {
     }
   }
 
-  public goToTop(): void {
-    window.scrollTo(0, 0);
-  }
-
   public returnClass(): string {
     if (this.consolidado > 0) {
       return 'cards-money cards-money-on';
@@ -301,6 +303,7 @@ export class DashboardComponent implements OnInit, DoCheck {
   public notification(str: string, time: number = 3000): void {
     this.snackbar?.open(str, 'ok', { duration: time });
   }
+
   public openDialog(component: any, data: MatDialogConfig = {}): any {
     const settings: MatDialogConfig = { ...data, panelClass: 'dialog-default' };
     return this.dialog?.open(component, settings);
@@ -341,7 +344,6 @@ export class DashboardComponent implements OnInit, DoCheck {
         panelClass: 'dialog-default',
       })
       .afterClosed()
-      // tslint:disable-next-line: deprecation
       .subscribe((res) => {
         if (res) {
           const payload: Register = {
@@ -359,5 +361,17 @@ export class DashboardComponent implements OnInit, DoCheck {
           this.store?.dispatch(actionsRegister.ADD_REGISTERS({ payload }));
         }
       });
+  }
+
+  public hideMenu(_: any): void {
+    this.hide = !this.hide;
+  }
+
+  public returnSizePanel(): string {
+    if (this.isMobile) {
+      return this.hide ? '0' : '250px';
+    } else {
+      return this.hide ? '64px' : '250px';
+    }
   }
 }

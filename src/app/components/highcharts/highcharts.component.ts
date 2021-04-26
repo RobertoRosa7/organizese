@@ -234,6 +234,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public isMobile: boolean;
   public setDtStart: any;
   public setDtEnd: any;
+  public color: string;
 
   constructor(
     private store: Store,
@@ -254,12 +255,12 @@ export class HighchartsComponent implements OnInit, DoCheck {
       .subscribe((state) => {
         const theme =
           state.mode === 'light-mode'
-            ? 'var(--color-medium-white)'
-            : 'var(--color-default-dark)';
+            ? 'var(--white-one)'
+            : 'var(--color-dark-secondary)';
         const themeInverse =
           state.mode !== 'light-mode'
-            ? 'var(--color-medium-white)'
-            : 'var(--color-default-dark)';
+            ? 'var(--white-one)'
+            : 'var(--color-dark-secondary)';
 
         this.chartLine.chart.backgroundColor = theme;
         this.chartLine.tooltip.backgroundColor = theme;
@@ -287,39 +288,95 @@ export class HighchartsComponent implements OnInit, DoCheck {
       change.forEachChangedItem((item: any) => {
         if (item.key === 'category') {
           this.instanceHighchart().then(() => {
-            Highcharts.chart(this.highchartPie.nativeElement, this.chartPie);
+            const instanceCategory = Highcharts.chart(
+              this.highchartPie.nativeElement,
+              this.chartPie
+            );
+            this.color = this.getColorFromMaxValue({
+              type: 'category',
+              instanceCategory,
+            });
           });
         }
 
         if (item.key === 'evolucao') {
           if (this.operation === 'despesas') {
             this.instanceHighchart().then(() => {
-              Highcharts.chart(
+              const instanceDespesas = Highcharts.chart(
                 this.highchartEvoution.nativeElement,
                 this.chartLine
               );
+              this.color = this.getColorFromMaxValue({
+                type: 'despesas',
+                instanceDespesas,
+              });
             });
           }
 
           if (this.operation === 'receita') {
             this.instanceHighchart().then(() => {
-              Highcharts.chart(
+              const instanceReceita = Highcharts.chart(
                 this.highchartEvoution.nativeElement,
                 this.chartLine
               );
+              this.color = this.getColorFromMaxValue({
+                type: 'receita',
+                instanceReceita,
+              });
             });
           }
 
           if (this.operation === 'categoria') {
             this.instanceHighchart().then(() => {
-              Highcharts.chart(
+              const instanceCategory = Highcharts.chart(
                 this.highchartPie.nativeElement,
                 this.chartPie
               ).redraw();
+              this.color = this.getColorFromMaxValue({
+                type: 'category',
+                instanceCategory,
+              });
             });
           }
         }
       });
+    }
+  }
+
+  public getColorFromMaxValue(payload: any): string {
+    switch (payload.type) {
+      case 'category':
+        const categories: any = [];
+        payload.instanceCategory.series[0].data.forEach((value: any) =>
+          categories.push(value.y)
+        );
+        const category =
+          payload.instanceCategory.series[0].data[
+            categories.indexOf(Math.max.apply(Math, categories))
+          ];
+        return category ? category.color : 'inset';
+      case 'despesas':
+        const despesas: any = [];
+        payload.instanceDespesas.series.forEach((value: any) =>
+          despesas.push(value.dataMax)
+        );
+        const despesa =
+          payload.instanceDespesas.series[
+            despesas.indexOf(Math.max.apply(Math, despesas))
+          ];
+        return despesa ? despesa.color : 'inset';
+      case 'receita':
+        const receitas: any = [];
+        payload.instanceReceita.series.forEach((value: any) =>
+          receitas.push(value.dataMax)
+        );
+        const receita =
+          payload.instanceReceita.series[
+            receitas.indexOf(Math.max.apply(Math, receitas))
+          ];
+        return receita ? receita.color : 'inset';
+      default:
+        return 'inset';
     }
   }
 
@@ -366,12 +423,10 @@ export class HighchartsComponent implements OnInit, DoCheck {
 
   public filterEnd = (d: any): boolean => {
     return moment(d).isSameOrAfter(moment(new Date()));
-    // tslint:disable-next-line: semicolon
   };
 
   public filterStart = (d: any): boolean => {
     return moment(d).isSameOrBefore(moment(new Date()));
-    // tslint:disable-next-line: semicolon
   };
 
   public onSubmit(): void {
@@ -409,7 +464,6 @@ export class HighchartsComponent implements OnInit, DoCheck {
   private setDatesAndEnableButton(): void {
     this.setDtEnd = this.dtEnd;
     this.setDtStart = this.dtStart;
-    // this.enableButtonFilter = false;
   }
 
   private resetDatesAndEnableButton(): void {

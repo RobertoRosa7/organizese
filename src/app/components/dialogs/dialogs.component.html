@@ -1,9 +1,4 @@
-<app-windows-hacker
-  [bodyBorderLeftColor]="returnColor()"
-  [bodyBorderRightColor]="returnColor()"
-  [topBorderColor]="returnColor()"
-  [footerBorderColor]="returnColor()"
->
+<app-windows-hacker>
   <div #contentDialog class="dialog" [ngSwitch]="type">
     <div *ngSwitchCase="'details'" class="dialog-container detail">
       <div class="header dialog-header-mode">
