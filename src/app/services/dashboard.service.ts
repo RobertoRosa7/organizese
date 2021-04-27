@@ -214,4 +214,13 @@ export class DashboardService {
   public fetchLastDate(): Observable<any> {
     return this.http.get<any>(this.constants.get('fetch_lastdate'));
   }
+
+  public fetchGraphOutcomeIncome(dates?: any): Observable<any> {
+    const params = dates ? this.convertDates(dates) : '';
+    return this.http.get<any>(
+      `${this.constants.get(
+        'fetch_graph_outcome_income'
+      )}${this.convertJsonToUrl(params)}`
+    );
+  }
 }

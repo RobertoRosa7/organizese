@@ -46,13 +46,12 @@ export class ChartService {
       },
     },
     xAxis: {
-      tickInterval: 10,
       categories: [],
-      crosshair: true,
+      tickWidth: 1,
       labels: {
         formatter(): any {
           const self: any = this;
-          return Highcharts.dateFormat('%m/%Y', self.value * 1000);
+          return Highcharts.dateFormat('%m/%Y', self.value);
         },
         style: {
           color: '',
@@ -72,10 +71,7 @@ export class ChartService {
         const self: any = this;
         let s = `
             <div class="highchart-tooltip">
-              <strong>${Highcharts.dateFormat(
-                '%d/%m/%Y',
-                self.x * 1000
-              )}</strong>
+              <strong>${Highcharts.dateFormat('%d/%m/%Y', self.x)}</strong>
             </div>
           `;
         for (const i in self.points) {

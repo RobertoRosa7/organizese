@@ -23,24 +23,10 @@ const BASE = {
   evolucao_despesas: {},
   auto_complete: [],
   graph_category: [],
-  dates: {
-    type: 'default',
-    category: {
-      dt_start: moment().subtract(31, 'days'),
-      dt_end: moment(new Date()),
-    },
-    outcome: {
-      dt_start: moment().subtract(31, 'days'),
-      dt_end: moment(new Date()),
-    },
-    income: {
-      dt_start: moment().subtract(31, 'days'),
-      dt_end: moment(new Date()),
-    },
-    default: {
-      dt_start: moment().subtract(31, 'days'),
-      dt_end: moment(new Date()),
-    },
+  outcome_income: {},
+  graph_dates: {
+    dt_start: moment().subtract(31, 'days'),
+    dt_end: moment(new Date()),
   },
 };
 
@@ -78,7 +64,11 @@ const dashboardReducers = createReducer(
   })),
   on(actions.FETCH_DATES, (states, { payload }) => ({
     ...states,
-    dates: payload,
+    graph_dates: payload,
+  })),
+  on(actions.SET_GRAPH_OUTCOME_INCOME, (states, { payload }) => ({
+    ...states,
+    outcome_income: utils.formatterOutcomeIncome(payload),
   })),
   on(actions.SET_DASHBOARD, (states, { payload }) => {
     const totals: any = utils.total(payload.data.results);

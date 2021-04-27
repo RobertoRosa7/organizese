@@ -1,18 +1,41 @@
 <section class="main">
-  <div *ngIf="!isMobile" class="cards-main">
-    <app-cards
-      [isLoading]="isMainLoading"
-      *ngFor="let item of cards"
-      [item]="item"
-      [value]="item.value || 0"
+  <div *ngIf="isMobile" class="cards-main">
+    <owl-carousel
+      [options]="{ items: 1 }"
+      style="width: 100%"
+      [carouselClasses]="['owl-theme', 'row', 'sliding']"
     >
-    </app-cards>
+      <app-cards
+        [isLoading]="isMainLoading"
+        style="max-width: 200px"
+        *ngFor="let item of cards"
+        [item]="item"
+        [value]="item.value"
+      ></app-cards>
+    </owl-carousel>
   </div>
+
   <div class="container-charts">
-    <div class="charts">
+    <div class="chart-75">
       <app-windows-hacker>
-        <app-highcharts type="spline" operation="outcome_income">
-        </app-highcharts>
+        <app-highcharts type="spline"> </app-highcharts>
+      </app-windows-hacker>
+      <app-windows-hacker>
+        <app-list-registers
+          *ngFor="let item of ELEMENT_DATA"
+          [item]="item"
+        ></app-list-registers>
+      </app-windows-hacker>
+    </div>
+    <div class="chart-25">
+      <app-windows-hacker *ngIf="!isMobile">
+        <app-cards
+          [isLoading]="isMainLoading"
+          *ngFor="let item of cards"
+          [item]="item"
+          [value]="item.value || 0"
+        >
+        </app-cards>
       </app-windows-hacker>
     </div>
 
@@ -23,14 +46,15 @@
       </app-windows-hacker>
     </div> -->
   </div>
+
   <div class="container-charts">
-    <div class="charts">
+    <!-- <div class="charts">
       <app-windows-hacker>
         <app-highcharts operation="categoria" [category]="CATEGORY_DATA">
         </app-highcharts>
       </app-windows-hacker>
-    </div>
-    <div class="charts">
+    </div> -->
+    <!-- <div class="charts">
       <app-windows-hacker>
         <app-highcharts
           operation="despesas"
@@ -38,7 +62,7 @@
         >
         </app-highcharts>
       </app-windows-hacker>
-    </div>
+    </div> -->
   </div>
 
   <!-- <div *ngIf="!isMobile && isMainLoading" class="cards-main">
@@ -176,11 +200,4 @@
       </app-highcharts>
     </div>
   </div> -->
-
-  <!-- <app-windows-hacker>
-    <app-list-registers
-      *ngFor="let item of ELEMENT_DATA"
-      [item]="item"
-    ></app-list-registers>
-  </app-windows-hacker> -->
 </section>

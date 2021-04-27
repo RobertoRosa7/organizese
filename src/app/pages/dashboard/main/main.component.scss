@@ -10,6 +10,17 @@
     .charts {
       flex: 1;
     }
+    .chart-25 {
+      width: 25%;
+      max-width: 300px;
+      margin-left: auto;
+    }
+    .chart-85 {
+      width: 85%;
+    }
+    .chart-75 {
+      width: 75%;
+    }
   }
 
   ::ng-deep .mat-tab-label {
@@ -76,22 +87,20 @@
     }
   }
 }
-@media (max-width: 600px) {
-  .main .cards-main {
-    flex-direction: column;
-    app-cards {
-      width: 100%;
-    }
+@media (max-width: 599.99px) {
+  .main {
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
-@media (max-width: 1250px) {
-  .main .highchart {
+@media (max-width: 1024px) {
+  .main .container-charts {
     flex-direction: column;
-    .col-7 {
+    .chart-25,
+    .chart-75,
+    .chart-85 {
       width: 100%;
-    }
-    .col-4 {
-      width: 100%;
+      max-width: 100%;
     }
   }
 }

@@ -11,6 +11,7 @@ export enum actionsTypes {
   FETCH_EVOLUCAO_DESPESAS = '[FETCH_EVOLUCAO_DESPESAS]',
   FETCH_EVOLUCAO_DETAIL = '[FETCH_EVOLUCAO_DETAIL]',
   FETCH_GRAPH_CATEGORY = '[FETCH_GRAPH_CATEGORY]',
+  FETCH_GRAPH_OUTCOME_INCOME = '[FETCH_GRAPH_OUTCOME_INCOME]',
   FETCH_AUTOCOMPLETE = '[FETCH_AUTOCOMPLETE]',
   FETCH_DATES = '[FETCH_DATES]',
 
@@ -19,6 +20,7 @@ export enum actionsTypes {
   SET_EVOLUCAO_DESPESAS = '[SET_EVOLUCAO_DESPESAS]',
   SET_EVOLUCAO_DETAIL = '[SET_EVOLUCAO_DETAIL]',
   SET_GRAPH_CATEGORY = '[SET_GRAPH_CATEGORY]',
+  SET_GRAPH_OUTCOME_INCOME = '[SET_GRAPH_OUTCOME_INCOME]',
   SET_DEV_MODE = '[SET_DEV_MODE]',
   SET_DATES = '[SET_DATES]',
   SET_DASHBOARD = '[SET_DASHBOARD]',
@@ -36,6 +38,9 @@ export const FETCH_EVOLUCAO_DESPESAS = createAction(
 );
 export const FETCH_GRAPH_CATEGORY = createAction(
   actionsTypes.FETCH_GRAPH_CATEGORY
+);
+export const FETCH_GRAPH_OUTCOME_INCOME = createAction(
+  actionsTypes.FETCH_GRAPH_OUTCOME_INCOME
 );
 export const FETCH_EVOLUCAO_DETAIL = createAction(
   actionsTypes.FETCH_EVOLUCAO_DETAIL,
@@ -74,6 +79,10 @@ export const SET_EVOLUCAO_DETAIL = createAction(
 );
 export const SET_GRAPH_CATEGORY = createAction(
   actionsTypes.SET_GRAPH_CATEGORY,
+  props<{ payload: any }>()
+);
+export const SET_GRAPH_OUTCOME_INCOME = createAction(
+  actionsTypes.SET_GRAPH_OUTCOME_INCOME,
   props<{ payload: any }>()
 );
 export const SET_AUTOCOMPLETE = createAction(

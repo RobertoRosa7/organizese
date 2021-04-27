@@ -1,5 +1,5 @@
 <div class="highcharts">
-  <!-- <form class="date" (ngSubmit)="onSubmit()">
+  <form class="date" (ngSubmit)="onSubmit()">
     <div class="form-inline">
       <mat-form-field
         (click)="$event.preventDefault(); pickerStart.open()"
@@ -11,7 +11,7 @@
           [readonly]="enableButtonFilter"
           autocomplete="off"
           [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="setDtStart"
+          [(ngModel)]="dtStart"
           matInput
           [matDatepickerFilter]="filterStart"
           [matDatepicker]="pickerStart"
@@ -33,7 +33,7 @@
           [readonly]="enableButtonFilter"
           autocomplete="off"
           [ngModelOptions]="{ standalone: true }"
-          [(ngModel)]="setDtEnd"
+          [(ngModel)]="dtEnd"
           [matDatepickerFilter]="filterEnd"
           matInput
           [matDatepicker]="pickerEnd"
@@ -51,7 +51,7 @@
         Filtrar
       </button>
     </div>
-  </form> -->
+  </form>
   <div #highchartEvoution></div>
   <div #highchartPie></div>
   <div #highchartLine></div>

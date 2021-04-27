@@ -78,7 +78,6 @@ export class MainComponent
     super();
     const breakPoint = this.breakpoint?.observe([Breakpoints.XSmall]);
 
-    // tslint:disable-next-line: deprecation
     breakPoint.subscribe((result) => (this.isMobile = !!result.matches));
     this.differ = this.differs.find({}).create();
   }
@@ -107,16 +106,7 @@ export class MainComponent
   private initializingMain(): Promise<boolean> {
     return new Promise((resolve) => {
       this.initMain().then(() => {
-        this.initGraphEvolution().then(() => {
-          this.initGraphEvolutionExpense().then(() => {
-            this.initGraphEvolutionCategory().then(() => {
-              this.dashboardService.fetchLastDate().subscribe((dt) => {
-                this.minDate = new Date(dt.dt_start);
-                resolve(true);
-              });
-            });
-          });
-        });
+        resolve(true);
       });
     });
   }
@@ -127,13 +117,13 @@ export class MainComponent
     );
   }
 
-  private initGraphEvolution(): Promise<any> {
+  private initGraphEvolutionIncome(): Promise<any> {
     return new Promise((resolve) =>
       resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO()))
     );
   }
 
-  private initGraphEvolutionExpense(): Promise<any> {
+  private initGraphEvolutionOutcome(): Promise<any> {
     return new Promise((resolve) =>
       resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS()))
     );
@@ -156,10 +146,10 @@ export class MainComponent
     return {
       all: [...dashboard.registers],
       consolidado: dashboard.consolidado,
-      evolucao: dashboard.evolucao,
+      // evolucao: dashboard.evolucao,
 
-      evoucao_despesas: dashboard.evolucao_despesas,
-      graph_category: dashboard.graph_category,
+      // evoucao_despesas: dashboard.evolucao_despesas,
+      // graph_category: dashboard.graph_category,
       // a_pagar: dashboard.a_pagar,
 
       // a_receber: dashboard.a_receber,
@@ -170,7 +160,7 @@ export class MainComponent
       // receita: dashboard.total_receita,
       // all_days_period: dashboard.all_days_period,
 
-      dates: dashboard.dates,
+      // dates: dashboard.dates,
       total: dashboard.total,
       tab: registers.tab,
     };
@@ -182,11 +172,10 @@ export class MainComponent
     // this.totalDespesa = st.despesas;
     // this.totalReceita = st.receita;
     // this.filterByDays = st.all_days_period;
-
-    this.dates = st.dates;
-    this.CATEGORY_DATA = st.graph_category;
-    this.EVOLUCAO_DATA = st.evolucao;
-    this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas;
+    // this.dates = st.dates;
+    // this.CATEGORY_DATA = st.graph_category;
+    // this.EVOLUCAO_DATA = st.evolucao;
+    // this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas;
     this.percentConsolidado = st.consolidado.percent_consolidado;
     this.percentDebit = st.consolidado.percent_debit;
     this.OUTCOME_AND_INCOME.outcome = st.evoucao_despesas;
@@ -215,22 +204,22 @@ export class MainComponent
     this.tabChanged = event.index;
   }
 
-  public onDatesListening(event: any): void {
-    switch (event.type) {
-      case event.type:
-        this.store.dispatch(
-          actionsDashboard.FETCH_DATES({
-            payload: {
-              ...this.dates,
-              type: event.type,
-              [`${event.type}`]: event[event.type],
-            },
-          })
-        );
-        this.initMain().then(() => this.store.dispatch(event.action()));
-        break;
-    }
-  }
+  // public onDatesListening(event: any): void {
+  //   switch (event.type) {
+  //     case event.type:
+  //       this.store.dispatch(
+  //         actionsDashboard.FETCH_DATES({
+  //           payload: {
+  //             ...this.dates,
+  //             type: event.type,
+  //             [`${event.type}`]: event[event.type],
+  //           },
+  //         })
+  //       );
+  //       this.initMain().then(() => this.store.dispatch(event.action()));
+  //       break;
+  //   }
+  // }
 
   public returnColor(): string {
     return '#7d99ed';

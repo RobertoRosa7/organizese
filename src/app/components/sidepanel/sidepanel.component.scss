@@ -17,6 +17,9 @@
     min-height: 64px;
     width: 100%;
     align-items: center;
+    &:hover {
+      opacity: 0.5;
+    }
   }
   .app-menu-list {
     list-style: none;

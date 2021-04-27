@@ -88,3 +88,13 @@ export function formatDataToGraphCategory(payload: any): any {
 function abstract(payload: any, index: number): any {
   return Object.values(payload).map((v: any) => ({ v }))[index].v;
 }
+
+export function formatterOutcomeIncome(payload: any): any {
+  return payload.outcome_income.map((value: any) => ({
+    ...value,
+    name: value.name === 'incoming' ? 'Entrada' : 'Saída',
+    dates: value.dates.map((date: any) => new Date(date).getTime()),
+    data: value.values,
+    color: value.name === 'incoming' ? '#0FF5E6' : '#FF4081',
+  }));
+}

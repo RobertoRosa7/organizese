@@ -46,7 +46,6 @@ export class DashboardEffect {
         ];
       } else {
         return this.dashboardService.fetchAutocomplete().pipe(
-          // tslint:disable-next-line: no-shadowed-variable
           map((autocomplete: any) => {
             if (autocomplete) {
               this.indexedb.create({
@@ -105,9 +104,7 @@ export class DashboardEffect {
     ofType(actions.FETCH_EVOLUCAO),
     switchMap(() => from(this.getDatesFromStore())),
     mergeMap(({ dates }) =>
-      this.dashboardService
-        .fetchEvocucao(dates.income)
-        .pipe(catchError((e) => of(e)))
+      this.dashboardService.fetchEvocucao(dates).pipe(catchError((e) => of(e)))
     ),
     map((payload: any) => {
       if (payload instanceof HttpErrorResponse) {
@@ -126,7 +123,7 @@ export class DashboardEffect {
     switchMap(() => from(this.getDatesFromStore())),
     mergeMap(({ dates }) =>
       this.dashboardService
-        .fetchEvocucaoDespesas(dates.outcome)
+        .fetchEvocucaoDespesas(dates)
         .pipe(catchError((e) => of(e)))
     ),
     map((payload: any) => {
@@ -165,7 +162,7 @@ export class DashboardEffect {
     switchMap(() => from(this.getDatesFromStore())),
     mergeMap(({ dates }) =>
       this.dashboardService
-        .fetchGraphCategory(dates.category)
+        .fetchGraphCategory(dates)
         .pipe(catchError((e) => of(e)))
     ),
     map((payload) => {
@@ -174,6 +171,44 @@ export class DashboardEffect {
         return SET_ERRORS({ payload: source });
       } else {
         return actions.SET_GRAPH_CATEGORY({ payload });
+      }
+    }),
+    catchError((err) => of(err))
+  );
+
+  @Effect()
+  public graphOutcomeIncome$: Observable<Actions> = this.action.pipe(
+    ofType(actions.actionsTypes.FETCH_GRAPH_OUTCOME_INCOME),
+    switchMap(() =>
+      forkJoin([
+        this.indexedb.getById('outcome_income_id'),
+        from(this.getDatesFromStore()),
+      ])
+    ),
+    mergeMap(([localData, { dates }]) => {
+      if (localData) {
+        console.log('from indexedb');
+        return of(localData.payload);
+      } else {
+        console.log('from server');
+        return this.dashboardService.fetchGraphOutcomeIncome(dates).pipe(
+          map((res) => {
+            this.indexedb.create({
+              id: 'outcome_income_id',
+              payload: res,
+            });
+            return res;
+          }),
+          catchError((e) => of(e))
+        );
+      }
+    }),
+    map((payload) => {
+      if (payload instanceof HttpErrorResponse) {
+        const source = { ...payload, source: 'graph_outcome_income' };
+        return SET_ERRORS({ payload: source });
+      } else {
+        return actions.SET_GRAPH_OUTCOME_INCOME({ payload });
       }
     }),
     catchError((err) => of(err))
@@ -220,11 +255,13 @@ export class DashboardEffect {
     return new Promise((resolve) =>
       this.store
         .select(({ dashboard }: any) => ({
-          dates: dashboard.dates,
-          type: dashboard.dates.type,
+          dates: dashboard.graph_dates,
         }))
-        // tslint:disable-next-line: deprecation
         .subscribe((dates) => resolve(dates))
     );
+  }
+
+  private teste(payload: any): Promise<any> {
+    return new Promise((resolve) => resolve(payload));
   }
 }
