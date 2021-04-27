@@ -128,15 +128,17 @@ export class SidepanelComponent implements OnInit {
     }
   }
 
-  public goTo(action: any): void {
-    if (action.name === 'Home') {
-      this.store?.dispatch(actionsApp.RESET_ALL());
+  public goTo(payload: any): void {
+    if (payload.name === 'Home') {
+      this.store.dispatch(actionsApp.RESET_ALL());
     }
-    this.send.emit('hide');
+    if (this.router.url === payload.link) {
+      this.send.emit('hide');
+    }
   }
 
   public logout(): void {
-    this.router?.navigateByUrl('/');
+    this.router.navigateByUrl('/');
     this.store.dispatch(actionsLogin.LOGOUT());
   }
 

@@ -45,6 +45,7 @@ export class MainComponent
   public ELEMENT_DATA: Register[] = [];
   public EVOLUCAO_DATA: any = {};
   public EVOLUCAO_DESPESAS_DATA: any = {};
+  public OUTCOME_AND_INCOME: any = {};
   public showEvolucaoReceita = false;
   public showEvolucaoDespesa = false;
   public aPagar = 0;
@@ -92,17 +93,15 @@ export class MainComponent
   public async ngOnInit(): Promise<any> {
     await this.initializingMain();
 
-    const store = this.store
+    this.store
       .select(({ registers, dashboard }: any) =>
         this.abastractStates({ registers, dashboard })
       )
       .pipe(
         map((state) => this.mapToProps(state)),
         delay(3500)
-      );
-
-    // tslint:disable-next-line: deprecation
-    store.subscribe(() => (this.isMainLoading = false));
+      )
+      .subscribe(() => (this.isMainLoading = false));
   }
 
   private initializingMain(): Promise<boolean> {
@@ -111,7 +110,6 @@ export class MainComponent
         this.initGraphEvolution().then(() => {
           this.initGraphEvolutionExpense().then(() => {
             this.initGraphEvolutionCategory().then(() => {
-              // tslint:disable-next-line: deprecation
               this.dashboardService.fetchLastDate().subscribe((dt) => {
                 this.minDate = new Date(dt.dt_start);
                 resolve(true);
@@ -191,6 +189,8 @@ export class MainComponent
     this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas;
     this.percentConsolidado = st.consolidado.percent_consolidado;
     this.percentDebit = st.consolidado.percent_debit;
+    this.OUTCOME_AND_INCOME.outcome = st.evoucao_despesas;
+    this.OUTCOME_AND_INCOME.income = st.evolucao;
 
     this.cards.forEach((value) => {
       switch (value.type) {
@@ -208,7 +208,6 @@ export class MainComponent
           break;
       }
     });
-
     return st;
   }
 

@@ -1,11 +1,13 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {
+  AfterViewInit,
   Component,
   DoCheck,
   ElementRef,
   EventEmitter,
   Input,
   KeyValueDiffers,
+  OnChanges,
   OnInit,
   Output,
   ViewChild,
@@ -19,7 +21,8 @@ import {
 import { Store } from '@ngrx/store';
 import * as Highcharts from 'highcharts';
 import * as moment from 'moment';
-import { UtilsService } from 'src/app/utils/utis.service';
+import { delay, map } from 'rxjs/operators';
+import { ChartService } from 'src/app/services/highcharts.service';
 import * as actionsDashboard from '../../actions/dashboard.actions';
 
 const Boost = require('highcharts/modules/boost');
@@ -55,10 +58,11 @@ export function teste(): any {}
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
-export class HighchartsComponent implements OnInit, DoCheck {
+export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
   @ViewChild('highchartEvoution', { static: true })
   highchartEvoution: ElementRef;
   @ViewChild('highchartPie', { static: true }) highchartPie: ElementRef;
+  @ViewChild('highchartLine', { static: true }) highchartLine: ElementRef;
 
   @Input() public evolucao: any;
   @Input() public category: any[] = [];
@@ -67,6 +71,7 @@ export class HighchartsComponent implements OnInit, DoCheck {
   @Input() public dtEnd: Date;
   @Input() public tabChanged: number;
   @Input() public minDate: Date = new Date('1920-01-01');
+  @Input() public type: string;
 
   @Output() public send = new EventEmitter();
 
@@ -235,15 +240,18 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public setDtStart: any;
   public setDtEnd: any;
   public color: string;
+  private theme: string;
+  private themeInverse: string;
+  private outcomeIncome: any = { in: {}, out: {} };
 
   constructor(
     private store: Store,
     private differs: KeyValueDiffers,
-    private breakpoint: BreakpointObserver
+    private breakpoint: BreakpointObserver,
+    private chartService: ChartService
   ) {
     this.breakpoint
       ?.observe([Breakpoints.XSmall])
-      // tslint:disable-next-line: deprecation
       .subscribe((result) => (this.isMobile = !!result.matches));
     this.differ = this.differs.find({}).create();
   }
@@ -251,36 +259,89 @@ export class HighchartsComponent implements OnInit, DoCheck {
   public ngOnInit(): void {
     this.store
       .select(({ dashboard }: any) => this.abstractStates({ dashboard }))
-      // tslint:disable-next-line: deprecation
-      .subscribe((state) => {
-        const theme =
-          state.mode === 'light-mode'
-            ? 'var(--white-one)'
-            : 'var(--color-dark-secondary)';
-        const themeInverse =
-          state.mode !== 'light-mode'
-            ? 'var(--white-one)'
-            : 'var(--color-dark-secondary)';
+      .pipe(
+        map((states) => this.mapToProps(states)),
+        delay(3500)
+      )
+      .subscribe(() => {});
 
-        this.chartLine.chart.backgroundColor = theme;
-        this.chartLine.tooltip.backgroundColor = theme;
-        this.chartLine.yAxis.gridLineColor = themeInverse;
-        this.chartLine.yAxis.labels.style.color = themeInverse;
-        this.chartLine.xAxis.labels.style.color = themeInverse;
-        this.chartLine.legend.itemStyle.color = themeInverse;
+    setTimeout(() => {
+      if (this.operation === 'outcome_income') {
+        this.chartService.getCharts().subscribe((chart) => {
+          const values: any = [];
+          const despesas: any = [];
 
-        this.chartPie.chart.backgroundColor = theme;
-        this.chartPie.legend.itemStyle.color = themeInverse;
-      });
+          chart.chart.type = this.type;
+          chart.backgroundColor = this.theme;
+          chart.tooltip.backgroundColor = this.theme;
+
+          for (const i in this.outcomeIncome.in.graph_evolution) {
+            if (i !== 'dates') {
+              values.push({
+                name: 'Receita',
+                data: this.outcomeIncome.in.graph_evolution[i].values,
+              });
+            }
+          }
+
+          for (const i in this.outcomeIncome.out.graph_evolution) {
+            if (i !== 'dates') {
+              despesas.push({
+                name: 'Despesas',
+                data: this.outcomeIncome.out.graph_evolution[i].values,
+              });
+            }
+          }
+
+          const t = values.map((val: any) => {
+            let total = 0;
+            const data = [
+              Math.max.apply(
+                Math,
+                val.data.map((v: number) => (total = total + v))
+              ),
+            ];
+            return {
+              ...val,
+              data,
+            };
+          });
+
+          const d = despesas.map((val: any) => {
+            let total = 0;
+            const data = [
+              Math.max.apply(
+                Math,
+                val.data.map((v: number) => (total = total + v))
+              ),
+            ];
+            return {
+              ...val,
+              data,
+            };
+          });
+
+          const series = [
+            {
+              name: 'Receita',
+              data: t.map((v: any) => v.data[0]),
+              color: 'rgb(144, 237, 125)',
+            },
+            {
+              name: 'Despesas',
+              data: d.map((v: any) => v.data[0]),
+              color: '#FF4081',
+            },
+          ];
+          chart.series = series;
+          chart.xAxis.categories = this.outcomeIncome.in.graph_evolution.dates;
+          Highcharts.chart(this.highchartLine.nativeElement, chart);
+        });
+      }
+    }, 200);
   }
 
-  private abstractStates({ dashboard }: any): any {
-    return {
-      mode: dashboard.dark_mode,
-      evolucao: dashboard.evolucao,
-      dates: dashboard.dates,
-    };
-  }
+  public ngOnChanges(): void {}
 
   public ngDoCheck(): void {
     const change = this.differ.diff(this);
@@ -341,6 +402,36 @@ export class HighchartsComponent implements OnInit, DoCheck {
         }
       });
     }
+  }
+
+  private mapToProps(states: any): any {
+    if (states.mode) {
+      this.theme = 'var(--white-one)';
+      this.themeInverse = 'var(--color-dark-secondary)';
+    } else {
+      this.theme = 'var(--color-dark-secondary)';
+      this.themeInverse = 'var(--white-one)';
+    }
+    this.chartLine.chart.backgroundColor = this.theme;
+    this.chartLine.tooltip.backgroundColor = this.theme;
+    this.chartLine.yAxis.gridLineColor = this.themeInverse;
+    this.chartLine.yAxis.labels.style.color = this.themeInverse;
+    this.chartLine.xAxis.labels.style.color = this.themeInverse;
+    this.chartLine.legend.itemStyle.color = this.themeInverse;
+    this.chartPie.chart.backgroundColor = this.theme;
+    this.chartPie.legend.itemStyle.color = this.themeInverse;
+    this.outcomeIncome.out = states.evoucao_despesas;
+    this.outcomeIncome.in = states.evolucao;
+    return states;
+  }
+
+  private abstractStates({ dashboard }: any): any {
+    return {
+      mode: dashboard.dark_mode,
+      evolucao: dashboard.evolucao,
+      dates: dashboard.dates,
+      evoucao_despesas: dashboard.evolucao_despesas,
+    };
   }
 
   public getColorFromMaxValue(payload: any): string {
@@ -466,9 +557,9 @@ export class HighchartsComponent implements OnInit, DoCheck {
     this.setDtStart = this.dtStart;
   }
 
-  private resetDatesAndEnableButton(): void {
-    this.setDtEnd = undefined;
-    this.setDtStart = undefined;
-    this.enableButtonFilter = true;
-  }
+  // private resetDatesAndEnableButton(): void {
+  //   this.setDtEnd = undefined;
+  //   this.setDtStart = undefined;
+  //   this.enableButtonFilter = true;
+  // }
 }

@@ -111,7 +111,6 @@ $border-width: 15%;
   .mat-form-field-outline,
   .mat-option.mat-selected:not(.mat-active):not(:hover) {
     background-color: var(--color-dark-secondary);
-    // backdrop-filter: blur(15px);
   }
   .window {
     margin-bottom: 8px;
@@ -120,10 +119,8 @@ $border-width: 15%;
       padding: 8px 16px;
       border-left: 1px solid var(--color-dark-secondary);
       border-right: 1px solid var(--color-dark-secondary);
-      border-collapse: collapse;
       overflow-y: auto;
       max-height: 768px;
-      backdrop-filter: blur(15px);
       background-color: var(--color-dark-secondary);
     }
     .window-top,
@@ -136,19 +133,16 @@ $border-width: 15%;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-collapse: collapse;
     }
     .window-top {
       border-bottom: $border-height solid var(--color-dark-secondary);
       border-right: $border-length solid transparent;
       border-left: $border-length solid transparent;
-      border-collapse: collapse;
     }
     .window-footer {
       border-top: $border-height solid var(--color-dark-secondary);
       border-right: $border-length solid transparent;
       border-left: $border-length solid transparent;
-      border-collapse: collapse;
     }
     .window-top::before {
       content: '';
@@ -159,7 +153,6 @@ $border-width: 15%;
       left: -$border-height;
       border-bottom: $border-length solid inherit;
       border-left: $border-length solid transparent;
-      border-collapse: collapse;
     }
     .window-top::after {
       content: '';
@@ -170,7 +163,6 @@ $border-width: 15%;
       width: $border-width;
       border-bottom: $border-length solid inherit;
       border-right: $border-length solid transparent;
-      border-collapse: collapse;
     }
     .window-footer::before {
       content: '';
@@ -181,7 +173,6 @@ $border-width: 15%;
       left: -$border-height;
       border-top: $border-length solid inherit;
       border-left: $border-length solid transparent;
-      border-collapse: collapse;
     }
     .window-footer::after {
       content: '';
@@ -192,7 +183,6 @@ $border-width: 15%;
       width: $border-width;
       border-top: $border-length solid inherit;
       border-right: $border-length solid transparent;
-      border-collapse: collapse;
     }
     .top-container,
     .footer-container {

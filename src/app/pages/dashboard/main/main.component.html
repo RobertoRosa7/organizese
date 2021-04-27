@@ -11,39 +11,28 @@
   <div class="container-charts">
     <div class="charts">
       <app-windows-hacker>
-        <app-highcharts
-          [minDate]="minDate"
-          (send)="onDatesListening($event)"
-          [dtEnd]="dates?.income.dt_end"
-          [dtStart]="dates?.income.dt_start"
-          operation="receita"
-          [evolucao]="EVOLUCAO_DATA"
-        >
+        <app-highcharts type="spline" operation="outcome_income">
         </app-highcharts>
       </app-windows-hacker>
     </div>
+
+    <!-- <div class="charts">
+      <app-windows-hacker>
+        <app-highcharts operation="receita" [evolucao]="EVOLUCAO_DATA">
+        </app-highcharts>
+      </app-windows-hacker>
+    </div> -->
   </div>
   <div class="container-charts">
     <div class="charts">
       <app-windows-hacker>
-        <app-highcharts
-          [minDate]="minDate"
-          (send)="onDatesListening($event)"
-          [dtEnd]="dates?.category.dt_end"
-          [dtStart]="dates?.category.dt_start"
-          operation="categoria"
-          [category]="CATEGORY_DATA"
-        >
+        <app-highcharts operation="categoria" [category]="CATEGORY_DATA">
         </app-highcharts>
       </app-windows-hacker>
     </div>
     <div class="charts">
       <app-windows-hacker>
         <app-highcharts
-          [minDate]="minDate"
-          (send)="onDatesListening($event)"
-          [dtEnd]="dates?.outcome.dt_end"
-          [dtStart]="dates?.outcome.dt_start"
           operation="despesas"
           [evolucao]="EVOLUCAO_DESPESAS_DATA"
         >
