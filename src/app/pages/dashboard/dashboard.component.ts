@@ -131,20 +131,20 @@ export class DashboardComponent implements OnInit, DoCheck {
     });
 
     this.store
-      ?.select(({ http_error, dashboard, profile, app }: any) => ({
+      ?.select(({ http_error, dashboard, profile }: any) => ({
         http_error,
-        consolidado: dashboard.consolidado,
-        autocomplete: dashboard.auto_complete,
+        // consolidado: dashboard.consolidado,
+        // autocomplete: dashboard.auto_complete,
         theme: dashboard.dark_mode,
-        profile: profile.user,
-        hide_values: app.hide_values,
+        // profile: profile.user,
+        // hide_values: app.hide_values,
       }))
       .subscribe(async (state) => {
         this.logo = './assets/' + this.getTheme(state.theme);
-        this.isDark = !(state.theme === 'dark-mode');
-        this.hideValues = state.hide_values;
-        this.autocomplete = state.autocomplete;
-        this.user = state.profile;
+        // this.isDark = !(state.theme === 'dark-mode');
+        // this.hideValues = state.hide_values;
+        // this.autocomplete = state.autocomplete;
+        // this.user = state.profile;
 
         if (state.http_error.errors.length > 0) {
           this.handleError(state.http_error.errors[0]);
@@ -185,54 +185,35 @@ export class DashboardComponent implements OnInit, DoCheck {
   }
 
   private async initialize(): Promise<any> {
-    this.fetchUser().then(() => {
-      this.fetchRegisters().then(() => {
-        this.initDashboard().then(() => {
-          this.fetchAutocomplete().then(() => {
-            this.isLoadingDashboard = false;
-          });
-        });
-      });
-    });
+    await this.fetchUser();
+    await this.fetchRegisters();
+    await this.initDashboard();
+    await this.fetchAutocomplete();
   }
 
   private async fetchUser(): Promise<any> {
     return new Promise((resolve) =>
-      setTimeout(
-        () => resolve(this.store?.dispatch(actionsProfile.GET_PROFILE())),
-        this.timeDelay
-      )
+      resolve(this.store?.dispatch(actionsProfile.GET_PROFILE()))
     );
   }
 
   private async initDashboard(): Promise<any> {
     return new Promise((resolve) =>
-      setTimeout(
-        () => resolve(this.store?.dispatch(actionsDashboard.INIT_DASHBOARD())),
-        this.timeDelay
-      )
+      resolve(this.store?.dispatch(actionsDashboard.INIT_DASHBOARD()))
     );
   }
 
   private async fetchRegisters(): Promise<any> {
     return new Promise((resolve) =>
-      setTimeout(
-        () =>
-          resolve(
-            this.store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))
-          ),
-        this.timeDelay
+      resolve(
+        this.store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))
       )
     );
   }
 
   private async fetchAutocomplete(): Promise<any> {
     return new Promise((resolve) =>
-      setTimeout(
-        () =>
-          resolve(this.store?.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE())),
-        this.timeDelay
-      )
+      resolve(this.store?.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE()))
     );
   }
 
@@ -371,7 +352,7 @@ export class DashboardComponent implements OnInit, DoCheck {
     if (this.isMobile) {
       return this.hide ? '0' : '250px';
     } else {
-      return this.hide ? '64px' : '250px';
+      return this.hide ? '70px' : '250px';
     }
   }
 }

@@ -20,6 +20,7 @@
       <ng-container *ngIf="dashboard$ | async as states">
         <app-windows-hacker>
           <app-highcharts
+            [minDate]="states.lastdate"
             (send)="onDatesChanges($event)"
             type="spline"
             [data]="states.outcome_income"

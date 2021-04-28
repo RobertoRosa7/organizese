@@ -21,12 +21,48 @@ export class DashboardEffect {
   @Effect()
   public init$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.INIT_DASHBOARD),
-    mergeMap(() =>
-      this.dashboardService.fetchConsolidado().pipe(catchError((e) => of(e)))
-    ),
+    mergeMap(() => this.indexedb.getById('consolidado_id')),
+    mergeMap((payload) => {
+      if (payload) {
+        console.log('consolidado from indexedb');
+        return of(payload.payload);
+      } else {
+        console.log('consolidado from server');
+        return this.dashboardService.fetchConsolidado().pipe(
+          map((payload) => {
+            this.indexedb.create({ id: 'consolidado_id', payload });
+            return payload;
+          }),
+          catchError((e) => of(e))
+        );
+      }
+    }),
     map((payload) => {
       if (payload instanceof HttpErrorResponse) {
         const source = { ...payload, source: 'calc_consolidado' };
+        return SET_ERRORS({ payload: source });
+      } else {
+        return actions.GET_TOTALS({ payload });
+      }
+    }),
+    catchError((err) => of(err))
+  );
+
+  @Effect()
+  public putConsolidado$: Observable<Actions> = this.action.pipe(
+    ofType(actions.actionsTypes.PUT_CONSOLIDADO),
+    mergeMap(() =>
+      this.dashboardService.fetchConsolidado().pipe(
+        map((payload) => {
+          this.indexedb.update({ id: 'consolidado_id', payload });
+          return payload;
+        }),
+        catchError((e) => of(e))
+      )
+    ),
+    map((payload) => {
+      if (payload instanceof HttpErrorResponse) {
+        const source = { ...payload, source: 'update_consolidado' };
         return SET_ERRORS({ payload: source });
       } else {
         return actions.GET_TOTALS({ payload });
@@ -185,10 +221,10 @@ export class DashboardEffect {
         from(this.getDatesFromStore()),
       ])
     ),
-    mergeMap(([localData, { dates }]) => {
-      if (localData) {
+    mergeMap(([payload, { dates }]) => {
+      if (payload) {
         console.log('from indexedb');
-        return of(localData.payload);
+        return of(payload.payload);
       } else {
         console.log('from server');
         return this.dashboardService.fetchGraphOutcomeIncome(dates).pipe(
@@ -221,7 +257,6 @@ export class DashboardEffect {
     mergeMap(({ dates }) =>
       this.dashboardService.fetchGraphOutcomeIncome(dates).pipe(
         map((payload) => {
-          console.log('update indexedb');
           this.indexedb.update({ id: 'outcome_income_id', payload });
           return payload;
         }),
@@ -276,6 +311,59 @@ export class DashboardEffect {
     catchError((e) => of(e))
   );
 
+  @Effect()
+  public fetchLastdateOutcome$: Observable<Actions> = this.action.pipe(
+    ofType(actions.FETCH_LASTDATE_OUTCOME),
+    mergeMap(() => this.indexedb.getById('lastdate_outcome_id')),
+    mergeMap((payload) => {
+      if (payload) {
+        console.log('last date from indexedb');
+        return of(payload.payload);
+      } else {
+        console.log('last date from server');
+        return this.dashboardService.fetchLastDate().pipe(
+          map((payload) => {
+            this.indexedb.create({ id: 'lastdate_outcome_id', payload });
+            return payload;
+          }),
+          catchError((e) => of(e))
+        );
+      }
+    }),
+    map((payload: any) => {
+      if (payload instanceof HttpErrorResponse) {
+        const source = { ...payload, source: 'lastdate_outcome' };
+        return SET_ERRORS({ payload: source });
+      } else {
+        return actions.SET_LASTDATE_OUTCOME({ payload });
+      }
+    }),
+    catchError((e) => of(e))
+  );
+
+  @Effect()
+  public putLastdateOutcome$: Observable<Actions> = this.action.pipe(
+    ofType(actions.PUT_LASTDATE_OUTCOME),
+    mergeMap(() =>
+      this.dashboardService.fetchLastDate().pipe(
+        map((payload) => {
+          this.indexedb.update({ id: 'lastdate_outcome_id', payload });
+          return payload;
+        }),
+        catchError((e) => of(e))
+      )
+    ),
+    map((payload: any) => {
+      if (payload instanceof HttpErrorResponse) {
+        const source = { ...payload, source: 'put_lastdate_outcome' };
+        return SET_ERRORS({ payload: source });
+      } else {
+        return actions.SET_LASTDATE_OUTCOME({ payload });
+      }
+    }),
+    catchError((e) => of(e))
+  );
+
   private getDatesFromStore(): Promise<any> {
     return new Promise((resolve) =>
       this.store
@@ -284,9 +372,5 @@ export class DashboardEffect {
         }))
         .subscribe((dates) => resolve(dates))
     );
-  }
-
-  private teste(payload: any): Promise<any> {
-    return new Promise((resolve) => resolve(payload));
   }
 }

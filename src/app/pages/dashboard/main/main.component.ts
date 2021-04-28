@@ -2,11 +2,9 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, DoCheck, KeyValueDiffers, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
 import { Register } from 'src/app/models/models';
 import { DashboardService } from 'src/app/services/dashboard.service';
 import * as actionsDashboard from '../../../actions/dashboard.actions';
@@ -113,6 +111,7 @@ export class MainComponent
         return value;
       }),
       outcome_income: dashboard.outcome_income,
+      lastdate: dashboard.lastdate_outcome.dt_start,
       all: dashboard.registers,
     }));
   }
@@ -125,6 +124,7 @@ export class MainComponent
     return new Promise(async (resolve) => {
       await this.initMain();
       await this.initGraphOutcomeIncome();
+      await this.initGraphLastOutcome();
       setTimeout(() => resolve(true), 100);
     });
   }
@@ -143,23 +143,29 @@ export class MainComponent
     );
   }
 
-  private initGraphEvolutionIncome(): Promise<any> {
+  private initGraphLastOutcome(): Promise<any> {
     return new Promise((resolve) =>
-      resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO()))
+      resolve(this.store.dispatch(actionsDashboard.FETCH_LASTDATE_OUTCOME()))
     );
   }
 
-  private initGraphEvolutionOutcome(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS()))
-    );
-  }
+  // private initGraphEvolutionIncome(): Promise<any> {
+  //   return new Promise((resolve) =>
+  //     resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO()))
+  //   );
+  // }
 
-  private initGraphEvolutionCategory(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY()))
-    );
-  }
+  // private initGraphEvolutionOutcome(): Promise<any> {
+  //   return new Promise((resolve) =>
+  //     resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS()))
+  //   );
+  // }
+
+  // private initGraphEvolutionCategory(): Promise<any> {
+  //   return new Promise((resolve) =>
+  //     resolve(this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY()))
+  //   );
+  // }
 
   public formatarValor(valor: number = 0): string {
     return new Intl.NumberFormat('pt-BR', {
@@ -168,61 +174,61 @@ export class MainComponent
     }).format(parseFloat(valor.toFixed(2)));
   }
 
-  private abastractStates({ registers, dashboard }: any): any {
-    return {
-      // all: [...dashboard.registers],
-      // consolidado: dashboard.consolidado,
-      // evolucao: dashboard.evolucao,
-      // evoucao_despesas: dashboard.evolucao_despesas,
-      // graph_category: dashboard.graph_category,
-      // a_pagar: dashboard.a_pagar,
-      // a_receber: dashboard.a_receber,
-      // total_credit: dashboard.total_credit,
-      // total_debit: dashboard.total_debit,
-      // despesas: dashboard.total_despesas,
-      // receita: dashboard.total_receita,
-      // all_days_period: dashboard.all_days_period,
-      // total: dashboard.total,
-      // tab: registers.tab,
-    };
-  }
+  // private abastractStates({ registers, dashboard }: any): any {
+  // return {
+  // all: [...dashboard.registers],
+  // consolidado: dashboard.consolidado,
+  // evolucao: dashboard.evolucao,
+  // evoucao_despesas: dashboard.evolucao_despesas,
+  // graph_category: dashboard.graph_category,
+  // a_pagar: dashboard.a_pagar,
+  // a_receber: dashboard.a_receber,
+  // total_credit: dashboard.total_credit,
+  // total_debit: dashboard.total_debit,
+  // despesas: dashboard.total_despesas,
+  // receita: dashboard.total_receita,
+  // all_days_period: dashboard.all_days_period,
+  // total: dashboard.total,
+  // tab: registers.tab,
+  // };
+  // }
 
-  private mapToProps(st: any): any {
-    // this.ELEMENT_DATA = st.all;
-    // this.total = st.total;
-    // this.totalDespesa = st.despesas;
-    // this.totalReceita = st.receita;
-    // this.filterByDays = st.all_days_period;
-    // this.dates = st.dates;
-    // this.CATEGORY_DATA = st.graph_category;
-    // this.EVOLUCAO_DATA = st.evolucao;
-    // this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas;
-    // this.percentConsolidado = st.consolidado.percent_consolidado;
-    // this.percentDebit = st.consolidado.percent_debit;
-    // this.OUTCOME_AND_INCOME.outcome = st.evoucao_despesas;
-    // this.OUTCOME_AND_INCOME.income = st.evolucao;
-    // this.cards.forEach((value) => {
-    //   switch (value.type) {
-    //     case 'incoming':
-    //       value.value = st.consolidado.total_credit || 0;
-    //       value.percent = st.consolidado.percent_credit || 0;
-    //       break;
-    //     case 'outcoming':
-    //       value.value = st.consolidado.total_debit || 0;
-    //       value.percent = st.consolidado.percent_debit || 0;
-    //       break;
-    //     case 'consolidado':
-    //       value.value = st.consolidado.total_consolidado || 0;
-    //       value.percent = st.consolidado.percent_consolidado;
-    //       break;
-    //   }
-    // });
-    // return st;
-  }
+  // private mapToProps(st: any): any {
+  // this.ELEMENT_DATA = st.all;
+  // this.total = st.total;
+  // this.totalDespesa = st.despesas;
+  // this.totalReceita = st.receita;
+  // this.filterByDays = st.all_days_period;
+  // this.dates = st.dates;
+  // this.CATEGORY_DATA = st.graph_category;
+  // this.EVOLUCAO_DATA = st.evolucao;
+  // this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas;
+  // this.percentConsolidado = st.consolidado.percent_consolidado;
+  // this.percentDebit = st.consolidado.percent_debit;
+  // this.OUTCOME_AND_INCOME.outcome = st.evoucao_despesas;
+  // this.OUTCOME_AND_INCOME.income = st.evolucao;
+  // this.cards.forEach((value) => {
+  //   switch (value.type) {
+  //     case 'incoming':
+  //       value.value = st.consolidado.total_credit || 0;
+  //       value.percent = st.consolidado.percent_credit || 0;
+  //       break;
+  //     case 'outcoming':
+  //       value.value = st.consolidado.total_debit || 0;
+  //       value.percent = st.consolidado.percent_debit || 0;
+  //       break;
+  //     case 'consolidado':
+  //       value.value = st.consolidado.total_consolidado || 0;
+  //       value.percent = st.consolidado.percent_consolidado;
+  //       break;
+  //   }
+  // });
+  // return st;
+  // }
 
-  public onTabChange(event: MatTabChangeEvent): void {
-    this.tabChanged = event.index;
-  }
+  // public onTabChange(event: MatTabChangeEvent): void {
+  //   this.tabChanged = event.index;
+  // }
 
   // public onDatesListening(event: any): void {
   //   switch (event.type) {

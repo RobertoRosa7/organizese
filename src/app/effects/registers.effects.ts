@@ -55,13 +55,7 @@ export class RegistersEffect {
         const source = { ...response, source: this.props.new_register };
         return SET_ERRORS({ payload: source });
       } else {
-        this.store.dispatch(SET_SUCCESS({ payload: this.props.new_register }));
-        this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
-        this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
-        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
-        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
-        this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY());
-        this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+        this.dispatchActions({ payload: this.props.new_register });
         return actions.INIT({ payload: {} });
       }
     }),
@@ -91,15 +85,7 @@ export class RegistersEffect {
         const source = { ...payload, source: this.props.delete_register };
         return SET_ERRORS({ payload: source });
       } else {
-        this.store.dispatch(
-          SET_SUCCESS({ payload: this.props.delete_register })
-        );
-        this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
-        this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
-        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
-        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
-        this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY());
-        this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+        this.dispatchActions({ payload: this.props.delete_register });
         return actions.GET_REGISTERS({ payload });
       }
     }),
@@ -128,20 +114,12 @@ export class RegistersEffect {
         of(payload),
       ])
     ),
-    map(([response, payload]) => {
+    map(([response, _]) => {
       if (response instanceof HttpErrorResponse) {
         const source = { ...response, source: this.props.update_register };
         return SET_ERRORS({ payload: source });
       } else {
-        this.store.dispatch(
-          SET_SUCCESS({ payload: this.props.update_register })
-        );
-        this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
-        this.store.dispatch(actionsDashboard.INIT_DASHBOARD());
-        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO());
-        this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS());
-        this.store.dispatch(actionsDashboard.FETCH_GRAPH_CATEGORY());
-        this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+        this.dispatchActions({ payload: this.props.update_register });
         return actions.SET_UPDATE({ payload: response.data });
       }
     }),
@@ -159,7 +137,7 @@ export class RegistersEffect {
         of(payload),
       ])
     ),
-    map(([response, payload]) => {
+    map(([response, _]) => {
       if (response instanceof HttpErrorResponse) {
         const source = { ...response, source: this.props.fetch_search };
         return SET_ERRORS({ payload: source });
@@ -169,4 +147,13 @@ export class RegistersEffect {
     }),
     catchError((err) => of(err))
   );
+
+  private dispatchActions(payload?: any): void {
+    this.store.dispatch(SET_SUCCESS(payload));
+    this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
+    this.store.dispatch(actionsDashboard.PUT_CONSOLIDADO());
+    this.store.dispatch(actionsDashboard.PUT_GRAPH_OUTCOME_INCOME());
+    this.store.dispatch(actionsDashboard.PUT_LASTDATE_OUTCOME());
+    this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+  }
 }

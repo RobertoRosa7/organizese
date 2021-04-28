@@ -4,11 +4,7 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as actionsApp from '../actions/app.actions';
-import {
-  GET_STATUS_CODE,
-  SET_ERRORS,
-  SET_STATUS_CODE,
-} from '../actions/errors.actions';
+import { SET_ERRORS } from '../actions/errors.actions';
 import { AppService } from '../services/app.service';
 import { IndexdbService } from '../services/indexedbs.service';
 

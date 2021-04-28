@@ -24,6 +24,7 @@ const BASE = {
   auto_complete: [],
   graph_category: [],
   outcome_income: {},
+  lastdate_outcome: {},
   graph_dates: {
     dt_start: moment().subtract(31, 'days'),
     dt_end: moment(new Date()),
@@ -34,6 +35,10 @@ const INITIAL_STATES = BASE;
 
 const dashboardReducers = createReducer(
   INITIAL_STATES,
+  on(actions.SET_LASTDATE_OUTCOME, (states, { payload }) => ({
+    ...states,
+    lastdate_outcome: payload,
+  })),
   on(actions.GET_TOTALS, (states, { payload }) => ({
     ...states,
     consolidado: payload,

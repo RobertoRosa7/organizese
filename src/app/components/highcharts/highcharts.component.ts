@@ -71,7 +71,7 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
   @Input() public dtEnd: Date;
   @Input() public data: any;
   @Input() public type: string;
-
+  @Input() public minDate: Date = new Date('1920-01-01');
   @Output() public send = new EventEmitter();
 
   public differ: any;
@@ -81,7 +81,7 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
   public setDtEnd: any;
   public color: string;
   public isDark: boolean;
-  public minDate: Date = new Date('1920-01-01');
+
   private theme: string;
   private themeInverse: string;
 
@@ -107,9 +107,7 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
       )
       .subscribe();
 
-    this.dashboardServices
-      .fetchLastDate()
-      .subscribe((dt) => (this.minDate = new Date(dt.dt_start)));
+    // this.dashboardServices.fetchLastDate().subscribe((dt) => console.log(dt));
     this.startChart();
   }
 
