@@ -148,12 +148,42 @@ export class RegistersEffect {
     catchError((err) => of(err))
   );
 
-  private dispatchActions(payload?: any): void {
+  private async dispatchActions(payload?: any): Promise<any> {
     this.store.dispatch(SET_SUCCESS(payload));
-    this.store.dispatch(actionsDashboard.FETCH_DASHBOARD());
-    this.store.dispatch(actionsDashboard.PUT_CONSOLIDADO());
-    this.store.dispatch(actionsDashboard.PUT_GRAPH_OUTCOME_INCOME());
-    this.store.dispatch(actionsDashboard.PUT_LASTDATE_OUTCOME());
-    this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE());
+    await this.putDashboard();
+    await this.putConsolidado();
+    await this.putGraphOutcomeIncome();
+    await this.putLastDateOutcome();
+    await this.putAutocomplete();
+  }
+
+  private putDashboard(): Promise<any> {
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.PUT_DASHBOARD())
+    );
+  }
+
+  private putConsolidado(): Promise<any> {
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.PUT_CONSOLIDADO())
+    );
+  }
+
+  private putGraphOutcomeIncome(): Promise<any> {
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.PUT_GRAPH_OUTCOME_INCOME())
+    );
+  }
+
+  private putLastDateOutcome(): Promise<any> {
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.PUT_LASTDATE_OUTCOME())
+    );
+  }
+
+  private putAutocomplete(): Promise<any> {
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
+    );
   }
 }

@@ -18,16 +18,17 @@ export class DashboardEffect {
     private store: Store
   ) {}
 
+  // init chama o consolidado
   @Effect()
   public init$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.INIT_DASHBOARD),
     mergeMap(() => this.indexedb.getById('consolidado_id')),
     mergeMap((payload) => {
       if (payload) {
-        console.log('consolidado from indexedb');
+        console.log('indexedb: consolidado');
         return of(payload.payload);
       } else {
-        console.log('consolidado from server');
+        console.log('server: consolidado');
         return this.dashboardService.fetchConsolidado().pipe(
           map((payload) => {
             this.indexedb.create({ id: 'consolidado_id', payload });
@@ -135,6 +136,7 @@ export class DashboardEffect {
     catchError((err) => of(err))
   );
 
+  // deprecated
   @Effect()
   public fetchEvolucao$: Observable<Actions> = this.action.pipe(
     ofType(actions.FETCH_EVOLUCAO),
@@ -153,6 +155,7 @@ export class DashboardEffect {
     catchError((e) => of(e))
   );
 
+  // deprecated
   @Effect()
   public fetchEvolucaoDespesas$: Observable<Actions> = this.action.pipe(
     ofType(actions.FETCH_EVOLUCAO_DESPESAS),
@@ -173,6 +176,7 @@ export class DashboardEffect {
     catchError((e) => of(e))
   );
 
+  // deprecated
   @Effect()
   public fetchEvolucaoDetail$: Observable<Actions> = this.action.pipe(
     ofType(actions.FETCH_EVOLUCAO_DETAIL),
@@ -192,6 +196,7 @@ export class DashboardEffect {
     catchError((e) => of(e))
   );
 
+  // deprecated
   @Effect()
   public graphCategory$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.FETCH_GRAPH_CATEGORY),
@@ -223,10 +228,10 @@ export class DashboardEffect {
     ),
     mergeMap(([payload, { dates }]) => {
       if (payload) {
-        console.log('from indexedb');
+        console.log('indexedb: graph');
         return of(payload.payload);
       } else {
-        console.log('from server');
+        console.log('server: graph');
         return this.dashboardService.fetchGraphOutcomeIncome(dates).pipe(
           map((payload) => {
             this.indexedb.create({
@@ -277,15 +282,54 @@ export class DashboardEffect {
   @Effect()
   public fetchDashboard$: Observable<Actions> = this.action.pipe(
     ofType(actions.actionsTypes.FETCH_DASHBOARD),
-    switchMap(() => from(this.getDatesFromStore())),
-    mergeMap(({ dates, type }) =>
-      this.dashboardService
-        .fetchDashboard(dates[type])
-        .pipe(catchError((e) => of(e)))
+    switchMap(() =>
+      forkJoin([
+        this.indexedb.getById('registers_to_dashboard_id'),
+        from(this.getDatesFromStore()),
+      ])
     ),
+    mergeMap(([payload, { dates }]) => {
+      if (payload) {
+        console.log('indexedb: registers to dash from');
+        return of(payload.payload);
+      } else {
+        console.log('server: registers to dash from');
+        return this.dashboardService.fetchDashboard(dates).pipe(
+          map((payload) => {
+            this.indexedb.create({ id: 'registers_to_dashboard_id', payload });
+            return payload;
+          }),
+          catchError((e) => of(e))
+        );
+      }
+    }),
     map((payload) => {
       if (payload instanceof HttpErrorResponse) {
         const source = { ...payload, source: 'set_dashboard' };
+        return SET_ERRORS({ payload: source });
+      } else {
+        return actions.SET_DASHBOARD({ payload });
+      }
+    }),
+    catchError((err) => of(err))
+  );
+
+  @Effect()
+  public putDashboard$: Observable<Actions> = this.action.pipe(
+    ofType(actions.actionsTypes.PUT_DASHBOARD),
+    switchMap(() => from(this.getDatesFromStore())),
+    mergeMap(({ dates }) =>
+      this.dashboardService.fetchDashboard(dates).pipe(
+        map((payload) => {
+          this.indexedb.update({ id: 'registers_to_dashboard_id', payload });
+          return payload;
+        }),
+        catchError((e) => of(e))
+      )
+    ),
+    map((payload) => {
+      if (payload instanceof HttpErrorResponse) {
+        const source = { ...payload, source: 'put_dashboard' };
         return SET_ERRORS({ payload: source });
       } else {
         return actions.SET_DASHBOARD({ payload });
@@ -317,10 +361,10 @@ export class DashboardEffect {
     mergeMap(() => this.indexedb.getById('lastdate_outcome_id')),
     mergeMap((payload) => {
       if (payload) {
-        console.log('last date from indexedb');
+        console.log('indexedb: last date');
         return of(payload.payload);
       } else {
-        console.log('last date from server');
+        console.log('server: last date');
         return this.dashboardService.fetchLastDate().pipe(
           map((payload) => {
             this.indexedb.create({ id: 'lastdate_outcome_id', payload });

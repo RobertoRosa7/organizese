@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit, DoCheck {
         // consolidado: dashboard.consolidado,
         // autocomplete: dashboard.auto_complete,
         theme: dashboard.dark_mode,
-        // profile: profile.user,
+        profile: profile.user,
         // hide_values: app.hide_values,
       }))
       .subscribe(async (state) => {
@@ -144,7 +144,7 @@ export class DashboardComponent implements OnInit, DoCheck {
         // this.isDark = !(state.theme === 'dark-mode');
         // this.hideValues = state.hide_values;
         // this.autocomplete = state.autocomplete;
-        // this.user = state.profile;
+        this.user = state.profile;
 
         if (state.http_error.errors.length > 0) {
           this.handleError(state.http_error.errors[0]);

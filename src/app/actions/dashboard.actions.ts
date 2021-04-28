@@ -30,6 +30,7 @@ export enum actionsTypes {
   PUT_GRAPH_OUTCOME_INCOME = '[PUT_GRAPH_OUTCOME_INCOME]',
   PUT_LASTDATE_OUTCOME = '[PUT_LASTDATE_OUTCOME]',
   PUT_CONSOLIDADO = '[PUT_CONSOLIDADO]',
+  PUT_DASHBOARD = '[PUT_DASHBOARD]',
 
   DARK_MODE = '[DARK_MODE]',
   UPDATE_AUTOCOMPLETE = '[UPDATE_AUTOCOMPLETE]',
@@ -113,6 +114,7 @@ export const DARK_MODE = createAction(
 );
 
 export const PUT_CONSOLIDADO = createAction(actionsTypes.PUT_CONSOLIDADO);
+export const PUT_DASHBOARD = createAction(actionsTypes.PUT_DASHBOARD);
 export const PUT_GRAPH_OUTCOME_INCOME = createAction(
   actionsTypes.PUT_GRAPH_OUTCOME_INCOME
 );
