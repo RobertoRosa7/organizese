@@ -70,7 +70,7 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
   @Input() public dtStart: Date;
   @Input() public dtEnd: Date;
   // @Input() public tabChanged: number;
-
+  @Input() public data: any;
   @Input() public type: string;
 
   @Output() public send = new EventEmitter();
@@ -230,7 +230,7 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
   //   series: [{ name: 'Despesa', colorByPoint: true, data: [] }],
   // };
 
-  public data: any = {};
+  // public data: any = {};
   public differ: any;
   public enableButtonFilter = true;
   public isMobile: boolean;
@@ -241,8 +241,8 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
   public minDate: Date = new Date('1920-01-01');
   private theme: string;
   private themeInverse: string;
-  private outcomeIncome: any;
-  private chart: any;
+  // private outcomeIncome: any;
+  // private chart: any;
 
   constructor(
     private store: Store,
@@ -270,8 +270,8 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
       .fetchLastDate()
       .subscribe((dt) => (this.minDate = new Date(dt.dt_start)));
 
-    this.initGraphOutcomeIncome();
-    setTimeout(() => this.startChart(), 200);
+    // this.initGraphOutcomeIncome();
+    this.startChart();
   }
 
   public ngOnChanges(): void {}
@@ -334,30 +334,30 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
     }
   }
 
-  private buildIncome(): any[] {
-    let income: any = [];
-    for (const props in this.outcomeIncome.in.graph_evolution) {
-      if (props !== 'dates') {
-        income = income.concat(
-          this.outcomeIncome.in.graph_evolution[props].values
-        );
-      }
-    }
-    return income;
-  }
+  // private buildIncome(): any[] {
+  //   let income: any = [];
+  //   for (const props in this.outcomeIncome.in.graph_evolution) {
+  //     if (props !== 'dates') {
+  //       income = income.concat(
+  //         this.outcomeIncome.in.graph_evolution[props].values
+  //       );
+  //     }
+  //   }
+  //   return income;
+  // }
 
-  private buildOutcome(): any[] {
-    let outcome: any = [];
-    for (const props in this.outcomeIncome.out.graph_evolution) {
-      if (props !== 'dates') {
-        outcome.push({
-          name: this.outcomeIncome.out.graph_evolution[props].label,
-          data: this.outcomeIncome.out.graph_evolution[props].values,
-        });
-      }
-    }
-    return outcome;
-  }
+  // private buildOutcome(): any[] {
+  //   let outcome: any = [];
+  //   for (const props in this.outcomeIncome.out.graph_evolution) {
+  //     if (props !== 'dates') {
+  //       outcome.push({
+  //         name: this.outcomeIncome.out.graph_evolution[props].label,
+  //         data: this.outcomeIncome.out.graph_evolution[props].values,
+  //       });
+  //     }
+  //   }
+  //   return outcome;
+  // }
 
   private startChart(): void {
     this.chartService.getCharts().subscribe((chart) => {
@@ -368,8 +368,8 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
       chart.xAxis.labels.style.color = this.themeInverse;
       chart.legend.itemStyle.color = this.themeInverse;
 
-      chart.series = this.outcomeIncome;
-      chart.xAxis.categories = this.outcomeIncome[0].dates;
+      chart.series = this.data;
+      chart.xAxis.categories = this.data[0].dates;
       Highcharts.chart(this.highchartLine.nativeElement, chart);
     });
   }
@@ -385,7 +385,7 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
       this.themeInverse = 'var(--white-one)';
     }
 
-    this.outcomeIncome = states.outcome_income;
+    // this.outcomeIncome = states.outcome_income;
     this.dtEnd = states.dates.dt_end;
     this.dtStart = states.dates.dt_start;
     return states;
@@ -394,9 +394,9 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
   private abstractStates({ dashboard }: any): any {
     return {
       theme: dashboard.dark_mode,
-      evolucao: dashboard.evolucao,
+      // evolucao: dashboard.evolucao,
       dates: dashboard.graph_dates,
-      evoucao_despesas: dashboard.evolucao_despesas,
+      // evoucao_despesas: dashboard.evolucao_despesas,
       outcome_income: dashboard.outcome_income,
     };
   }
@@ -487,24 +487,25 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
     return moment(d).isSameOrBefore(moment(new Date()));
   };
 
-  private initGraphEvolutionIncome(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO()))
-    );
-  }
+  // private initGraphEvolutionIncome(): Promise<any> {
+  //   return new Promise((resolve) =>
+  //     resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO()))
+  //   );
+  // }
 
-  private initGraphEvolutionOutcome(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS()))
-    );
-  }
-  private initGraphOutcomeIncome(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(
-        this.store.dispatch(actionsDashboard.FETCH_GRAPH_OUTCOME_INCOME())
-      )
-    );
-  }
+  // private initGraphEvolutionOutcome(): Promise<any> {
+  //   return new Promise((resolve) =>
+  //     resolve(this.store.dispatch(actionsDashboard.FETCH_EVOLUCAO_DESPESAS()))
+  //   );
+  // }
+
+  // private initGraphOutcomeIncome(): Promise<any> {
+  //   return new Promise((resolve) =>
+  //     resolve(
+  //       this.store.dispatch(actionsDashboard.FETCH_GRAPH_OUTCOME_INCOME())
+  //     )
+  //   );
+  // }
 
   public onSubmit(): void {
     this.store.dispatch(
@@ -515,12 +516,11 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
         },
       })
     );
-
-    this.initGraphEvolutionIncome().then(() =>
-      this.initGraphEvolutionOutcome().then(() => {
-        this.startChart();
-      })
-    );
+    // this.initGraphEvolutionIncome().then(() =>
+    //   this.initGraphEvolutionOutcome().then(() => {
+    //     this.startChart();
+    //   })
+    // );
 
     // switch (tab) {
     //   case 0:

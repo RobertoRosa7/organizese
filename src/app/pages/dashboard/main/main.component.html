@@ -1,42 +1,44 @@
 <section class="main">
-  <div *ngIf="isMobile" class="cards-main">
-    <owl-carousel
-      [options]="{ items: 1 }"
-      style="width: 100%"
-      [carouselClasses]="['owl-theme', 'row', 'sliding']"
-    >
-      <app-cards
-        [isLoading]="isMainLoading"
-        style="max-width: 200px"
-        *ngFor="let item of cards"
-        [item]="item"
-        [value]="item.value"
-      ></app-cards>
-    </owl-carousel>
-  </div>
+  <ng-container *ngIf="dashboard$ | async as states" class="cards-main">
+    <div *ngIf="isMobile">
+      <owl-carousel
+        [options]="{ items: 1 }"
+        style="width: 100%"
+        [carouselClasses]="['owl-theme', 'row', 'sliding']"
+      >
+        <app-cards
+          style="max-width: 200px"
+          *ngFor="let item of states.consolidado"
+          [item]="item"
+        ></app-cards>
+      </owl-carousel>
+    </div>
+  </ng-container>
 
   <div class="container-charts">
     <div class="chart-75">
-      <app-windows-hacker>
-        <app-highcharts type="spline"> </app-highcharts>
-      </app-windows-hacker>
-      <app-windows-hacker>
-        <app-list-registers
-          *ngFor="let item of ELEMENT_DATA"
-          [item]="item"
-        ></app-list-registers>
-      </app-windows-hacker>
+      <ng-container *ngIf="dashboard$ | async as states">
+        <app-windows-hacker>
+          <app-highcharts type="spline" [data]="states.outcome_income">
+          </app-highcharts>
+        </app-windows-hacker>
+      </ng-container>
+      <ng-container *ngIf="dashboard$ | async as states">
+        <app-windows-hacker>
+          <app-list-registers
+            *ngFor="let item of states.all"
+            [item]="item"
+          ></app-list-registers>
+        </app-windows-hacker>
+      </ng-container>
     </div>
     <div class="chart-25">
-      <app-windows-hacker *ngIf="!isMobile">
-        <app-cards
-          [isLoading]="isMainLoading"
-          *ngFor="let item of cards"
-          [item]="item"
-          [value]="item.value || 0"
-        >
-        </app-cards>
-      </app-windows-hacker>
+      <ng-container *ngIf="dashboard$ | async as states">
+        <app-windows-hacker *ngIf="!isMobile">
+          <app-cards *ngFor="let item of states.consolidado" [item]="item">
+          </app-cards>
+        </app-windows-hacker>
+      </ng-container>
     </div>
 
     <!-- <div class="charts">

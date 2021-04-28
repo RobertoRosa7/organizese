@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { Register } from 'src/app/models/models';
 import { DashboardService } from 'src/app/services/dashboard.service';
@@ -65,6 +66,8 @@ export class MainComponent
   public dtStart: Date;
   public dtEnd: Date;
   public minDate: Date;
+  public dashboard$: Observable<any>;
+  public outcomeIncome$: Observable<any>;
 
   constructor(
     protected store: Store,
@@ -91,29 +94,57 @@ export class MainComponent
 
   public async ngOnInit(): Promise<any> {
     await this.initializingMain();
-
-    this.store
-      .select(({ registers, dashboard }: any) =>
-        this.abastractStates({ registers, dashboard })
-      )
-      .pipe(
-        map((state) => this.mapToProps(state)),
-        delay(3500)
-      )
-      .subscribe(() => (this.isMainLoading = false));
+    this.dashboard$ = this.store.select(({ dashboard }: any) => ({
+      consolidado: this.cards.map((value: any) => {
+        switch (value.type) {
+          case 'incoming':
+            value.value = dashboard.consolidado.total_credit || 0;
+            value.percent = dashboard.consolidado.percent_credit || 0;
+            break;
+          case 'outcoming':
+            value.value = dashboard.consolidado.total_debit || 0;
+            value.percent = dashboard.consolidado.percent_debit || 0;
+            break;
+          case 'consolidado':
+            value.value = dashboard.consolidado.total_consolidado || 0;
+            value.percent = dashboard.consolidado.percent_consolidado;
+            break;
+        }
+        return value;
+      }),
+      outcome_income: dashboard.outcome_income,
+      all: dashboard.registers,
+    }));
+    // this.store
+    //   .select(({ registers, dashboard }: any) =>
+    //     this.abastractStates({ registers, dashboard })
+    //   )
+    //   .pipe(
+    //     map((state) => this.mapToProps(state)),
+    //     delay(3500)
+    //   )
+    //   .subscribe(() => (this.isMainLoading = false));
   }
 
   private initializingMain(): Promise<boolean> {
-    return new Promise((resolve) => {
-      this.initMain().then(() => {
-        resolve(true);
-      });
+    return new Promise(async (resolve) => {
+      await this.initMain();
+      await this.initGraphOutcomeIncome();
+      setTimeout(() => resolve(true), 100);
     });
   }
 
   private initMain(): Promise<any> {
     return new Promise((resolve) =>
       resolve(this.store.dispatch(actionsDashboard.FETCH_DASHBOARD()))
+    );
+  }
+
+  private initGraphOutcomeIncome(): Promise<any> {
+    return new Promise((resolve) =>
+      resolve(
+        this.store.dispatch(actionsDashboard.FETCH_GRAPH_OUTCOME_INCOME())
+      )
     );
   }
 
@@ -144,30 +175,25 @@ export class MainComponent
 
   private abastractStates({ registers, dashboard }: any): any {
     return {
-      all: [...dashboard.registers],
-      consolidado: dashboard.consolidado,
+      // all: [...dashboard.registers],
+      // consolidado: dashboard.consolidado,
       // evolucao: dashboard.evolucao,
-
       // evoucao_despesas: dashboard.evolucao_despesas,
       // graph_category: dashboard.graph_category,
       // a_pagar: dashboard.a_pagar,
-
       // a_receber: dashboard.a_receber,
       // total_credit: dashboard.total_credit,
       // total_debit: dashboard.total_debit,
-
       // despesas: dashboard.total_despesas,
       // receita: dashboard.total_receita,
       // all_days_period: dashboard.all_days_period,
-
-      // dates: dashboard.dates,
-      total: dashboard.total,
-      tab: registers.tab,
+      // total: dashboard.total,
+      // tab: registers.tab,
     };
   }
 
   private mapToProps(st: any): any {
-    this.ELEMENT_DATA = st.all;
+    // this.ELEMENT_DATA = st.all;
     // this.total = st.total;
     // this.totalDespesa = st.despesas;
     // this.totalReceita = st.receita;
@@ -176,28 +202,27 @@ export class MainComponent
     // this.CATEGORY_DATA = st.graph_category;
     // this.EVOLUCAO_DATA = st.evolucao;
     // this.EVOLUCAO_DESPESAS_DATA = st.evoucao_despesas;
-    this.percentConsolidado = st.consolidado.percent_consolidado;
-    this.percentDebit = st.consolidado.percent_debit;
-    this.OUTCOME_AND_INCOME.outcome = st.evoucao_despesas;
-    this.OUTCOME_AND_INCOME.income = st.evolucao;
-
-    this.cards.forEach((value) => {
-      switch (value.type) {
-        case 'incoming':
-          value.value = st.consolidado.total_credit || 0;
-          value.percent = st.consolidado.percent_credit || 0;
-          break;
-        case 'outcoming':
-          value.value = st.consolidado.total_debit || 0;
-          value.percent = st.consolidado.percent_debit || 0;
-          break;
-        case 'consolidado':
-          value.value = st.consolidado.total_consolidado || 0;
-          value.percent = st.consolidado.percent_consolidado;
-          break;
-      }
-    });
-    return st;
+    // this.percentConsolidado = st.consolidado.percent_consolidado;
+    // this.percentDebit = st.consolidado.percent_debit;
+    // this.OUTCOME_AND_INCOME.outcome = st.evoucao_despesas;
+    // this.OUTCOME_AND_INCOME.income = st.evolucao;
+    // this.cards.forEach((value) => {
+    //   switch (value.type) {
+    //     case 'incoming':
+    //       value.value = st.consolidado.total_credit || 0;
+    //       value.percent = st.consolidado.percent_credit || 0;
+    //       break;
+    //     case 'outcoming':
+    //       value.value = st.consolidado.total_debit || 0;
+    //       value.percent = st.consolidado.percent_debit || 0;
+    //       break;
+    //     case 'consolidado':
+    //       value.value = st.consolidado.total_consolidado || 0;
+    //       value.percent = st.consolidado.percent_consolidado;
+    //       break;
+    //   }
+    // });
+    // return st;
   }
 
   public onTabChange(event: MatTabChangeEvent): void {

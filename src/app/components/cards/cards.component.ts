@@ -35,11 +35,11 @@ export class CardsComponent implements OnInit {
   }
 
   public returnClass(): string {
-    if (this.value > 0 && this.item.type === 'incoming') {
+    if (this.item.value > 0 && this.item.type === 'incoming') {
       return 'cards-money cards-money-on';
-    } else if (this.value > 0 && this.item.type === 'outcoming') {
+    } else if (this.item.value > 0 && this.item.type === 'outcoming') {
       return 'cards-money cards-debit';
-    } else if (this.value < 0) {
+    } else if (this.item.value < 0) {
       return 'cards-money cards-money-off';
     } else {
       return 'cards-money';

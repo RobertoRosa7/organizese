@@ -12,6 +12,7 @@ export enum actionsTypes {
   FETCH_EVOLUCAO_DETAIL = '[FETCH_EVOLUCAO_DETAIL]',
   FETCH_GRAPH_CATEGORY = '[FETCH_GRAPH_CATEGORY]',
   FETCH_GRAPH_OUTCOME_INCOME = '[FETCH_GRAPH_OUTCOME_INCOME]',
+  PUT_GRAPH_OUTCOME_INCOME = '[PUT_GRAPH_OUTCOME_INCOME]',
   FETCH_AUTOCOMPLETE = '[FETCH_AUTOCOMPLETE]',
   FETCH_DATES = '[FETCH_DATES]',
 
@@ -30,7 +31,6 @@ export enum actionsTypes {
 }
 
 export const INIT_DASHBOARD = createAction(actionsTypes.INIT_DASHBOARD);
-
 export const FETCH_DASHBOARD = createAction(actionsTypes.FETCH_DASHBOARD);
 export const FETCH_EVOLUCAO = createAction(actionsTypes.FETCH_EVOLUCAO);
 export const FETCH_EVOLUCAO_DESPESAS = createAction(
@@ -51,7 +51,6 @@ export const FETCH_DATES = createAction(
   actionsTypes.FETCH_DATES,
   props<{ payload: any }>()
 );
-
 export const GET_TOTALS = createAction(
   actionsTypes.GET_TOTALS,
   props<{ payload: any }>()
@@ -60,7 +59,6 @@ export const GET_DEV_MODE = createAction(
   actionsTypes.GET_DEV_MODE,
   props<{ payload: any }>()
 );
-
 export const SET_DEV_MODE = createAction(
   actionsTypes.SET_DEV_MODE,
   props<{ payload: any }>()
@@ -93,7 +91,6 @@ export const SET_DASHBOARD = createAction(
   actionsTypes.SET_DASHBOARD,
   props<{ payload: any }>()
 );
-
 export const DARK_MODE = createAction(
   actionsTypes.DARK_MODE,
   props<{ payload: any }>()

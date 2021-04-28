@@ -24,13 +24,12 @@
     </div>
     <div class="cards-content">
       <div class="cards-cash">
-        <span class="cards-label">Total:</span>
         <span
-          matTooltip="R$ {{ formatarValor(value || 0) }}"
+          matTooltip="R$ {{ formatarValor(item.value || 0) }}"
           *ngIf="showValues; else hideValues"
           [ngClass]="returnClass()"
         >
-          R$ {{ formatarValor(value || 0) }}
+          R$ {{ formatarValor(item.value || 0) }}
         </span>
         <ng-template #hideValues>
           <span class="hide-value"> R$&nbsp;<span></span> </span>
