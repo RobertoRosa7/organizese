@@ -192,12 +192,12 @@ export class DashboardEffect {
       } else {
         console.log('from server');
         return this.dashboardService.fetchGraphOutcomeIncome(dates).pipe(
-          map((res) => {
+          map((payload) => {
             this.indexedb.create({
               id: 'outcome_income_id',
-              payload: res,
+              payload,
             });
-            return res;
+            return payload;
           }),
           catchError((e) => of(e))
         );
@@ -206,6 +206,31 @@ export class DashboardEffect {
     map((payload) => {
       if (payload instanceof HttpErrorResponse) {
         const source = { ...payload, source: 'graph_outcome_income' };
+        return SET_ERRORS({ payload: source });
+      } else {
+        return actions.SET_GRAPH_OUTCOME_INCOME({ payload });
+      }
+    }),
+    catchError((err) => of(err))
+  );
+
+  @Effect()
+  public putOutcomeIncome$: Observable<Actions> = this.action.pipe(
+    ofType(actions.actionsTypes.PUT_GRAPH_OUTCOME_INCOME),
+    switchMap(() => from(this.getDatesFromStore())),
+    mergeMap(({ dates }) =>
+      this.dashboardService.fetchGraphOutcomeIncome(dates).pipe(
+        map((payload) => {
+          console.log('update indexedb');
+          this.indexedb.update({ id: 'outcome_income_id', payload });
+          return payload;
+        }),
+        catchError((e) => of(e))
+      )
+    ),
+    map((payload) => {
+      if (payload instanceof HttpErrorResponse) {
+        const source = { ...payload, source: 'put_outcome_income' };
         return SET_ERRORS({ payload: source });
       } else {
         return actions.SET_GRAPH_OUTCOME_INCOME({ payload });

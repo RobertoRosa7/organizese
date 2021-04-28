@@ -42,6 +42,9 @@ export const FETCH_GRAPH_CATEGORY = createAction(
 export const FETCH_GRAPH_OUTCOME_INCOME = createAction(
   actionsTypes.FETCH_GRAPH_OUTCOME_INCOME
 );
+export const PUT_GRAPH_OUTCOME_INCOME = createAction(
+  actionsTypes.PUT_GRAPH_OUTCOME_INCOME
+);
 export const FETCH_EVOLUCAO_DETAIL = createAction(
   actionsTypes.FETCH_EVOLUCAO_DETAIL,
   props<{ payload: any }>()

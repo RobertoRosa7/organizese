@@ -19,7 +19,11 @@
     <div class="chart-75">
       <ng-container *ngIf="dashboard$ | async as states">
         <app-windows-hacker>
-          <app-highcharts type="spline" [data]="states.outcome_income">
+          <app-highcharts
+            (send)="onDatesChanges($event)"
+            type="spline"
+            [data]="states.outcome_income"
+          >
           </app-highcharts>
         </app-windows-hacker>
       </ng-container>

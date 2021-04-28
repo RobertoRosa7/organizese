@@ -115,15 +115,10 @@ export class MainComponent
       outcome_income: dashboard.outcome_income,
       all: dashboard.registers,
     }));
-    // this.store
-    //   .select(({ registers, dashboard }: any) =>
-    //     this.abastractStates({ registers, dashboard })
-    //   )
-    //   .pipe(
-    //     map((state) => this.mapToProps(state)),
-    //     delay(3500)
-    //   )
-    //   .subscribe(() => (this.isMainLoading = false));
+  }
+
+  public onDatesChanges(event: any): void {
+    this.store.dispatch(actionsDashboard.PUT_GRAPH_OUTCOME_INCOME());
   }
 
   private initializingMain(): Promise<boolean> {
