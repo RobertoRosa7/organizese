@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DialogsComponent } from 'src/app/components/dialogs/dialogs.component';
 import { DownloadsComponent } from 'src/app/components/downloads/downloads.component';
 import { LoginComponent } from 'src/app/components/login/login.component';
+import { SearchComponent } from 'src/app/components/search/search.component';
 import { MaterialModule } from 'src/app/material.module';
 import { LoginService } from 'src/app/services/login.service';
 import { NewPasswordComponent } from './new-password/new-password.component';
@@ -22,13 +23,14 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     LoginComponent,
-    DialogsComponent,
     SignInComponent,
     SignUpComponent,
     ResetPasswordComponent,
     VerifyComponent,
     NewPasswordComponent,
     DownloadsComponent,
+    DialogsComponent,
+    SearchComponent,
   ],
   imports: [MaterialModule, RouterModule.forChild(routes)],
   providers: [{ provide: LoginService }],

@@ -1,15 +1,9 @@
 <section class="side-panel">
-  <div class="side-panel-top item-menu">
-    <button
-      (click)="search($event)"
-      disableRipple="true"
-      mat-icon-button
-      type="button"
-    >
+  <div (click)="search($event)" class="side-panel-top item-menu">
+    <button disableRipple="true" mat-icon-button type="button">
       <mat-icon>search</mat-icon>
     </button>
     <span *ngIf="showText">Buscar</span>
-
     <button
       *ngIf="isMobile"
       (click)="closeSidePanel($event)"
@@ -24,11 +18,10 @@
   <div class="sidebar bg-mode display-none">
     <ul class="app-menu-list">
       <li
-        [title]="item.name"
+        [matTooltip]="item.name"
         (click)="goTo(item)"
         [ngClass]="{ 'link-active': isActive === item.link }"
         *ngFor="let item of menuList"
-        [routerLink]="item.link"
         class="item-menu"
       >
         <button disableRipple="true" mat-icon-button type="button">

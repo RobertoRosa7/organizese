@@ -25,6 +25,7 @@ export class DialogsComponent implements OnInit {
   public downloadList: any;
   public isLoading = true;
   public isDark: boolean;
+  public searchData: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public dialogData: DialogData,
@@ -40,6 +41,7 @@ export class DialogsComponent implements OnInit {
       .subscribe(async (state) => {
         this.isDark = !(state.theme === 'dark-mode');
       });
+
     switch (this.dialogData.type) {
       case 'details':
         this.type = this.dialogData.type;
@@ -51,6 +53,10 @@ export class DialogsComponent implements OnInit {
       case 'download':
         this.type = this.dialogData.type;
         this.downloadList = this.dialogData.data;
+        break;
+      case 'search':
+        this.type = this.dialogData.type;
+        this.searchData = this.dialogData.data;
         break;
     }
   }
@@ -132,5 +138,11 @@ export class DialogsComponent implements OnInit {
       }
     }
     return 'inset';
+  }
+
+  public onListening(event: any): void {
+    if (event === 'close') {
+      this.close();
+    }
   }
 }

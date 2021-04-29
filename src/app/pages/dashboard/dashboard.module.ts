@@ -97,7 +97,6 @@ registerLocaleData(localePt, 'pt');
     SettingsNewPasswordComponent,
     SidepanelComponent,
     ToolbarComponent,
-    // WindowsHackerComponent,
   ],
   exports: [
     LoaderComponent,

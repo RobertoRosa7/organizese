@@ -27,7 +27,6 @@ export class ListRegistersComponent implements OnInit {
   ) {
     this.breakpoint
       .observe([Breakpoints.XSmall])
-      // tslint:disable-next-line: deprecation
       .subscribe((result) => (this.isMobile = !!result.matches));
   }
 
@@ -36,7 +35,6 @@ export class ListRegistersComponent implements OnInit {
       theme: dashboard.dark_mode,
     }));
 
-    // tslint:disable-next-line: deprecation
     states.subscribe(
       (state) => (this.isDark = !(state.theme === 'light-mode'))
     );
@@ -49,8 +47,6 @@ export class ListRegistersComponent implements OnInit {
         panelClass: 'dialog-default',
       })
       .beforeClosed()
-
-      // tslint:disable-next-line: deprecation
       .subscribe((res) => {
         if (res) {
           this.store.dispatch(
@@ -76,7 +72,6 @@ export class ListRegistersComponent implements OnInit {
         panelClass: 'dialog-default',
       })
       .beforeClosed()
-      // tslint:disable-next-line: deprecation
       .subscribe((response) => {
         if (response) {
           this.store.dispatch(actionsRegister.DELETE_REGISTERS({ payload }));
@@ -93,7 +88,6 @@ export class ListRegistersComponent implements OnInit {
         panelClass: 'dialog-default',
       })
       .beforeClosed()
-      // tslint:disable-next-line: deprecation
       .subscribe((res: any) => {
         if (res && res.operation === 'edit') {
           this.edit(_, res.payload);

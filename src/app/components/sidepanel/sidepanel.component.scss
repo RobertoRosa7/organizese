@@ -50,4 +50,7 @@
   .item-menu button {
     min-width: 64px;
   }
+  .item-menu button[focus] {
+    background: inherit;
+  }
 }

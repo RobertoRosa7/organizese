@@ -22,13 +22,8 @@
   --white-two: #eee;
   --white-three: #ddd;
   --white-ice: #ecf0f1;
-  //dark
-  // --color-default-dark: #303030;
-  // --color-default-dark: #151825;
-  // --color-default-dark: #0b0d14;
-  // --color-default-dark: #15141d;
-  // --color-dark-secondary: #12181f;
 
+  //dark
   --text-dark: #d65a31;
   --text-dark-green: #0ff5e6;
   --color-default-dark: #060818;
@@ -149,13 +144,11 @@ h2.welcome-subtitle {
     font-size: 2em;
   }
 }
-
 @mixin text {
   text-transform: capitalize;
   margin: 8px 0;
   display: inline-block;
 }
-
 .dialog-default {
   width: 100%;
   max-height: 500px;
@@ -208,6 +201,10 @@ h2.welcome-subtitle {
     }
   }
 }
+.cdk-program-focused .mat-button-focus-overlay {
+  opacity: 0 !important;
+  background-color: transparent !important;
+}
 .cdk-global-scrollblock {
   position: static;
 }
@@ -224,7 +221,6 @@ h2.welcome-subtitle {
   background: #c2bcbc;
   border-radius: 10px;
 }
-
 @media screen and (max-width: 557px) {
   .dialog-default {
     max-width: 90% !important;
@@ -247,7 +243,6 @@ h2.welcome-subtitle {
     background: var(--color-whitesmoke);
   }
 }
-
 @media screen and (min-width: 557.98px) and (max-width: 768px) {
   .dialog-default {
     max-width: calc(100% - 211px) !important;
@@ -259,7 +254,6 @@ h2.welcome-subtitle {
     background: var(--color-whitesmoke);
   }
 }
-
 @media screen and (min-width: 768.98px) and (max-width: 1024px) {
   .dialog-default {
     max-width: calc(100% - 256px) !important;

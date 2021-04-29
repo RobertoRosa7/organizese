@@ -98,20 +98,6 @@ $border-width: 15%;
   .top {
     background: var(--color-default-dark);
   }
-  .mat-dialog-container,
-  .mat-card,
-  .mat-raised-button,
-  .mat-menu-panel,
-  .mat-datepicker-content,
-  .mat-select-panel,
-  .mat-expansion-panel,
-  .mat-autocomplete-panel,
-  .mat-autocomplete-panel,
-  .mat-tooltip,
-  .mat-form-field-outline,
-  .mat-option.mat-selected:not(.mat-active):not(:hover) {
-    background-color: var(--color-dark-secondary);
-  }
   .window {
     margin-bottom: 8px;
     margin-top: 8px;
@@ -202,4 +188,30 @@ $border-width: 15%;
   .aside {
     background-color: var(--color-dark-secondary);
   }
+  .mat-dialog-container,
+  .mat-card,
+  .mat-raised-button,
+  .mat-menu-panel,
+  .mat-datepicker-content,
+  .mat-select-panel,
+  .mat-expansion-panel,
+  .mat-autocomplete-panel,
+  .mat-autocomplete-panel,
+  .mat-tooltip,
+  // .mat-form-field-outline,
+  .mat-option.mat-selected:not(.mat-active):not(:hover) {
+    background-color: var(--color-dark-secondary);
+  }
+  .mat-form-field-outline {
+    background-color: #12151f;
+  }
+  // .mat-form-field-label,
+  // .mat-form-field-label.mat-focused,
+  // .mat-form-field.mat-focused.matform-field-should-float {
+  //   color: #fafafa;
+  // }
+  // .mat-form-field-underline,
+  // .mat-form-field-underline.mat-focused {
+  //   background-color: #fafafa;
+  // }
 }

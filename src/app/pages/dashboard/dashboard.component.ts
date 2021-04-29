@@ -6,14 +6,12 @@ import {
   OnInit,
   RendererFactory2,
 } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
-import { fromEvent, Observable } from 'rxjs';
-import { filter, map, startWith } from 'rxjs/operators';
+import { fromEvent } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
 import { Register } from 'src/app/models/models';
 import { IpcService } from 'src/app/services/ipc.service';
@@ -56,26 +54,26 @@ export class DashboardComponent implements OnInit, DoCheck {
     },
   ];
   public logo = './assets/icon-default-transparent-512x512.svg';
-  public searchTerms: FormControl = new FormControl();
+  // public searchTerms: FormControl = new FormControl();
   public consolidado = 0;
   public isMobile = false;
   public json: any;
   public scroll: number;
-  public buttonToTop: boolean;
+  // public buttonToTop: boolean;
   public type: string;
   public value: number;
   public showErrors = false;
   public isActive = '';
   public differ: any;
-  public autocomplete: string[] = [];
-  public autocomplete$: Observable<string[]>;
+  // public autocomplete: string[] = [];
+  // public autocomplete$: Observable<string[]>;
   public user: any;
   public isLoadingDashboard = true;
-  private timeDelay = 1500;
+  // private timeDelay = 1500;
   public hideValues: boolean;
   public isDark: boolean;
   public renderer: any;
-  private previousScroll = 0;
+  // private previousScroll = 0;
   public hide = true;
 
   constructor(
@@ -100,12 +98,12 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
     this.differ = this.differs?.find({}).create();
 
-    this.autocomplete$ = this.searchTerms.valueChanges.pipe(
-      startWith(''),
-      map((value) =>
-        value ? this.filterAutocomplete(value) : this.autocomplete
-      )
-    );
+    // this.autocomplete$ = this.searchTerms.valueChanges.pipe(
+    //   startWith(''),
+    //   map((value) =>
+    //     value ? this.filterAutocomplete(value) : this.autocomplete
+    //   )
+    // );
   }
 
   public ngOnInit(): void {
@@ -170,11 +168,11 @@ export class DashboardComponent implements OnInit, DoCheck {
     }
   }
 
-  private filterAutocomplete(value: string = ''): string[] {
-    return this.autocomplete
-      .filter((option) => option.toLowerCase().includes(value.toLowerCase()))
-      .sort();
-  }
+  // private filterAutocomplete(value: string = ''): string[] {
+  //   return this.autocomplete
+  //     .filter((option) => option.toLowerCase().includes(value.toLowerCase()))
+  //     .sort();
+  // }
 
   public isEmpty(payload: any): Promise<any> {
     return new Promise((resolve) => {
@@ -188,7 +186,7 @@ export class DashboardComponent implements OnInit, DoCheck {
     await this.fetchUser();
     await this.fetchRegisters();
     await this.initDashboard();
-    await this.fetchAutocomplete();
+    // await this.fetchAutocomplete();
   }
 
   private async fetchUser(): Promise<any> {
@@ -211,27 +209,27 @@ export class DashboardComponent implements OnInit, DoCheck {
     );
   }
 
-  private async fetchAutocomplete(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store?.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE()))
-    );
-  }
+  // private async fetchAutocomplete(): Promise<any> {
+  //   return new Promise((resolve) =>
+  //     resolve(this.store?.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE()))
+  //   );
+  // }
 
-  public onSubmit(): void {
-    this.router?.navigate([
-      'dashboard/result-search',
-      { s: this.searchTerms.value },
-    ]);
-    this.searchTerms.reset();
-  }
+  // public onSubmit(): void {
+  //   this.router?.navigate([
+  //     'dashboard/result-search',
+  //     { s: this.searchTerms.value },
+  //   ]);
+  //   this.searchTerms.reset();
+  // }
 
-  public setSearch(event: MatAutocompleteSelectedEvent): void {
-    this.router?.navigate([
-      'dashboard/result-search',
-      { s: event.option.value },
-    ]);
-    this.searchTerms.reset();
-  }
+  // public setSearch(event: MatAutocompleteSelectedEvent): void {
+  //   this.router?.navigate([
+  //     'dashboard/result-search',
+  //     { s: event.option.value },
+  //   ]);
+  //   this.searchTerms.reset();
+  // }
 
   public handleError(error: any): void {
     this.showErrors = true;

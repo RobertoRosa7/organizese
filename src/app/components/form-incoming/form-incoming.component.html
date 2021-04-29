@@ -77,30 +77,32 @@
   <div class="container-button">
     <button
       disableRipple="true"
+      (click)="close(false)"
+      color="accent"
+      type="button"
+      mat-raised-button
+    >
+      Cancelar
+    </button>
+    <button
+      disableRipple="true"
       *ngIf="!edit"
       [disabled]="isDisabled"
-      mat-raised-button
+      mat-stroked-button
       type="submit"
     >
       Registrar
     </button>
+
     <button
       disableRipple="true"
       *ngIf="edit"
       [disabled]="isDisabled"
       (click)="close(form.value)"
-      mat-raised-button
+      mat-stroked-button
       type="button"
     >
       Atualizar
-    </button>
-    <button
-      disableRipple="true"
-      mat-raised-button
-      (click)="close(false)"
-      type="button"
-    >
-      Cancelar
     </button>
   </div>
 </form>

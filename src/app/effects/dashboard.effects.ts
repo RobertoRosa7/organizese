@@ -25,10 +25,8 @@ export class DashboardEffect {
     mergeMap(() => this.indexedb.getById('consolidado_id')),
     mergeMap((payload) => {
       if (payload) {
-        console.log('indexedb: consolidado');
         return of(payload.payload);
       } else {
-        console.log('server: consolidado');
         return this.dashboardService.fetchConsolidado().pipe(
           map((payload) => {
             this.indexedb.create({ id: 'consolidado_id', payload });
@@ -228,10 +226,8 @@ export class DashboardEffect {
     ),
     mergeMap(([payload, { dates }]) => {
       if (payload) {
-        console.log('indexedb: graph');
         return of(payload.payload);
       } else {
-        console.log('server: graph');
         return this.dashboardService.fetchGraphOutcomeIncome(dates).pipe(
           map((payload) => {
             this.indexedb.create({
@@ -290,10 +286,8 @@ export class DashboardEffect {
     ),
     mergeMap(([payload, { dates }]) => {
       if (payload) {
-        console.log('indexedb: registers to dash from');
         return of(payload.payload);
       } else {
-        console.log('server: registers to dash from');
         return this.dashboardService.fetchDashboard(dates).pipe(
           map((payload) => {
             this.indexedb.create({ id: 'registers_to_dashboard_id', payload });
@@ -361,10 +355,8 @@ export class DashboardEffect {
     mergeMap(() => this.indexedb.getById('lastdate_outcome_id')),
     mergeMap((payload) => {
       if (payload) {
-        console.log('indexedb: last date');
         return of(payload.payload);
       } else {
-        console.log('server: last date');
         return this.dashboardService.fetchLastDate().pipe(
           map((payload) => {
             this.indexedb.create({ id: 'lastdate_outcome_id', payload });

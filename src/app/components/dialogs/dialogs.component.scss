@@ -1,4 +1,5 @@
-@import "../../../styles.scss";
+@import '../../../styles.scss';
+@import '../../../themes/mixins';
 
 $padding-size: 16px;
 .dialog {
@@ -8,7 +9,8 @@ $padding-size: 16px;
   }
   .dialog-container.detail,
   .dialog-container.login,
-  .dialog-container.download {
+  .dialog-container.download,
+  .dialog-container.search {
     width: inherit;
     height: inherit;
     display: flex;
@@ -65,24 +67,12 @@ $padding-size: 16px;
           font-size: 60px;
         }
       }
-      // .status small,
-      // .categoria small,
-      // .tipo small {
-      //   display: flex;
-      //   align-items: center;
-      //   min-height: 24px;
-      // }
-      // .valor {
-      //   align-items: flex-start;
-      // }
-      // .line {
-      //   display: flex;
-      // }
     }
     .container-footer {
       padding: $padding-size;
       display: flex;
       align-items: center;
+
       .container-tools {
         flex: 1;
         display: flex;
@@ -91,6 +81,20 @@ $padding-size: 16px;
         font-size: 12px;
       }
     }
+  }
+  .dialog-container.search .content-dialog {
+    padding: 0;
+    display: block;
+  }
+  .dialog-container.search .container-footer {
+    width: 100%;
+    justify-content: space-between;
+    max-width: 320px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .dialog-container.search .container-footer button {
+    @include custom-button-icon-width-text;
   }
   .dialog-container.login .max-window button:focus,
   .dialog-container.login .max-window button:active {

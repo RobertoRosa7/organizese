@@ -1,9 +1,14 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 import * as actionsApp from '../../actions/app.actions';
+import * as actionsDashboard from '../../actions/dashboard.actions';
 import * as actionsLogin from '../../actions/login.actions';
+import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
+import { DialogsComponent } from '../dialogs/dialogs.component';
 
 @Component({
   selector: 'app-sidepanel',
@@ -61,10 +66,12 @@ export class SidepanelComponent implements OnInit {
   ];
   public isActive = '';
   public isMobile: boolean;
+
   constructor(
     private store: Store,
     private router: Router,
-    protected breakpoint: BreakpointObserver
+    private dialog: MatDialog,
+    private breakpoint: BreakpointObserver
   ) {
     this.breakpoint
       ?.observe([Breakpoints.XSmall])
@@ -72,60 +79,11 @@ export class SidepanelComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store
-      .select(({ dashboard }: any) => ({
-        consolidado: dashboard.consolidado,
-      }))
-      .subscribe(async (state) => {
-        this.cards.forEach((value) => {
-          switch (value.type) {
-            case 'incoming':
-              value.value = state.consolidado.total_credit || 0;
-              value.percent = state.consolidado.percent_credit || 0;
-              break;
-            case 'outcoming':
-              value.value = state.consolidado.total_debit || 0;
-              value.percent = state.consolidado.percent_debit || 0;
-              break;
-            case 'consolidado':
-              value.value = state.consolidado.total_consolidado || 0;
-              value.percent = state.consolidado.percent_consolidado;
-              break;
-          }
-        });
-      });
+    this.initialize();
   }
 
-  public returnClass(value: number, type: string): string {
-    if (value > 0 && type === 'incoming') {
-      return 'cards-money cards-money-on';
-    } else if (value > 0 && type === 'outcoming') {
-      return 'cards-money cards-debit';
-    } else if (value < 0) {
-      return 'cards-money cards-money-off';
-    } else {
-      return 'cards-money';
-    }
-  }
-
-  public formatarValor(valor: number): string {
-    return new Intl.NumberFormat('pt-BR', {
-      currency: 'BRL',
-      minimumFractionDigits: 2,
-    }).format(valor);
-  }
-
-  public returnFormatterType(type: string): string {
-    switch (type) {
-      case 'incoming':
-        return 'Entrada';
-      case 'outcoming':
-        return 'Saída';
-      case 'consolidado':
-        return 'Consolidado';
-      default:
-        return '';
-    }
+  private async initialize() {
+    await this.fetchAutocomplete();
   }
 
   public goTo(payload: any): void {
@@ -135,11 +93,17 @@ export class SidepanelComponent implements OnInit {
     if (this.router.url === payload.link) {
       this.send.emit('hide');
     }
+    this.router.navigateByUrl(payload.link);
   }
 
   public logout(): void {
-    this.router.navigateByUrl('/');
-    this.store.dispatch(actionsLogin.LOGOUT());
+    this.dialog
+      .open(DialogConfirmComponent, {
+        data: { type: 'logout' },
+        panelClass: 'dialog-default',
+      })
+      .afterClosed()
+      .subscribe((res) => (res ? this.resetSession() : undefined));
   }
 
   public returnColor(name: string): string {
@@ -164,11 +128,25 @@ export class SidepanelComponent implements OnInit {
 
   public search(event: Event): void {
     event.stopPropagation();
-    this.send.emit('hide');
+    this.dialog.open(DialogsComponent, {
+      data: { type: 'search', data: {} },
+      panelClass: 'dialog-default',
+    });
   }
 
   public closeSidePanel(event: Event): void {
     event.stopPropagation();
     this.send.emit('hide');
+  }
+
+  private fetchAutocomplete(): Promise<any> {
+    return new Promise((resolve) =>
+      resolve(this.store.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE()))
+    );
+  }
+
+  private resetSession() {
+    this.router.navigateByUrl('/');
+    this.store.dispatch(actionsLogin.LOGOUT());
   }
 }

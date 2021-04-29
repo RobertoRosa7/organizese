@@ -2,14 +2,14 @@
   <section class="dialog">
     <div class="header dialog-header-mode">
       <div class="title">
-        <small>Excluir</small>
+        <small>{{ title }}</small>
       </div>
       <div class="max-window">
         <span (click)="close()"><mat-icon>close</mat-icon></span>
       </div>
     </div>
     <div mat-dialog-content class="container-dialog">
-      <h2 class="welcome-subtitle">Tem certeza que quer excluir?</h2>
+      <h2 class="welcome-subtitle">{{ description }}</h2>
       <div class="container-buttons">
         <button
           disableRipple="true"
@@ -19,8 +19,8 @@
         >
           Fechar
         </button>
-        <button disableRipple="true" mat-raised-button (click)="close(true)">
-          Confirmar
+        <button disableRipple="true" mat-stroked-button (click)="close(true)">
+          {{ label }}
         </button>
       </div>
     </div>
