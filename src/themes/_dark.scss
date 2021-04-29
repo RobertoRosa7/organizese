@@ -99,76 +99,16 @@ $border-width: 15%;
     background: var(--color-default-dark);
   }
   .window {
-    margin-bottom: 8px;
-    margin-top: 8px;
     .window-body {
-      padding: 8px 16px;
       border-left: 1px solid var(--color-dark-secondary);
       border-right: 1px solid var(--color-dark-secondary);
-      overflow-y: auto;
-      max-height: 768px;
       background-color: var(--color-dark-secondary);
-    }
-    .window-top,
-    .window-footer {
-      height: $border-height;
-      position: relative;
-      padding: 0 $border-width;
-      font-size: 0.9em;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
     .window-top {
       border-bottom: $border-height solid var(--color-dark-secondary);
-      border-right: $border-length solid transparent;
-      border-left: $border-length solid transparent;
     }
     .window-footer {
       border-top: $border-height solid var(--color-dark-secondary);
-      border-right: $border-length solid transparent;
-      border-left: $border-length solid transparent;
-    }
-    .window-top::before {
-      content: '';
-      position: absolute;
-      height: 100%;
-      width: $border-width;
-      bottom: -$border-height;
-      left: -$border-height;
-      border-bottom: $border-length solid inherit;
-      border-left: $border-length solid transparent;
-    }
-    .window-top::after {
-      content: '';
-      position: absolute;
-      bottom: -$border-height;
-      right: -$border-height;
-      height: 100%;
-      width: $border-width;
-      border-bottom: $border-length solid inherit;
-      border-right: $border-length solid transparent;
-    }
-    .window-footer::before {
-      content: '';
-      position: absolute;
-      height: 100%;
-      width: $border-width;
-      top: -$border-height;
-      left: -$border-height;
-      border-top: $border-length solid inherit;
-      border-left: $border-length solid transparent;
-    }
-    .window-footer::after {
-      content: '';
-      position: absolute;
-      top: -$border-height;
-      right: -$border-height;
-      height: 100%;
-      width: $border-width;
-      border-top: $border-length solid inherit;
-      border-right: $border-length solid transparent;
     }
     .top-container,
     .footer-container {

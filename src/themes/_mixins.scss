@@ -44,3 +44,12 @@
   display: inline-block;
   max-width: 200px;
 }
+@mixin padding-page {
+  padding-left: 40px;
+  padding-right: 40px;
+
+  @media (max-width: 599.99px) {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

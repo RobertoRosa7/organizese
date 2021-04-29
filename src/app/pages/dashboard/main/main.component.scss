@@ -1,6 +1,8 @@
+@import '../../../../themes/mixins';
+
 .main {
-  padding-left: 40px;
-  padding-right: 40px;
+  @include padding-page;
+
   ::ng-deep .mat-tab-labels {
     justify-content: space-between;
   }
@@ -86,12 +88,6 @@
         font-size: 0.9em;
       }
     }
-  }
-}
-@media (max-width: 599.99px) {
-  .main {
-    padding-left: 10px;
-    padding-right: 10px;
   }
 }
 @media (max-width: 1024px) {

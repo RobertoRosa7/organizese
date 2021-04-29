@@ -1,0 +1,71 @@
+$border-height: 20px;
+$border-length: 60px;
+$border-width: 15%;
+
+.window {
+  margin-bottom: 8px;
+  margin-top: 8px;
+  .window-body {
+    padding: 8px 16px;
+    overflow-y: auto;
+  }
+  .window-top,
+  .window-footer {
+    height: $border-height;
+    position: relative;
+    padding: 0 $border-width;
+    font-size: 0.9em;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .window-top {
+    border-right: $border-length solid transparent;
+    border-left: $border-length solid transparent;
+  }
+  .window-footer {
+    border-right: $border-length solid transparent;
+    border-left: $border-length solid transparent;
+  }
+  .window-top::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: $border-width;
+    bottom: -$border-height;
+    left: -$border-height;
+    border-bottom: $border-length solid inherit;
+    border-left: $border-length solid transparent;
+  }
+  .window-top::after {
+    content: '';
+    position: absolute;
+    bottom: -$border-height;
+    right: -$border-height;
+    height: 100%;
+    width: $border-width;
+    border-bottom: $border-length solid inherit;
+    border-right: $border-length solid transparent;
+  }
+  .window-footer::before {
+    content: '';
+    position: absolute;
+    height: 100%;
+    width: $border-width;
+    top: -$border-height;
+    left: -$border-height;
+    border-top: $border-length solid inherit;
+    border-left: $border-length solid transparent;
+  }
+  .window-footer::after {
+    content: '';
+    position: absolute;
+    top: -$border-height;
+    right: -$border-height;
+    height: 100%;
+    width: $border-width;
+    border-top: $border-length solid inherit;
+    border-right: $border-length solid transparent;
+  }
+}

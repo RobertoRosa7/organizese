@@ -1,42 +1,61 @@
 @import '../../../../styles.scss';
+@import '../../../../themes/mixins';
 
 .registers {
-  .control {
+  @include padding-page;
+  .app-tabs {
     display: flex;
-    align-items: center;
-    width: 100%;
-    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
-      padding: 12px;
-    }
-    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-      padding: 0;
-    }
-    ::ng-deep .mat-form-field-wrapper {
-      padding-bottom: 0;
-    }
-    ::ng-deep .mat-form-field-infix {
-      border-top: 0;
-    }
-    ::ng-deep .mat-input-element {
-      font-size: 14px;
-      height: 20px;
-    }
-    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-      padding: 0px;
-    }
-    ::ng-deep .mat-select-arrow-wrapper {
-      display: block;
-    }
-    ::ng-deep .mat-select-placeholder {
-      font-size: 14px;
-    }
-    ::ng-deep .mat-select-trigger {
-      font-size: 14px;
-    }
-    .btn-menu {
-      flex: 1;
+    gap: 20px;
+    flex-wrap: wrap;
+    flex-direction: row-reverse;
+    .tabs {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      width: 100%;
+      overflow: hidden;
+
+      .control {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+          padding: 12px;
+        }
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+          padding: 0;
+        }
+        ::ng-deep .mat-form-field-wrapper {
+          padding-bottom: 0;
+        }
+        ::ng-deep .mat-form-field-infix {
+          border-top: 0;
+        }
+        ::ng-deep .mat-input-element {
+          font-size: 14px;
+          height: 20px;
+        }
+        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+          padding: 0px;
+        }
+        ::ng-deep .mat-select-arrow-wrapper {
+          display: block;
+        }
+        ::ng-deep .mat-select-placeholder {
+          font-size: 14px;
+        }
+        ::ng-deep .mat-select-trigger {
+          font-size: 14px;
+        }
+        .btn-menu {
+          flex: 1;
+        }
+      }
     }
   }
+
   .control .form {
     max-width: 150px;
   }
