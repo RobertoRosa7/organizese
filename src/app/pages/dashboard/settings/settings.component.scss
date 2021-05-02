@@ -1,13 +1,14 @@
 @import '../../../../styles.scss';
+@import '../../../../themes/mixins';
 
 .settings {
+  @include padding-page;
   position: relative;
-  height: 100%;
-  padding-left: 40px;
-  padding-right: 40px;
   .settings-container {
     display: flex;
     width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
     .aside {
       // min-width: 280px;
       ::ng-deep .mat-list-base .mat-list-item .mat-list-item-content,
@@ -99,8 +100,8 @@
   }
 }
 
-@media (max-width: 920px) {
-  .settings .settings-container .aside.mobile {
+@media (max-width: 768px) {
+  .settings .settings-container app-windows-hacker {
     display: none;
   }
 }

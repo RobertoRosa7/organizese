@@ -1,5 +1,6 @@
 <div class="registers">
-  <!-- <app-windows-hacker>
+  <app-windows-hacker>
+    <!-- <app-windows-hacker>
     <app-panel-control
       *ngIf="tab === 'read'"
       [total]="total"
@@ -12,9 +13,162 @@
     >
     </app-panel-control>
   </app-windows-hacker> -->
+    <div class="tab-menu">
+      <div class="menus">
+        <app-tab-menu
+          class="btn-menu"
+          label="Listar"
+          icon="list"
+          target="read"
+        ></app-tab-menu>
+        <app-tab-menu
+          class="btn-menu"
+          label="Incluir"
+          icon="add"
+          target="create"
+        ></app-tab-menu>
+        <app-tab-menu
+          class="btn-menu"
+          label="Imprimir"
+          icon="print"
+          target="print"
+        ></app-tab-menu>
+      </div>
+      <div *ngIf="!isMobile" class="control forms">
+        <mat-form-field
+          matTooltip="Ordenar"
+          class="form"
+          floatLabel="always"
+          appearance="outline"
+        >
+          <mat-select
+            panelClass="custom-select"
+            [(value)]="orderby"
+            (selectionChange)="orderbyChange($event)"
+            placeholder="Ordenar por"
+          >
+            <mat-option
+              [value]="option"
+              *ngFor="let option of displayedColumns"
+              >{{ option }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
 
-  <app-tabs class="app-tabs">
-    <div style="width: 29%; max-width: 350px; margin-left: auto">
+        <mat-form-field
+          matTooltip="Filtrar"
+          class="form"
+          floatLabel="always"
+          appearance="outline"
+        >
+          <mat-select
+            panelClass="custom-select"
+            [(value)]="filterByDays"
+            placeholder="Ultimos 7 dias"
+            (selectionChange)="filterByDaysChange($event)"
+          >
+            <mat-option value="7">Ultimos 7 dias</mat-option>
+            <mat-option value="15">Ultimos 15 dias</mat-option>
+            <mat-option value="30">Ultimos 30 dias</mat-option>
+            <mat-option value="60">Ultimos 60 dias</mat-option>
+            <mat-option value="todos">Todos dias</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field
+          matTooltip="Filtrar"
+          class="form"
+          floatLabel="always"
+          appearance="outline"
+        >
+          <mat-select
+            panelClass="custom-select"
+            [(value)]="inOutComing"
+            (selectionChange)="inOutComingChange($event)"
+            placeholder="Entradas/Saídas"
+          >
+            <mat-option
+              [value]="option.type"
+              *ngFor="let option of categoriesList"
+              >{{ option.label }}</mat-option
+            >
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="isMobile">
+        <button
+          matTooltip="Classificar"
+          class="btn-classificar"
+          type="button"
+          mat-raised-button
+          [matMenuTriggerFor]="menu"
+        >
+          <span>Classificar</span>
+        </button>
+        <mat-menu #menu="matMenu">
+          <div class="control mobile">
+            <mat-form-field
+              class="form"
+              floatLabel="always"
+              appearance="outline"
+            >
+              <mat-select
+                panelClass="custom-select"
+                [(value)]="orderby"
+                (selectionChange)="orderbyChange($event)"
+                placeholder="Ordenar por"
+              >
+                <mat-option
+                  [value]="option"
+                  *ngFor="let option of displayedColumns"
+                  >{{ option }}</mat-option
+                >
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="form"
+              floatLabel="always"
+              appearance="outline"
+            >
+              <mat-select
+                panelClass="custom-select"
+                [(value)]="filterByDays"
+                placeholder="Ultimos 7 dias"
+                (selectionChange)="filterByDaysChange($event)"
+              >
+                <mat-option value="7">Ultimos 7 dias</mat-option>
+                <mat-option value="15">Ultimos 15 dias</mat-option>
+                <mat-option value="30">Ultimos 30 dias</mat-option>
+                <mat-option value="60">Ultimos 60 dias</mat-option>
+                <mat-option value="todos">Todos dias</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field
+              class="form"
+              floatLabel="always"
+              appearance="outline"
+            >
+              <mat-select
+                panelClass="custom-select"
+                [(value)]="inOutComing"
+                (selectionChange)="inOutComingChange($event)"
+                placeholder="Entradas/Saídas"
+              >
+                <mat-option value="incoming">Entradas</mat-option>
+                <mat-option value="outcoming">Saídas</mat-option>
+                <mat-option value="pending">Lançamento</mat-option>
+                <mat-option value="all">Entrada/Saídas</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-menu>
+      </div>
+    </div>
+
+    <app-tabs class="app-tabs">
+      <!-- <div class="tab-float">
       <app-tab-header class="tabs">
         <app-windows-hacker>
           <div class="control">
@@ -39,9 +193,9 @@
           </div>
         </app-windows-hacker>
 
-        <app-windows-hacker *ngIf="tab === 'read'">
-          <div style="width: 100%; max-width: 470px">
-            <div *ngIf="!isMobile" class="control forms">
+        <app-windows-hacker>
+          <div style="width: 100%">
+            <div class="control forms">
               <mat-form-field
                 class="form"
                 floatLabel="always"
@@ -172,11 +326,10 @@
           </div>
         </app-windows-hacker>
       </app-tab-header>
-    </div>
-    <div style="flex: 1">
-      <app-tab-content style="display: block; height: 100%">
-        <div *ngIf="tab === 'read'" read #extrato id="extrato">
-          <app-windows-hacker>
+    </div> -->
+      <div style="flex: 1">
+        <app-tab-content style="display: block">
+          <div *ngIf="tab === 'read'" read #extrato id="extrato">
             <ng-container *ngIf="ELEMENT_DATA.length > 0; else noneOfExtracts">
               <div *ngFor="let item of ELEMENT_DATA">
                 <span class="line-month">
@@ -200,11 +353,9 @@
               /></ng-container>
               <h2 class="welcome-subtitle">Não há registros</h2>
             </ng-template>
-          </app-windows-hacker>
-        </div>
+          </div>
 
-        <app-windows-hacker *ngIf="tab === 'create'" create>
-          <div style="padding: 16px">
+          <div *ngIf="tab === 'create'" create>
             <mat-tab-group mat-stretch-tabs class="create">
               <mat-tab label="Entrada">
                 <app-form-incoming
@@ -227,10 +378,8 @@
               </mat-tab>
             </mat-tab-group>
           </div>
-        </app-windows-hacker>
 
-        <app-windows-hacker *ngIf="tab === 'print'" print>
-          <div class="container-imprimir">
+          <div *ngIf="tab === 'print'" print class="container-imprimir">
             <div class="hedaer-print">
               <div class="logo">
                 <img [src]="logo" alt="logo" />
@@ -336,6 +485,7 @@
               </table>
               <div class="container-buttons">
                 <button
+                  matTooltip="Imprimir"
                   class="btn-print"
                   mat-stroked-button
                   (click)="imprimir()"
@@ -343,6 +493,7 @@
                   IMPRIMIR
                 </button>
                 <button
+                  matTooltip="Exportar"
                   [matMenuTriggerFor]="menu"
                   class="btn-print"
                   mat-stroked-button
@@ -370,8 +521,8 @@
               <h2 class="welcome-subtitle">Não há registros</h2>
             </ng-template>
           </div>
-        </app-windows-hacker>
-      </app-tab-content>
-    </div>
-  </app-tabs>
+        </app-tab-content>
+      </div>
+    </app-tabs>
+  </app-windows-hacker>
 </div>

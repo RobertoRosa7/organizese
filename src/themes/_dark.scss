@@ -154,4 +154,7 @@ $border-width: 15%;
   // .mat-form-field-underline.mat-focused {
   //   background-color: #fafafa;
   // }
+  .mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+  }
 }

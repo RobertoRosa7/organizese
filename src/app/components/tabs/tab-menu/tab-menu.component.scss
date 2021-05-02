@@ -1,15 +1,12 @@
-@import "../../../../styles.scss";
+@import '../../../../styles.scss';
 
 .tab-menu {
-  display: flex;
-  list-style: none;
-  width: 100%;
+  width: 120px;
 }
 .btn-tab {
   @include custom-button-icon-width-text;
 }
 .span-btn {
-  width: 100%;
   height: inherit;
   display: flex;
   padding: 8px 0;

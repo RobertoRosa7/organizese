@@ -1,3 +1,8 @@
+@import '../../../../themes/mixins';
+
+.result-search {
+  @include padding-page;
+}
 .result-search-title {
   display: flex;
   align-items: center;

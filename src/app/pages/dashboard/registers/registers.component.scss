@@ -3,56 +3,66 @@
 
 .registers {
   @include padding-page;
-  .app-tabs {
+  .app-tabs,
+  .tab-menu,
+  .tab-menu .tabs,
+  .tab-menu .control,
+  .tab-menu .menus {
     display: flex;
     gap: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+  .tab-menu,
+  .app-tabs .tabs .control {
+    justify-content: space-between;
+  }
+  .tab-menu .menus {
     flex-wrap: wrap;
+  }
+  .tab-menu .control {
+    align-items: center;
+    justify-content: center;
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+      padding: 12px;
+    }
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 0;
+    }
+    ::ng-deep .mat-form-field-wrapper {
+      padding-bottom: 0;
+    }
+    ::ng-deep .mat-form-field-infix {
+      border-top: 0;
+    }
+    ::ng-deep .mat-input-element {
+      font-size: 14px;
+      height: 20px;
+    }
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+      padding: 0px;
+    }
+    ::ng-deep .mat-select-arrow-wrapper {
+      display: block;
+    }
+    ::ng-deep .mat-select-placeholder {
+      font-size: 14px;
+    }
+    ::ng-deep .mat-select-trigger {
+      font-size: 14px;
+    }
+  }
+  .app-tabs {
     flex-direction: row-reverse;
+    .tab-float {
+      width: 29%;
+      max-width: 350px;
+      margin-left: auto;
+    }
     .tabs {
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
       width: 100%;
       overflow: hidden;
-
-      .control {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        width: 100%;
-
-        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
-          padding: 12px;
-        }
-        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-          padding: 0;
-        }
-        ::ng-deep .mat-form-field-wrapper {
-          padding-bottom: 0;
-        }
-        ::ng-deep .mat-form-field-infix {
-          border-top: 0;
-        }
-        ::ng-deep .mat-input-element {
-          font-size: 14px;
-          height: 20px;
-        }
-        ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
-          padding: 0px;
-        }
-        ::ng-deep .mat-select-arrow-wrapper {
-          display: block;
-        }
-        ::ng-deep .mat-select-placeholder {
-          font-size: 14px;
-        }
-        ::ng-deep .mat-select-trigger {
-          font-size: 14px;
-        }
-        .btn-menu {
-          flex: 1;
-        }
-      }
     }
   }
 
@@ -306,15 +316,33 @@ $marginTopButton: 25px;
   }
 }
 
-@media screen and (max-width: 600px) {
-  .registers .create {
+@media screen and (max-width: 768px) {
+  .registers .create,
+  .registers .app-tabs {
     flex-direction: column;
+  }
+  .registers .app-tabs .tab-float .tabs {
+    display: block;
+  }
+  .registers .app-tabs .tabs .control {
+    justify-content: center;
+  }
+  .registers .app-tabs .tabs .control .btn-menu {
+    flex: none;
+  }
+  .registers .app-tabs .tab-float,
+  .registers .control,
+  .container-imprimir table,
+  .container-imprimir table tbody,
+  .container-imprimir table tr,
+  .container-imprimir table td {
+    width: 100%;
+    max-width: 100%;
   }
   .btn-classificar {
     @include custom-button-icon-width-text;
   }
   .registers .control {
-    width: 100%;
     justify-content: space-between;
     flex-wrap: wrap;
   }
@@ -326,7 +354,6 @@ $marginTopButton: 25px;
   .container-imprimir table tr,
   .container-imprimir table td {
     display: block;
-    width: 100%;
   }
   .container-imprimir table tr {
     margin-bottom: 15px;
@@ -345,7 +372,9 @@ $marginTopButton: 25px;
 
 @media print {
   .registers .tabs,
+  .registers .tab-menu,
   .registers .control,
+  .registers .tab-float,
   .container-imprimir .btn-print {
     display: none;
   }

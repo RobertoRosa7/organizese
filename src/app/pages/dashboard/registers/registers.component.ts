@@ -247,7 +247,7 @@ export class RegistersComponent
     if (registers) {
       this.ELEMENT_ORDER = registers;
     }
-    const t = this.ELEMENT_ORDER.sort((a: any, b: any) => {
+    const t = [...this.ELEMENT_ORDER].sort((a: any, b: any) => {
       switch (value) {
         case 'Data + crescente':
           return a.created_at - b.created_at;
@@ -277,6 +277,7 @@ export class RegistersComponent
           return 0;
       }
     });
+
     this.ELEMENT_DATA = this.classificar(t);
   }
 

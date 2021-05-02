@@ -201,4 +201,7 @@ $border-width: 15%;
       margin-bottom: $border-height;
     }
   }
+  .mat-expansion-panel:not([class*='mat-elevation-z']) {
+    box-shadow: none;
+  }
 }

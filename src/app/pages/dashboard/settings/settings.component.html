@@ -1,7 +1,9 @@
 <section class="settings">
-  <!-- <mat-progress-bar *ngIf="isLoading" class="progress-bar" mode="indeterminate"></mat-progress-bar> -->
   <div class="settings-container">
-    <aside class="aside mobile">
+    <div style="flex: 1">
+      <router-outlet></router-outlet>
+    </div>
+    <app-windows-hacker>
       <mat-list>
         <mat-list-item
           class="list"
@@ -12,12 +14,6 @@
           <p mat-line>{{ item.subtitle }}</p>
         </mat-list-item>
       </mat-list>
-    </aside>
-    <div class="content">
-      <div class="pages">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-    <div class="aside mobile"></div>
+    </app-windows-hacker>
   </div>
 </section>

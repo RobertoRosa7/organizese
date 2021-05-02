@@ -37,12 +37,10 @@
         </app-windows-hacker>
       </ng-container>
     </div>
-    <div class="chart-25">
+    <div class="chart-25" *ngIf="!isMobile">
       <ng-container *ngIf="dashboard$ | async as states">
-        <app-windows-hacker *ngIf="!isMobile">
-          <app-cards *ngFor="let item of states.consolidado" [item]="item">
-          </app-cards>
-        </app-windows-hacker>
+        <app-cards *ngFor="let item of states.consolidado" [item]="item">
+        </app-cards>
       </ng-container>
     </div>
 

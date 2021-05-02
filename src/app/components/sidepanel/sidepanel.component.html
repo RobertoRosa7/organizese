@@ -1,5 +1,9 @@
 <section class="side-panel">
-  <div (click)="search($event)" class="side-panel-top item-menu">
+  <div
+    matTooltip="Buscar"
+    (click)="search($event)"
+    class="side-panel-top item-menu"
+  >
     <button disableRipple="true" mat-icon-button type="button">
       <mat-icon>search</mat-icon>
     </button>
@@ -30,7 +34,7 @@
         <span *ngIf="showText">{{ item.name }}</span>
       </li>
 
-      <li (click)="logout()" class="btn-logout item-menu">
+      <li matTooltip="Sair" (click)="logout()" class="btn-logout item-menu">
         <button disableRipple="true" mat-icon-button type="button">
           <mat-icon>logout</mat-icon>
         </button>

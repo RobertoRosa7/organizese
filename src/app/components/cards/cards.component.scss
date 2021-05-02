@@ -1,26 +1,33 @@
 @import '../../../styles.scss';
+.cards,
+.cards .cards-header,
+.cards .cards-title,
+.cards .cards-cash {
+  display: flex;
+}
+.cards,
+.cards .cards-header {
+  justify-content: space-between;
+}
+.cards,
+.cards .cards-title {
+  overflow: hidden;
+  justify-content: space-between;
+}
 .cards {
   min-height: 100px;
-  overflow: hidden;
   width: 100%;
-  display: flex;
   flex-direction: column;
-  justify-content: space-between;
   background-color: inherit;
   box-shadow: none;
   h1 {
     font-weight: 500;
   }
-  .cards-header {
-    display: flex;
+  .cards-header,
+  .cards-title {
     align-items: center;
-    justify-content: flex-start;
   }
   .cards-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     flex: 1;
@@ -30,15 +37,15 @@
       height: 16px;
       cursor: pointer;
     }
+    span {
+      font-size: 14px;
+      font-weight: 300;
+      margin-right: 8px;
+      display: inline-block;
+    }
   }
-  .cards-title span {
-    font-size: 18px;
-    font-weight: 300;
-    margin-right: 8px;
-    display: inline-block;
-  }
+
   .cards-cash {
-    display: flex;
     justify-content: flex-start;
     width: 100%;
     flex-direction: column;
@@ -64,9 +71,6 @@
   .cards-label {
     font-size: 12px;
     font-weight: 100;
-  }
-  .cards-content {
-    min-height: 87px;
   }
   .loading-waves {
     width: 100%;

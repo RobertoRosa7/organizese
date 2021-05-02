@@ -37,7 +37,7 @@ export class TabMenuComponent implements OnInit {
         tabList: registers.tabList,
       }))
       .subscribe((state) => {
-        this.tabActive = !!(state.tab === this.target);
+        this.tabActive = state.tab !== this.target;
         this.visible = !!state.visible[this.target];
         this.tabList = state.tabList;
       });
@@ -46,12 +46,13 @@ export class TabMenuComponent implements OnInit {
   }
 
   public selectedTab(target: string): void {
-    if (!this.isMobile) {
-      this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
-    } else {
-      this.store.dispatch(actionsRegisters.GET_SHOWTAB({ payload: ['back'] }));
-      this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
-    }
+    this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
+    // if (!this.isMobile) {
+    //   this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
+    // } else {
+    //   this.store.dispatch(actionsRegisters.GET_SHOWTAB({ payload: ['back'] }));
+    //   this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
+    // }
   }
 
   private setTabToShow(tabList: string[]): void {

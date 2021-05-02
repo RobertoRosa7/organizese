@@ -54,26 +54,20 @@ export class DashboardComponent implements OnInit, DoCheck {
     },
   ];
   public logo = './assets/icon-default-transparent-512x512.svg';
-  // public searchTerms: FormControl = new FormControl();
   public consolidado = 0;
   public isMobile = false;
   public json: any;
   public scroll: number;
-  // public buttonToTop: boolean;
   public type: string;
   public value: number;
   public showErrors = false;
   public isActive = '';
   public differ: any;
-  // public autocomplete: string[] = [];
-  // public autocomplete$: Observable<string[]>;
   public user: any;
   public isLoadingDashboard = true;
-  // private timeDelay = 1500;
   public hideValues: boolean;
   public isDark: boolean;
   public renderer: any;
-  // private previousScroll = 0;
   public hide = true;
 
   constructor(
@@ -97,13 +91,6 @@ export class DashboardComponent implements OnInit, DoCheck {
       .subscribe((result) => (this.isMobile = !!result.matches));
     this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
     this.differ = this.differs?.find({}).create();
-
-    // this.autocomplete$ = this.searchTerms.valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) =>
-    //     value ? this.filterAutocomplete(value) : this.autocomplete
-    //   )
-    // );
   }
 
   public ngOnInit(): void {
@@ -131,17 +118,12 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.store
       ?.select(({ http_error, dashboard, profile }: any) => ({
         http_error,
-        // consolidado: dashboard.consolidado,
-        // autocomplete: dashboard.auto_complete,
         theme: dashboard.dark_mode,
         profile: profile.user,
-        // hide_values: app.hide_values,
       }))
       .subscribe(async (state) => {
         this.logo = './assets/' + this.getTheme(state.theme);
-        // this.isDark = !(state.theme === 'dark-mode');
-        // this.hideValues = state.hide_values;
-        // this.autocomplete = state.autocomplete;
+        this.isDark = state.theme !== 'dark-mode';
         this.user = state.profile;
 
         if (state.http_error.errors.length > 0) {
@@ -168,12 +150,6 @@ export class DashboardComponent implements OnInit, DoCheck {
     }
   }
 
-  // private filterAutocomplete(value: string = ''): string[] {
-  //   return this.autocomplete
-  //     .filter((option) => option.toLowerCase().includes(value.toLowerCase()))
-  //     .sort();
-  // }
-
   public isEmpty(payload: any): Promise<any> {
     return new Promise((resolve) => {
       if (!this.utilsService?.isEmpty(payload)) {
@@ -186,7 +162,6 @@ export class DashboardComponent implements OnInit, DoCheck {
     await this.fetchUser();
     await this.fetchRegisters();
     await this.initDashboard();
-    // await this.fetchAutocomplete();
   }
 
   private async fetchUser(): Promise<any> {
@@ -208,28 +183,6 @@ export class DashboardComponent implements OnInit, DoCheck {
       )
     );
   }
-
-  // private async fetchAutocomplete(): Promise<any> {
-  //   return new Promise((resolve) =>
-  //     resolve(this.store?.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE()))
-  //   );
-  // }
-
-  // public onSubmit(): void {
-  //   this.router?.navigate([
-  //     'dashboard/result-search',
-  //     { s: this.searchTerms.value },
-  //   ]);
-  //   this.searchTerms.reset();
-  // }
-
-  // public setSearch(event: MatAutocompleteSelectedEvent): void {
-  //   this.router?.navigate([
-  //     'dashboard/result-search',
-  //     { s: event.option.value },
-  //   ]);
-  //   this.searchTerms.reset();
-  // }
 
   public handleError(error: any): void {
     this.showErrors = true;

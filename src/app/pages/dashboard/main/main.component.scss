@@ -15,7 +15,6 @@
     }
     .chart-25 {
       width: 25%;
-      max-width: 300px;
       margin-left: auto;
     }
     .chart-85 {
@@ -92,7 +91,7 @@
 }
 @media (max-width: 1024px) {
   .main .container-charts {
-    flex-direction: column;
+    flex-direction: column-reverse;
     .chart-25,
     .chart-75,
     .chart-85 {

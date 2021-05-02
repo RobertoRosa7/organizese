@@ -25,7 +25,6 @@ $min-height: 80px;
     overflow-x: hidden;
   }
 }
-
 @media (max-width: 599px) {
   .dashboard .aside {
     display: none;
@@ -48,7 +47,14 @@ $min-height: 80px;
     z-index: 9;
   }
 }
-
+@media print {
+  .dashboard .aside,
+  .dashboard .aside.mobile,
+  .dashboard .button-top,
+  .dashboard .container .toolbar {
+    display: none;
+  }
+}
 // version antiga
 
 // .dashboard {

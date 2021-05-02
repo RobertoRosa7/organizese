@@ -1,5 +1,6 @@
 <div *ngIf="visible" class="tab-menu">
   <button
+    [matTooltip]="label"
     *ngIf="isButton; else isNotButton"
     class="btn-tab"
     (click)="selectedTab(target)"
