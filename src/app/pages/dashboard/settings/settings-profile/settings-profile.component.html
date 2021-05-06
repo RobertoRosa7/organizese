@@ -1,112 +1,108 @@
-<app-windows-hacker>
-  <div class="settings-profile">
-    <div class="container-profile">
-      <button mat-icon-button routerLink="/dashboard/settings">
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-      <div class="profile">
-        <p>Informações básicas</p>
-        <form
-          [formGroup]="formProfile"
-          (ngSubmit)="onProfileSubmit()"
-          class="form-profile"
-        >
-          <div class="container-forms">
-            <div class="form-inline">
-              <mat-form-field
-                class="form"
-                floatLabel="always"
-                appearance="outline"
-              >
-                <mat-label>Nome</mat-label>
-                <input
-                  [readonly]="isLoading"
-                  type="text"
-                  formControlName="name"
-                  matInput
-                  placeholder="Nome"
-                />
-              </mat-form-field>
-            </div>
-
-            <div class="form-inline">
-              <mat-form-field
-                class="form"
-                floatLabel="always"
-                appearance="outline"
-              >
-                <mat-label>Celular</mat-label>
-                <input
-                  [readonly]="isLoading"
-                  mask="(00) 0 0000-0000"
-                  type="text"
-                  formControlName="tel"
-                  matInput
-                  placeholder="Celular"
-                  required
-                />
-                <mat-error *ngIf="formProfile.get('tel')?.hasError('required')">
-                  Digite o telefone
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="form-inline">
-              <mat-form-field
-                class="form"
-                floatLabel="always"
-                appearance="outline"
-              >
-                <mat-label>CPF/CNPJ</mat-label>
-                <input
-                  [readonly]="isLoading"
-                  mask="000.000.000-00||00.000.000/0000-00"
-                  type="text"
-                  formControlName="cpf"
-                  matInput
-                  placeholder="CPF ou CNPJ"
-                  required
-                />
-                <mat-error *ngIf="formProfile.get('cpf')?.hasError('required')">
-                  Digite o cpf ou cnpj
-                </mat-error>
-              </mat-form-field>
-            </div>
-
-            <div class="form-inline">
-              <mat-form-field
-                class="form"
-                floatLabel="always"
-                appearance="outline"
-              >
-                <mat-label>E-mail</mat-label>
-                <input
-                  [readonly]="isLoading"
-                  type="email"
-                  formControlName="email"
-                  matInput
-                  placeholder="E-mail"
-                  required
-                />
-                <mat-error
-                  *ngIf="formProfile.get('email')?.hasError('required')"
-                >
-                  Digite o email
-                </mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <div class="form-buttons">
-            <button
-              [disabled]="!formProfile.valid"
-              type="submit"
-              mat-raised-button
+<div class="settings-profile">
+  <div class="container-profile">
+    <button mat-icon-button routerLink="/dashboard/settings">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <div class="profile">
+      <p>Informações básicas</p>
+      <form
+        [formGroup]="formProfile"
+        (ngSubmit)="onProfileSubmit()"
+        class="form-profile"
+      >
+        <div class="container-forms">
+          <div class="form-inline">
+            <mat-form-field
+              class="form"
+              floatLabel="always"
+              appearance="outline"
             >
-              Salvar
-            </button>
+              <mat-label>Nome</mat-label>
+              <input
+                [readonly]="isLoading"
+                type="text"
+                formControlName="name"
+                matInput
+                placeholder="Nome"
+              />
+            </mat-form-field>
           </div>
-        </form>
-      </div>
+
+          <div class="form-inline">
+            <mat-form-field
+              class="form"
+              floatLabel="always"
+              appearance="outline"
+            >
+              <mat-label>Celular</mat-label>
+              <input
+                [readonly]="isLoading"
+                mask="(00) 0 0000-0000"
+                type="text"
+                formControlName="tel"
+                matInput
+                placeholder="Celular"
+                required
+              />
+              <mat-error *ngIf="formProfile.get('tel')?.hasError('required')">
+                Digite o telefone
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-inline">
+            <mat-form-field
+              class="form"
+              floatLabel="always"
+              appearance="outline"
+            >
+              <mat-label>CPF/CNPJ</mat-label>
+              <input
+                [readonly]="isLoading"
+                mask="000.000.000-00||00.000.000/0000-00"
+                type="text"
+                formControlName="cpf"
+                matInput
+                placeholder="CPF ou CNPJ"
+                required
+              />
+              <mat-error *ngIf="formProfile.get('cpf')?.hasError('required')">
+                Digite o cpf ou cnpj
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="form-inline">
+            <mat-form-field
+              class="form"
+              floatLabel="always"
+              appearance="outline"
+            >
+              <mat-label>E-mail</mat-label>
+              <input
+                [readonly]="isLoading"
+                type="email"
+                formControlName="email"
+                matInput
+                placeholder="E-mail"
+                required
+              />
+              <mat-error *ngIf="formProfile.get('email')?.hasError('required')">
+                Digite o email
+              </mat-error>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="form-buttons">
+          <button
+            [disabled]="!formProfile.valid"
+            type="submit"
+            mat-raised-button
+          >
+            Salvar
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-</app-windows-hacker>
+</div>

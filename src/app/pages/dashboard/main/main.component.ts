@@ -66,6 +66,7 @@ export class MainComponent
   public minDate: Date;
   public dashboard$: Observable<any>;
   public outcomeIncome$: Observable<any>;
+  public isSm: boolean;
 
   constructor(
     protected store: Store,
@@ -77,9 +78,11 @@ export class MainComponent
     protected dashboardService: DashboardService
   ) {
     super();
-    const breakPoint = this.breakpoint?.observe([Breakpoints.XSmall]);
-
-    breakPoint.subscribe((result) => (this.isMobile = !!result.matches));
+    this.breakpoint
+      ?.observe([Breakpoints.XSmall, Breakpoints.Small])
+      .subscribe((result) => {
+        this.isMobile = !!result.matches;
+      });
     this.differ = this.differs.find({}).create();
   }
 

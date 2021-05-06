@@ -10,7 +10,7 @@ $app-light-theme: mat-light-theme($mat-primary-pallete, $mat-accent-pallete);
 $app-dark-theme: mat-dark-theme($mat-dark-primary, $mat-dark-accent);
 $bg-dark-mode: var(--color-default-dark);
 
-$bg-light-mode: var(--white-two);
+$bg-light-mode: var(--white-one);
 $white-one: var(--white-one);
 $color-dark-mode: var(--color-white);
 
@@ -99,7 +99,7 @@ $border-width: 15%;
   .side-panel,
   .search-toolbar,
   .aside {
-    background-color: $white-one;
+    background-color: var(--white-one);
   }
   .side-panel-top,
   .app-menu-list li {
@@ -203,5 +203,8 @@ $border-width: 15%;
   }
   .mat-expansion-panel:not([class*='mat-elevation-z']) {
     box-shadow: none;
+  }
+  .registers .container {
+    background: var(--white-one);
   }
 }

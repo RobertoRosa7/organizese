@@ -1,28 +1,26 @@
-<app-windows-hacker>
-  <section class="dialog">
-    <div class="header dialog-header-mode">
-      <div class="title">
-        <small>{{ title }}</small>
-      </div>
-      <div class="max-window">
-        <span (click)="close()"><mat-icon>close</mat-icon></span>
-      </div>
+<section class="dialog">
+  <div class="header dialog-header-mode">
+    <div class="title">
+      <small>{{ title }}</small>
     </div>
-    <div mat-dialog-content class="container-dialog">
-      <h2 class="welcome-subtitle">{{ description }}</h2>
-      <div class="container-buttons">
-        <button
-          disableRipple="true"
-          color="accent"
-          mat-raised-button
-          (click)="close(false)"
-        >
-          Fechar
-        </button>
-        <button disableRipple="true" mat-stroked-button (click)="close(true)">
-          {{ label }}
-        </button>
-      </div>
+    <div class="max-window">
+      <span (click)="close()"><mat-icon>close</mat-icon></span>
     </div>
-  </section>
-</app-windows-hacker>
+  </div>
+  <div mat-dialog-content class="container-dialog">
+    <h2 class="welcome-subtitle">{{ description }}</h2>
+    <div class="container-buttons">
+      <button
+        disableRipple="true"
+        color="accent"
+        mat-raised-button
+        (click)="close(false)"
+      >
+        Fechar
+      </button>
+      <button disableRipple="true" mat-stroked-button (click)="close(true)">
+        {{ label }}
+      </button>
+    </div>
+  </div>
+</section>

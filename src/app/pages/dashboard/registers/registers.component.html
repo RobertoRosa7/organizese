@@ -1,18 +1,5 @@
 <div class="registers">
-  <app-windows-hacker>
-    <!-- <app-windows-hacker>
-    <app-panel-control
-      *ngIf="tab === 'read'"
-      [total]="total"
-      [filterByDays]="days"
-      [totalDespesa]="totalDespesa"
-      [totalReceita]="totalReceita"
-      [aReceber]="aReceber"
-      [aPagar]="aPagar"
-      style="width: 100%"
-    >
-    </app-panel-control>
-  </app-windows-hacker> -->
+  <div class="container">
     <div class="tab-menu">
       <div class="menus">
         <app-tab-menu
@@ -192,7 +179,7 @@
             ></app-tab-menu>
           </div>
         </app-windows-hacker>
-
+  
         <app-windows-hacker>
           <div style="width: 100%">
             <div class="control forms">
@@ -214,7 +201,7 @@
                   >
                 </mat-select>
               </mat-form-field>
-
+  
               <mat-form-field
                 class="form"
                 floatLabel="always"
@@ -233,7 +220,7 @@
                   <mat-option value="todos">Todos dias</mat-option>
                 </mat-select>
               </mat-form-field>
-
+  
               <mat-form-field
                 class="form"
                 floatLabel="always"
@@ -253,7 +240,7 @@
                 </mat-select>
               </mat-form-field>
             </div>
-
+  
             <div *ngIf="isMobile">
               <button
                 class="btn-classificar"
@@ -283,7 +270,7 @@
                       >
                     </mat-select>
                   </mat-form-field>
-
+  
                   <mat-form-field
                     class="form"
                     floatLabel="always"
@@ -302,7 +289,7 @@
                       <mat-option value="todos">Todos dias</mat-option>
                     </mat-select>
                   </mat-form-field>
-
+  
                   <mat-form-field
                     class="form"
                     floatLabel="always"
@@ -327,7 +314,7 @@
         </app-windows-hacker>
       </app-tab-header>
     </div> -->
-      <div style="flex: 1">
+      <div class="content">
         <app-tab-content style="display: block">
           <div *ngIf="tab === 'read'" read #extrato id="extrato">
             <ng-container *ngIf="ELEMENT_DATA.length > 0; else noneOfExtracts">
@@ -524,5 +511,5 @@
         </app-tab-content>
       </div>
     </app-tabs>
-  </app-windows-hacker>
+  </div>
 </div>

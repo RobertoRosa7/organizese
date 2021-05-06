@@ -1,31 +1,67 @@
 <section class="home content" role="main">
-  <div class="background" [style.background-image]="'url('+ background + ')'"></div>
+  <div
+    class="background"
+    [style.background-image]="'url(' + background + ')'"
+  ></div>
   <div class="container-home">
     <mat-toolbar class="toolbar-home">
       <mat-toolbar-row class="toolbar-row">
         <div title="logo" class="container-logo">
-          <img [src]="logo" alt="logo">
+          <img [src]="logo" alt="logo" />
         </div>
         <div class="container-buttons">
-          <button title="download" (click)="download()" class="btn-download" type="button"
-            mat-raised-button>Download</button>
-          <button title="cadastrar" type="button" routerLink="/login/signup" mat-raised-button>Cadastrar</button>
-          <button title="login" routerLink="/login" type="button" mat-raised-button>Login</button>
+          <!-- <button title="download" (click)="download()" class="btn-download" type="button"
+            mat-raised-button>Download</button> -->
+          <button
+            title="cadastrar"
+            type="button"
+            routerLink="/login/signup"
+            mat-raised-button
+          >
+            Cadastrar
+          </button>
+          <button
+            title="login"
+            routerLink="/login"
+            type="button"
+            mat-raised-button
+          >
+            Login
+          </button>
         </div>
       </mat-toolbar-row>
     </mat-toolbar>
     <div class="wrapper">
       <div class="middle">
-        <h1 style="color: var(--text-green); align-items: center;">Organize-se!</h1>
+        <h1 style="color: var(--text-green); align-items: center">
+          Organize-se!
+        </h1>
         <h1>Mantenha seus gastos sob controle</h1>
-        <p>Controle suas despesas com facilidade e saiba para onde esta indo seu dinheiro.</p>
+        <p>
+          Controle suas despesas com facilidade e saiba para onde esta indo seu
+          dinheiro.
+        </p>
       </div>
       <div class="middle">
         <h3 class="display">Acesse sua conta!</h3>
         <div class="container-buttons">
-          <button title="acesso ao dashboard" type="button" routerLink="/dashboard" color="primary"
-            mat-raised-button>Dashboard</button>
-          <button title="atalho pra fazer login" (click)="login()" type="button" mat-raised-button>Login</button>
+          <button
+            title="acesso ao dashboard"
+            type="button"
+            routerLink="/dashboard"
+            color="primary"
+            mat-raised-button
+          >
+            Dashboard
+          </button>
+          <button
+            title="atalho pra fazer login"
+            (click)="login()"
+            type="button"
+            mat-raised-button
+          >
+            Login
+          </button>
         </div>
       </div>
     </div>

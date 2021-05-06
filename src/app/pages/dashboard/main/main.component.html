@@ -1,24 +1,23 @@
 <section class="main">
-  <ng-container *ngIf="dashboard$ | async as states" class="cards-main">
-    <div *ngIf="isMobile">
-      <owl-carousel
-        [options]="{ items: 1 }"
-        style="width: 100%"
-        [carouselClasses]="['owl-theme', 'row', 'sliding']"
-      >
-        <app-cards
-          style="max-width: 200px"
-          *ngFor="let item of states.consolidado"
-          [item]="item"
-        ></app-cards>
-      </owl-carousel>
-    </div>
-  </ng-container>
+  <div class="container">
+    <ng-container *ngIf="dashboard$ | async as states" class="cards-main">
+      <div *ngIf="isMobile">
+        <owl-carousel
+          [options]="{ items: 1 }"
+          [carouselClasses]="['owl-theme', 'row', 'sliding']"
+        >
+          <app-cards
+            style="max-width: 200px"
+            *ngFor="let item of states.consolidado"
+            [item]="item"
+          ></app-cards>
+        </owl-carousel>
+      </div>
+    </ng-container>
 
-  <div class="container-charts">
-    <div class="chart-75">
-      <ng-container *ngIf="dashboard$ | async as states">
-        <app-windows-hacker>
+    <div class="container-charts">
+      <div class="charts">
+        <ng-container *ngIf="dashboard$ | async as states">
           <app-highcharts
             [minDate]="states.lastdate"
             (send)="onDatesChanges($event)"
@@ -26,183 +25,20 @@
             [data]="states.outcome_income"
           >
           </app-highcharts>
-        </app-windows-hacker>
-      </ng-container>
-      <ng-container *ngIf="dashboard$ | async as states">
-        <app-windows-hacker>
+        </ng-container>
+        <ng-container *ngIf="dashboard$ | async as states">
           <app-list-registers
             *ngFor="let item of states.all"
             [item]="item"
           ></app-list-registers>
-        </app-windows-hacker>
-      </ng-container>
-    </div>
-    <div class="chart-25" *ngIf="!isMobile">
-      <ng-container *ngIf="dashboard$ | async as states">
-        <app-cards *ngFor="let item of states.consolidado" [item]="item">
-        </app-cards>
-      </ng-container>
-    </div>
-
-    <!-- <div class="charts">
-      <app-windows-hacker>
-        <app-highcharts operation="receita" [evolucao]="EVOLUCAO_DATA">
-        </app-highcharts>
-      </app-windows-hacker>
-    </div> -->
-  </div>
-
-  <div class="container-charts">
-    <!-- <div class="charts">
-      <app-windows-hacker>
-        <app-highcharts operation="categoria" [category]="CATEGORY_DATA">
-        </app-highcharts>
-      </app-windows-hacker>
-    </div> -->
-    <!-- <div class="charts">
-      <app-windows-hacker>
-        <app-highcharts
-          operation="despesas"
-          [evolucao]="EVOLUCAO_DESPESAS_DATA"
-        >
-        </app-highcharts>
-      </app-windows-hacker>
-    </div> -->
-  </div>
-
-  <!-- <div *ngIf="!isMobile && isMainLoading" class="cards-main">
-    <app-cards [isLoading]="isMainLoading" *ngFor="let item of cards" [item]="item" [value]="item.value"></app-cards>
-  </div> -->
-
-  <!-- <div *ngIf="isMobile" class="cards-main">
-    <owl-carousel
-      [options]="{ items: 1 }"
-      style="width: 100%"
-      [carouselClasses]="['owl-theme', 'row', 'sliding']"
-    >
-      <app-cards
-        [isLoading]="isMainLoading"
-        style="max-width: 200px"
-        *ngFor="let item of cards"
-        [item]="item"
-        [value]="item.value"
-      ></app-cards>
-    </owl-carousel>
-  </div> -->
-
-  <!-- <mat-tab-group (selectedTabChange)="onTabChange($event)">
-    <mat-tab label="Categoria">
-      <app-highcharts
-        [minDate]="minDate"
-        (send)="onDatesListening($event)"
-        [dtEnd]="dates?.category.dt_end"
-        [dtStart]="dates?.category.dt_start"
-        [tabChanged]="tabChanged"
-        operation="categoria"
-        [category]="CATEGORY_DATA"
-      >
-      </app-highcharts>
-    </mat-tab>
-    <mat-tab label="Despesas">
-      <app-highcharts
-        [minDate]="minDate"
-        (send)="onDatesListening($event)"
-        [dtEnd]="dates?.outcome.dt_end"
-        [dtStart]="dates?.outcome.dt_start"
-        [tabChanged]="tabChanged"
-        operation="despesas"
-        [evolucao]="EVOLUCAO_DESPESAS_DATA"
-      >
-      </app-highcharts>
-    </mat-tab>
-    <mat-tab label="Receita">
-      <app-highcharts
-        [minDate]="minDate"
-        (send)="onDatesListening($event)"
-        [dtEnd]="dates?.income.dt_end"
-        [dtStart]="dates?.income.dt_start"
-        [tabChanged]="tabChanged"
-        operation="receita"
-        [evolucao]="EVOLUCAO_DATA"
-      >
-      </app-highcharts>
-    </mat-tab>
-  </mat-tab-group> -->
-
-  <!-- <div class="analise">
-    <app-panel-control
-      [filterByDays]="filterByDays"
-      [aPagar]="aPagar"
-      [aReceber]="aReceber"
-      [total]="total"
-      [totalReceita]="totalReceita"
-      [totalDespesa]="totalDespesa"
-    >
-    </app-panel-control>
-  </div> -->
-
-  <!-- <div *ngIf="!isMobile" class="highchart">
-    <div class="col-7">
-      <app-title title="Despesas"></app-title>
-      <app-highcharts operation="despesas" [evolucao]="EVOLUCAO_DESPESAS_DATA"></app-highcharts>
-    </div>
-
-    <div class="col-7">
-      <app-title title="Receitas"></app-title>
-      <app-highcharts operation="receita" [evolucao]="EVOLUCAO_DATA"></app-highcharts>
-    </div>
-  </div>
-
-  <div *ngIf="isMobile" class="highchart">
-    <owl-carousel [options]="{items: 1}" style="width: 100%;" [carouselClasses]="['owl-theme', 'row', 'sliding']">
-      <div class="col-7">
-        <app-title title="Despesas"></app-title>
-        <app-highcharts [evolucao]="EVOLUCAO_DESPESAS_DATA"></app-highcharts>
+        </ng-container>
       </div>
-
-      <div class="col-7">
-        <app-title title="Receitas"></app-title>
-        <app-highcharts [evolucao]="EVOLUCAO_DATA"></app-highcharts>
+      <div class="cards-consolidado" *ngIf="!isMobile">
+        <ng-container *ngIf="dashboard$ | async as states">
+          <app-cards *ngFor="let item of states.consolidado" [item]="item">
+          </app-cards>
+        </ng-container>
       </div>
-    </owl-carousel>
-  </div> -->
-
-  <!-- <div class="container-charts">
-    <div class="charts">
-      <app-highcharts
-        [minDate]="minDate"
-        (send)="onDatesListening($event)"
-        [dtEnd]="dates?.outcome.dt_end"
-        [dtStart]="dates?.outcome.dt_start"
-        operation="despesas"
-        [evolucao]="EVOLUCAO_DESPESAS_DATA"
-      >
-      </app-highcharts>
-    </div>
-
-    <div class="charts">
-      <app-highcharts
-        [minDate]="minDate"
-        (send)="onDatesListening($event)"
-        [dtEnd]="dates?.income.dt_end"
-        [dtStart]="dates?.income.dt_start"
-        operation="receita"
-        [evolucao]="EVOLUCAO_DATA"
-      >
-      </app-highcharts>
     </div>
   </div>
-  <div class="container-charts">
-    <div class="charts">
-      <app-highcharts
-        [minDate]="minDate"
-        (send)="onDatesListening($event)"
-        [dtEnd]="dates?.category.dt_end"
-        [dtStart]="dates?.category.dt_start"
-        operation="categoria"
-        [category]="CATEGORY_DATA"
-      >
-      </app-highcharts>
-    </div>
-  </div> -->
 </section>

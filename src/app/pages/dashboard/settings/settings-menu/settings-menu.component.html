@@ -1,80 +1,74 @@
-<app-windows-hacker>
-  <div class="settings-menu">
-    <div class="profile">
-      <mat-card style="background: transparent; box-shadow: none"
-        >Você</mat-card
+<div class="settings-menu">
+  <div class="profile">
+    <mat-card style="background: transparent; box-shadow: none">Você</mat-card>
+    <mat-accordion [multi]="true">
+      <mat-expansion-panel
+        #profile
+        (opened)="closePanel()"
+        routerLink="/dashboard/settings/profile"
       >
-      <mat-accordion [multi]="true">
-        <mat-expansion-panel
-          #profile
-          (opened)="closePanel()"
-          routerLink="/dashboard/settings/profile"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon mat-list-icon>person</mat-icon>
-              <span style="margin-left: 16px">Perfil</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon mat-list-icon>person</mat-icon>
+            <span style="margin-left: 16px">Perfil</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
 
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon>dark_mode</mat-icon>
-              <span style="margin-left: 16px">Tema</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="expansion-content">
-            <app-dark-theme></app-dark-theme>
-          </div>
-        </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>dark_mode</mat-icon>
+            <span style="margin-left: 16px">Tema</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="expansion-content">
+          <app-dark-theme></app-dark-theme>
+        </div>
+      </mat-expansion-panel>
 
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon mat-list-icon>manage_accounts</mat-icon>
-              <span style="margin-left: 16px">Conta</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-          <div class="expansion-content">
-            <button (click)="deleteAccount()" mat-raised-button type="button">
-              excluir conta
-            </button>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
-
-    <div class="about">
-      <mat-card style="background: transparent; box-shadow: none"
-        >Sobre</mat-card
-      >
-      <!-- <mat-card style="padding: 0;">
-        <mat-list>
-          <mat-list-item class="list" routerLink="/dashboard/settings/about">
-            <mat-icon mat-list-icon>info</mat-icon>
-            <h3 mat-line>Sobre</h3>
-            <p mat-line>informações sobre o app</p>
-            <mat-icon>keyboard_arrow_right</mat-icon>
-          </mat-list-item>
-        </mat-list>
-      </mat-card> -->
-
-      <mat-accordion>
-        <mat-expansion-panel
-          #about
-          (opened)="closePanel()"
-          routerLink="/dashboard/settings/about"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <mat-icon>info</mat-icon>
-              <span style="margin-left: 16px">Sobre</span>
-            </mat-panel-title>
-          </mat-expansion-panel-header>
-        </mat-expansion-panel>
-      </mat-accordion>
-    </div>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon mat-list-icon>manage_accounts</mat-icon>
+            <span style="margin-left: 16px">Conta</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="expansion-content">
+          <button (click)="deleteAccount()" mat-raised-button type="button">
+            excluir conta
+          </button>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
-</app-windows-hacker>
+
+  <div class="about">
+    <mat-card style="background: transparent; box-shadow: none">Sobre</mat-card>
+    <!-- <mat-card style="padding: 0;">
+      <mat-list>
+        <mat-list-item class="list" routerLink="/dashboard/settings/about">
+          <mat-icon mat-list-icon>info</mat-icon>
+          <h3 mat-line>Sobre</h3>
+          <p mat-line>informações sobre o app</p>
+          <mat-icon>keyboard_arrow_right</mat-icon>
+        </mat-list-item>
+      </mat-list>
+    </mat-card> -->
+
+    <mat-accordion>
+      <mat-expansion-panel
+        #about
+        (opened)="closePanel()"
+        routerLink="/dashboard/settings/about"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>info</mat-icon>
+            <span style="margin-left: 16px">Sobre</span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>

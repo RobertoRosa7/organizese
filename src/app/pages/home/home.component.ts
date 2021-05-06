@@ -121,12 +121,12 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  public download(): void {
-    this.dialog.open(DialogsComponent, {
-      data: { type: 'download', data: this.downloadList },
-      panelClass: 'dialog-default',
-    });
-  }
+  // public download(): void {
+  //   this.dialog.open(DialogsComponent, {
+  //     data: { type: 'download', data: this.downloadList },
+  //     panelClass: 'dialog-default',
+  //   });
+  // }
 
   public isDark(): boolean {
     return localStorage.getItem('user-theme') === 'light-mode';

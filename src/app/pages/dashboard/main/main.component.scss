@@ -3,36 +3,35 @@
 .main {
   @include padding-page;
 
+  .container {
+    @include container;
+  }
+
   ::ng-deep .mat-tab-labels {
     justify-content: space-between;
   }
-  .container-charts {
+  .container-charts,
+  .cards-main,
+  .highchart {
     display: flex;
+  }
+  .container-charts {
     gap: 20px;
     overflow: hidden auto;
+    justify-content: space-between;
     .charts {
-      flex: 1;
+      width: 768px;
     }
-    .chart-25 {
-      width: 25%;
-      margin-left: auto;
-    }
-    .chart-85 {
-      width: 85%;
-    }
-    .chart-75 {
-      width: 75%;
+    .cards-consolidado {
+      width: 250px;
     }
   }
-
   ::ng-deep .mat-tab-label {
     padding: 0;
-    // width: 32.33%;
     flex-grow: 0 !important;
     justify-content: flex-start;
   }
   ::ng-deep .mat-tab-label.mat-tab-label-active {
-    // background: var(--text-green-light);
     background: rgba(0, 0, 0, 0.15);
   }
   ::ng-deep .mat-ink-bar {
@@ -42,17 +41,13 @@
     border: none;
     padding: 0;
   }
-
   ::ng-deep .owl-theme .owl-dots .owl-dot span {
     background: var(--color-medium-white);
   }
   ::ng-deep .owl-theme .owl-dots .owl-dot.active span {
     background: var(--text-green);
-    // color: red;
   }
-
   .cards-main {
-    display: flex;
     flex: 1;
     justify-content: space-between;
     flex-wrap: wrap;
@@ -61,7 +56,6 @@
     }
   }
   .highchart {
-    display: flex;
     justify-content: space-between;
     .col-7 {
       flex: 1;
@@ -86,17 +80,6 @@
         flex-direction: column;
         font-size: 0.9em;
       }
-    }
-  }
-}
-@media (max-width: 1024px) {
-  .main .container-charts {
-    flex-direction: column-reverse;
-    .chart-25,
-    .chart-75,
-    .chart-85 {
-      width: 100%;
-      max-width: 100%;
     }
   }
 }

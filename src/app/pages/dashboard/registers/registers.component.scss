@@ -3,6 +3,10 @@
 
 .registers {
   @include padding-page;
+  .container {
+    border-radius: 8px;
+    padding: 40px;
+  }
   .app-tabs,
   .tab-menu,
   .tab-menu .tabs,
@@ -10,8 +14,6 @@
   .tab-menu .menus {
     display: flex;
     gap: 20px;
-    margin-top: 8px;
-    margin-bottom: 8px;
   }
   .tab-menu,
   .app-tabs .tabs .control {
@@ -63,6 +65,9 @@
     .tabs {
       width: 100%;
       overflow: hidden;
+    }
+    .content {
+      flex: 1;
     }
   }
 
