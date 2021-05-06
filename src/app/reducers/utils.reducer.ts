@@ -95,6 +95,9 @@ export function formatterOutcomeIncome(payload: any): any {
     name: value.name === 'incoming' ? 'Entrada' : 'Saída',
     dates: value.dates.map((date: any) => new Date(date).getTime()),
     data: value.values,
-    color: value.name === 'incoming' ? '#0FF5E6' : '#FF4081',
+    color:
+      value.name === 'incoming'
+        ? 'var(--green-microsoft)'
+        : 'var(--text-accent)',
   }));
 }

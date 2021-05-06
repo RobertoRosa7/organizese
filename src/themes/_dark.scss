@@ -31,7 +31,7 @@ $border-width: 15%;
   }
   .link-active {
     background: var(--text-light);
-    color: var(--text-dark-green);
+    color: var(--green-microsoft);
   }
   mat-card span.cards-money {
     @include span-cash;
@@ -43,11 +43,11 @@ $border-width: 15%;
   }
   mat-card span.cards-money-on {
     @include span-cash;
-    color: var(--text-dark-green);
+    color: var(--green-microsoft);
   }
   span.cards-money-on {
     @include span-cash;
-    color: var(--text-dark-green);
+    color: var(--green-microsoft);
   }
   mat-card span.cards-money-off {
     @include span-cash;

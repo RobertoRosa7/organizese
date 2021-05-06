@@ -95,20 +95,7 @@ export class DashboardComponent implements OnInit, DoCheck {
 
   public ngOnInit(): void {
     this.initialize();
-    // this.scrollService?.getScrollAsStream().subscribe((currentScroll) => {
-    //   if (currentScroll > this.previousScroll) {
-    //     this.renderer.addClass(
-    //       document.querySelector('.dashboard .sidebar'),
-    //       'display-none'
-    //     );
-    //   } else {
-    //     this.renderer.removeClass(
-    //       document.querySelector('.dashboard .sidebar'),
-    //       'display-none'
-    //     );
-    //   }
-    //   this.previousScroll = currentScroll;
-    // });
+    // this.scrollService?.getScrollAsStream().subscribe((scroll) => {});
     fromEvent(window, 'keypress').subscribe((ev: any) => {
       if (ev.ctrlKey && ev.code === 'KeyB') {
         this.hide = !this.hide;

@@ -2,11 +2,9 @@
 
 .main {
   @include padding-page;
-
   .container {
     @include container;
   }
-
   ::ng-deep .mat-tab-labels {
     justify-content: space-between;
   }
@@ -81,5 +79,15 @@
         font-size: 0.9em;
       }
     }
+  }
+}
+@media (max-width: 959px) {
+  .main .container-charts .charts {
+    width: 100%;
+  }
+}
+@media (min-width: 960px) and (max-width: 1024px) {
+  .main .container-charts .charts {
+    width: 500px;
   }
 }

@@ -89,8 +89,7 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
     private store: Store,
     private differs: KeyValueDiffers,
     private breakpoint: BreakpointObserver,
-    private chartService: ChartService,
-    private dashboardServices: DashboardService
+    private chartService: ChartService
   ) {
     this.breakpoint
       ?.observe([Breakpoints.XSmall])
@@ -106,8 +105,6 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
         delay(3500)
       )
       .subscribe();
-
-    // this.dashboardServices.fetchLastDate().subscribe((dt) => console.log(dt));
     this.startChart();
   }
 
@@ -144,9 +141,9 @@ export class HighchartsComponent implements OnInit, DoCheck, OnChanges {
 
     if (this.isDark) {
       this.theme = 'var(--white-one)';
-      this.themeInverse = 'var(--color-dark-secondary)';
+      this.themeInverse = 'var(--color-default-dark)';
     } else {
-      this.theme = 'var(--color-dark-secondary)';
+      this.theme = 'var(--color-default-dark)';
       this.themeInverse = 'var(--white-one)';
     }
     this.dtEnd = states.dates.dt_end;
