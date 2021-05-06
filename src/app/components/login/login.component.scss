@@ -1,4 +1,4 @@
-@import "../../../styles.scss";
+@import '../../../styles.scss';
 
 .container-form {
   height: inherit;
@@ -32,16 +32,23 @@
     @include custom-button-icon-width-text;
     text-transform: uppercase;
   }
+  .hint-error {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    color: var(--text-accent);
+    font-size: 0.8em;
+  }
   .container-forget {
     display: flex;
     justify-content: flex-start;
     width: 100%;
     max-width: 384px;
     p {
-      flex:1;
+      flex: 1;
       text-decoration: underline;
       cursor: pointer;
-      &:hover{
+      &:hover {
         opacity: 0.5;
       }
     }

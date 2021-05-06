@@ -7,6 +7,7 @@ export enum actionsTypes {
   LOGGED_USER = '[LOGGED_USER]',
   GET_USER = '[GET_USER]',
   SET_USER = '[SET_USER]',
+  SET_TOKEN = '[SET_TOKEN]',
   SIGNIN = '[SIGNIN]',
   LOGOUT = '[LOGOUT]',
   RESET = '[RESET]',
@@ -29,6 +30,10 @@ export const CREATE_USER = createAction(
 );
 export const SET_USER = createAction(
   actionsTypes.SET_USER,
+  props<{ payload: any }>()
+);
+export const SET_TOKEN = createAction(
+  actionsTypes.SET_TOKEN,
   props<{ payload: any }>()
 );
 export const SIGNIN = createAction(

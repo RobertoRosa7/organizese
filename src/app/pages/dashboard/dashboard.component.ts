@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit, DoCheck {
   public hideValues: boolean;
   public isDark: boolean;
   public renderer: any;
-  public hide = true;
+  public hide = false;
 
   constructor(
     protected ipcService?: IpcService,
@@ -113,9 +113,9 @@ export class DashboardComponent implements OnInit, DoCheck {
         this.isDark = state.theme !== 'dark-mode';
         this.user = state.profile;
 
-        if (state.http_error.errors.length > 0) {
-          this.handleError(state.http_error.errors[0]);
-        }
+        // if (state.http_error.errors.length > 0) {
+        //   this.handleError(state.http_error.errors[0]);
+        // }
       });
 
     this.as

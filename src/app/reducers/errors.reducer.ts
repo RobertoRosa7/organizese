@@ -3,7 +3,7 @@ import * as actionsApp from '../actions/app.actions';
 import * as actions from '../actions/errors.actions';
 
 const INITIAL_STATES = {
-  errors: [],
+  error: {},
   status_code: [],
   success: '',
 };
@@ -12,7 +12,7 @@ const errorsReducers = createReducer(
   INITIAL_STATES,
   on(actions.SET_ERRORS, (states, { payload }) => ({
     ...states,
-    errors: states.errors.concat(payload),
+    error: payload,
   })),
   on(actions.SET_STATUS_CODE, (states, { payload }) => ({
     ...states,
@@ -22,11 +22,11 @@ const errorsReducers = createReducer(
     ...states,
     success: payload,
   })),
-  on(actions.RESET_ERRORS, (states) => ({ ...states, errors: [] })),
+  on(actions.RESET_ERRORS, (states) => ({ ...states, error: {} })),
 
   on(actionsApp.RESET_ALL, (states) => ({
     ...states,
-    errors: [],
+    error: {},
     status_code: [],
     success: '',
   }))

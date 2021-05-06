@@ -11,8 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
-import { delay, filter } from 'rxjs/operators';
-import * as actionsErrors from '../../actions/errors.actions';
+import { Observable } from 'rxjs';
+import { filter } from 'rxjs/operators';
 import * as actionsLogin from '../../actions/login.actions';
 
 @Component({
@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit, DoCheck {
   public isLoginText = 'Fechar';
   public isLoading = false;
   public differ: any;
-
+  public errors$: Observable<any>;
+  public changeTexts = true;
   public formLogin: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     keep_connect: [false],
@@ -53,32 +54,9 @@ export class LoginComponent implements OnInit, DoCheck {
   }
 
   public ngOnInit(): void {
-    this.store
-      .select(({ http_error }: any) => ({ errors: http_error.errors }))
-      .pipe(delay(3000))
-      .subscribe((state) => {
-        if (state.errors.length > 0) {
-          state.errors.forEach((e: any) => {
-            const msg = e.error.message ? e.error.message : e.error;
-            this.snackbar.open(msg, 'ok');
-            this.isLoading = false;
-            this.trigger.emit({ operation: 'hide-progressbar', data: {} });
-            this.store.dispatch(actionsErrors.RESET_ERRORS());
-          });
-        }
-      });
-
-    this.as
-      ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
-      .subscribe(({ payload }: any) => {
-        if (payload === 'login') {
-          this.snackbar.open('Login realizado com sucesso', 'Ok', {
-            duration: 3000,
-          });
-          this.trigger.emit({ operation: 'close', data: payload });
-        }
-      });
-
+    this.errors$ = this.store.select(({ http_error }: any) => ({
+      errors: http_error.error.error,
+    }));
     this.isLoginText = this.dialog === 'page-login' ? 'voltar' : 'fechar';
   }
 
@@ -89,16 +67,18 @@ export class LoginComponent implements OnInit, DoCheck {
     }
   }
 
-  public onSubmit(event: any): void {
+  public async onSubmit(event: any): Promise<any> {
     event.preventDefault();
-    this.isLoading = true;
-    this.trigger.emit({ operation: 'show-progressbar', data: {} });
+    // this.isLoading = true;
     this.store.dispatch(actionsLogin.SIGNIN({ payload: this.formLogin.value }));
-  }
+    const payload = await this.onToken();
 
-  public changeVisibility(str: string): void {
-    this.textIcon = str === 'password' ? 'text' : 'password';
-    this.changeIcon = str === 'password' ? 'visibility' : 'visibility_off';
+    if (payload) {
+      this.snackbar.open('Login realizado com sucesso', 'Ok', {
+        duration: 3000,
+      });
+      this.trigger.emit({ operation: 'close', data: 'login' });
+    }
   }
 
   public forgetPassword(event: any): void {
@@ -123,5 +103,13 @@ export class LoginComponent implements OnInit, DoCheck {
     options === 'page-login'
       ? this.router.navigateByUrl('/')
       : this.trigger.emit({ operation: 'close', data: options });
+  }
+
+  private onToken(): Promise<string> {
+    return new Promise((resolve) => {
+      this.as
+        ?.pipe(filter((a) => a.type === actionsLogin.actionsTypes.SET_TOKEN))
+        .subscribe(({ payload }: any) => resolve(payload));
+    });
   }
 }

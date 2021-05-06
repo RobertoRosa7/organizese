@@ -19,7 +19,7 @@ const appReducer = createReducer(
     ...states,
     logged_user: payload,
   })),
-  on(actions.SET_USER, (states, { payload }) => ({
+  on(actions.SET_TOKEN, (states, { payload }) => ({
     ...states,
     token: payload,
   })),

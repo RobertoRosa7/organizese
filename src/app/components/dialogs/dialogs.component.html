@@ -71,29 +71,7 @@
       </p>
     </div>
   </div>
-  <div *ngSwitchCase="'download'" class="dialog-container download">
-    <div class="header dialog-header-mode">
-      <div class="title">
-        <small>Seu Sistema Operacional</small>&nbsp;&nbsp; - &nbsp;&nbsp;
-        <span> {{ downloadList.current_os }}</span>
-      </div>
-      <div class="max-window">
-        <span (click)="close()">
-          <mat-icon>close</mat-icon>
-        </span>
-      </div>
-    </div>
-    <mat-list role="list" style="height: inherit">
-      <app-downloads
-        *ngFor="let i of downloadList?.linux"
-        [downloadItem]="i"
-      ></app-downloads>
-      <app-downloads
-        *ngFor="let i of downloadList?.windows"
-        [downloadItem]="i"
-      ></app-downloads>
-    </mat-list>
-  </div>
+
   <div
     *ngSwitchCase="'login'"
     class="dialog-container login"

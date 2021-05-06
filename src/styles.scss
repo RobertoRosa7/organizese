@@ -151,14 +151,8 @@ h2.welcome-subtitle {
   display: inline-block;
 }
 .dialog-default {
-  width: 100%;
-  max-height: 500px;
-  max-width: 768px !important;
-  // .mat-dialog-container {
-  //   padding: 0;
-  //   background: transparent !important;
-  //   box-shadow: none !important;
-  // }
+  width: 600px;
+  height: 600px;
 }
 .mat-menu-panel.profile {
   width: 300px;

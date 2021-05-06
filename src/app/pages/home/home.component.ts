@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { DialogsComponent } from 'src/app/components/dialogs/dialogs.component';
 import { AppService } from 'src/app/services/app.service';
 import { Constants } from 'src/app/services/constants';
+import * as actionsErrors from '../../actions/errors.actions';
 
 @Component({
   selector: 'app-home',
@@ -24,36 +26,10 @@ export class HomeComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private appService: AppService,
-    private constants: Constants
+    private constants: Constants,
+    private store: Store
   ) {
     this.logo = this.constants.get('file_images') + this.getLogo();
-    if (window.navigator.userAgent.indexOf('Windows NT 10.0') !== -1) {
-      this.currentOS = 'Windows 10';
-    }
-    if (window.navigator.userAgent.indexOf('Windows NT 6.2') !== -1) {
-      this.currentOS = 'Windows 8';
-    }
-    if (window.navigator.userAgent.indexOf('Windows NT 6.1') !== -1) {
-      this.currentOS = 'Windows 7';
-    }
-    if (window.navigator.userAgent.indexOf('Windows NT 6.0') !== -1) {
-      this.currentOS = 'Windows Vista';
-    }
-    if (window.navigator.userAgent.indexOf('Windows NT 5.1') !== -1) {
-      this.currentOS = 'Windows XP';
-    }
-    if (window.navigator.userAgent.indexOf('Windows NT 5.0') !== -1) {
-      this.currentOS = 'Windows 2000';
-    }
-    if (window.navigator.userAgent.indexOf('Mac') !== -1) {
-      this.currentOS = 'Mac/iOS';
-    }
-    if (window.navigator.userAgent.indexOf('X11') !== -1) {
-      this.currentOS = 'UNIX';
-    }
-    if (window.navigator.userAgent.indexOf('Linux') !== -1) {
-      this.currentOS = 'Linux';
-    }
   }
 
   public ngOnInit(): void {
@@ -88,12 +64,6 @@ export class HomeComponent implements OnInit {
           ? this.constants.get('file_images') + 'logo-windows-black'
           : this.constants.get('file_images') + 'logo-windows-white',
       })),
-      // mac: payload['mac'].map((v: any) => ({
-      //   ...v,
-      //   icon: this.isDark()
-      //     ? this.constants.get('file_images') + 'logo-mac-black'
-      //     : this.constants.get('file_images') + 'logo-mac-white'
-      // }))
     };
   }
 
@@ -108,6 +78,7 @@ export class HomeComponent implements OnInit {
         if (res === 'login') {
           this.goto('/dashboard');
         }
+        this.store.dispatch(actionsErrors.RESET_ERRORS());
       });
   }
 

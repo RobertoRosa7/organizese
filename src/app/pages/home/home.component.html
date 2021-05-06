@@ -10,8 +10,6 @@
           <img [src]="logo" alt="logo" />
         </div>
         <div class="container-buttons">
-          <!-- <button title="download" (click)="download()" class="btn-download" type="button"
-            mat-raised-button>Download</button> -->
           <button
             title="cadastrar"
             type="button"
@@ -33,7 +31,7 @@
     </mat-toolbar>
     <div class="wrapper">
       <div class="middle">
-        <h1 style="color: var(--text-green); align-items: center">
+        <h1 style="color: var(--green-microsoft); align-items: center">
           Organize-se!
         </h1>
         <h1>Mantenha seus gastos sob controle</h1>
@@ -46,10 +44,10 @@
         <h3 class="display">Acesse sua conta!</h3>
         <div class="container-buttons">
           <button
+            style="color: var(--white-one); background: var(--green-microsoft)"
             title="acesso ao dashboard"
             type="button"
             routerLink="/dashboard"
-            color="primary"
             mat-raised-button
           >
             Dashboard

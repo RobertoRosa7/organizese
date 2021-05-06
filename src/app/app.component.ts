@@ -52,15 +52,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.store.dispatch(actionsApp.ONLINE());
     this.store
       .select(({ http_error, app }: any) => ({
-        errors: http_error.errors,
+        errors: http_error.error,
         online: app.online,
       }))
-      // tslint:disable-next-line: deprecation
       .subscribe((state) => {
-        if (state.errors.length > 0) {
-          this.handlerError(state.errors[0]);
+        if (state.errors) {
+          this.handlerError(state.errors);
         }
-        if (state.errors.length === 0 && state.online) {
+        if (state.errors && state.online) {
           setTimeout(() => {
             this.isOnline = true;
             this.isLoading = false;
@@ -116,7 +115,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   public handlerError(error: HttpErrorResponse): void {
-    console.log(error);
     setTimeout(() => {
       this.isError = true;
     }, 5000);

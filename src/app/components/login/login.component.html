@@ -1,8 +1,19 @@
-<form [formGroup]="formLogin" class="container-form" (ngSubmit)="onSubmit($event)">
+<form
+  [formGroup]="formLogin"
+  class="container-form"
+  (ngSubmit)="onSubmit($event)"
+>
   <div class="form-inline">
     <mat-form-field class="form" floatLabel="always" appearance="outline">
       <mat-label>Email</mat-label>
-      <input [readonly]="isLoading" formControlName="email" type="email" matInput placeholder="E-mail" required>
+      <input
+        [readonly]="isLoading"
+        formControlName="email"
+        type="email"
+        matInput
+        placeholder="E-mail"
+        required
+      />
       <mat-error>Email é obrigatório</mat-error>
     </mat-form-field>
   </div>
@@ -10,8 +21,20 @@
   <div class="form-inline">
     <mat-form-field class="form" floatLabel="always" appearance="outline">
       <mat-label>Senha</mat-label>
-      <input [readonly]="isLoading" formControlName="password" [type]="textIcon" matInput placeholder="Senha" required>
-      <mat-icon style="cursor: pointer;" (click)="changeVisibility(textIcon)" matSuffix>{{changeIcon}}</mat-icon>
+      <input
+        [readonly]="isLoading"
+        formControlName="password"
+        [type]="changeTexts ? 'password' : 'text'"
+        matInput
+        placeholder="Senha"
+        required
+      />
+      <mat-icon
+        style="cursor: pointer"
+        (click)="changeTexts = !changeTexts"
+        matSuffix
+        >{{ changeTexts ? 'visibility_off' : 'visibility' }}</mat-icon
+      >
       <mat-error *ngIf="formLogin.get('password')?.hasError('required')">
         Senha é obrigatória
       </mat-error>
@@ -22,6 +45,9 @@
         Máximo de 24 caracteres
       </mat-error>
     </mat-form-field>
+    <small class="hint-error" *ngIf="errors$ | async as states">{{
+      states.errors?.message
+    }}</small>
   </div>
 
   <div class="container-forget">
@@ -38,9 +64,21 @@
   </div>
 
   <div class="container-buttons">
-    <button (click)="close(dialog)" [disabled]="isLoading" type="button" color="accent" mat-raised-button>
-      {{isLoginText}}
+    <button
+      (click)="close(dialog)"
+      [disabled]="isLoading"
+      type="button"
+      color="accent"
+      mat-raised-button
+    >
+      {{ isLoginText }}
     </button>
-    <button [disabled]="!formLogin.valid || isLoading" type="submit" mat-raised-button>Login</button>
+    <button
+      [disabled]="!formLogin.valid || isLoading"
+      type="submit"
+      mat-raised-button
+    >
+      Login
+    </button>
   </div>
 </form>

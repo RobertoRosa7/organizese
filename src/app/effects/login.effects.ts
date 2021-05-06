@@ -45,9 +45,7 @@ export class LoginEffect {
         const source = { ...payload, source: 'signin' };
         return SET_ERRORS({ payload: source });
       } else {
-        this.store.dispatch(SET_SUCCESS({ payload: 'login' }));
-        this.store.dispatch(actionsLogin.SET_USER({ payload }));
-        return actionsLogin.LOGGED_USER({ payload: true });
+        return actionsLogin.SET_TOKEN({ payload });
       }
     }),
     catchError((err) => of(err))
