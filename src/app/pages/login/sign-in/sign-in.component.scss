@@ -1,17 +1,83 @@
-@import "../../../../styles.scss";
+@import '../../../../themes/mixins';
 
 .login {
+  height: 100%;
+}
+.login,
+.login .container-login,
+.container-form,
+.container-form .checkbox,
+.container-form .hint-error,
+.container-form .container-forget,
+.container-form .container-buttons {
+  width: 100%;
+}
+.login,
+.container-form,
+.container-form .container-buttons,
+.container-form .container-forget,
+.login .container-login {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+}
+.login .container-login {
+  max-height: 600px;
+  max-width: 600px;
   width: 100%;
   height: 100%;
-  .container-login {
-    width: 100%;
+
+  text-align: center;
+}
+.login,
+.login .container-login,
+.container-form {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.login .container-login .title {
+  @include title-login;
+}
+.container-form {
+  .form-inline,
+  .form-inline .form {
+    width: inherit;
+  }
+  .form-inline {
+    text-align: center;
+  }
+  .form-inline .form,
+  .checkbox,
+  .container-buttons {
     max-width: 384px;
-    p.title {
-      @include title-login;
+  }
+  .checkbox {
+    text-align: left;
+    margin: 16px 0;
+  }
+  .container-buttons {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .container-buttons button {
+    @include custom-button-icon-width-text;
+    text-transform: uppercase;
+  }
+  .hint-error {
+    display: inline-block;
+    text-align: center;
+    color: var(--text-accent);
+    font-size: 0.8em;
+  }
+  .container-forget {
+    justify-content: flex-start;
+    max-width: 384px;
+    p {
+      flex: 1;
+      text-decoration: underline;
+      cursor: pointer;
+      &:hover {
+        opacity: 0.5;
+      }
     }
   }
 }

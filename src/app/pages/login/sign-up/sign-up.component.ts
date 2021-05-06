@@ -74,15 +74,15 @@ export class SignUpComponent implements OnInit, DoCheck {
   public ngOnInit(): void {
     this.store
       .select(({ login, http_error }: any) => ({
-        errors: http_error.errors,
+        errors: http_error.error,
         createdUser: login.createdUser,
       }))
       .pipe(delay(3000))
       .subscribe((state) => {
-        if (state.errors.length > 0) {
-          this.isLoading = false;
-          this.snackbar.open(state.errors[0].error.message, 'ok');
-        }
+        // if (state.errors.length > 0) {
+        //   this.isLoading = false;
+        //   this.snackbar.open(state.errors[0].error.message, 'ok');
+        // }
         this.createdUser = state.createdUser;
       });
   }

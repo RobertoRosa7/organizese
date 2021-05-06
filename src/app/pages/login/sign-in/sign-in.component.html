@@ -1,6 +1,86 @@
 <section class="login">
   <div class="container-login">
     <p class="title">Login</p>
-    <app-login (trigger)="onTrigger($event)" style="height: inherit;" dialog="page-login"></app-login>
+    <form
+      [formGroup]="formLogin"
+      class="container-form"
+      (ngSubmit)="onSubmit($event)"
+    >
+      <div class="form-inline">
+        <mat-form-field class="form" floatLabel="always" appearance="outline">
+          <mat-label>Email</mat-label>
+          <input
+            [readonly]="isLoading"
+            formControlName="email"
+            type="email"
+            matInput
+            placeholder="E-mail"
+            required
+          />
+          <mat-error>Email é obrigatório</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form-inline">
+        <mat-form-field class="form" floatLabel="always" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input
+            [readonly]="isLoading"
+            formControlName="password"
+            [type]="changeTexts ? 'password' : 'text'"
+            matInput
+            placeholder="Senha"
+            required
+          />
+          <mat-icon
+            style="cursor: pointer"
+            (click)="changeTexts = !changeTexts"
+            matSuffix
+            >{{ changeTexts ? 'visibility_off' : 'visibility' }}</mat-icon
+          >
+          <mat-error *ngIf="formLogin.get('password')?.hasError('required')">
+            Senha é obrigatória
+          </mat-error>
+          <mat-error *ngIf="formLogin.get('password')?.hasError('minlength')">
+            Mínimo de 6 caracteres
+          </mat-error>
+          <mat-error *ngIf="formLogin.get('password')?.hasError('maxlength')">
+            Máximo de 24 caracteres
+          </mat-error>
+        </mat-form-field>
+        <small class="hint-error" *ngIf="errors$ | async as states">{{
+          states.errors?.message
+        }}</small>
+      </div>
+
+      <div class="container-forget">
+        <p routerLink="/login/reset" class="forget-password">
+          <small>Esqueci a senha</small>
+        </p>
+        <p routerLink="/login/signup" class="no-account">
+          <small>Não tenho conta</small>
+        </p>
+      </div>
+
+      <div class="checkbox">
+        <mat-checkbox formControlName="keep_connect"
+          >Manter conectado</mat-checkbox
+        >
+      </div>
+
+      <div class="container-buttons">
+        <button
+          type="button"
+          color="accent"
+          routerLink="/home"
+          mat-raised-button
+        >
+          Voltar
+        </button>
+        <button [disabled]="!formLogin.valid" type="submit" mat-raised-button>
+          Login
+        </button>
+      </div>
+    </form>
   </div>
 </section>
