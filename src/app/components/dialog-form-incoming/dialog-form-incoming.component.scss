@@ -1,15 +1,29 @@
-@import "../../../styles.scss";
+@import '../../../themes/mixins';
 
+.dialog,
+.dialog .header,
+.dialog .title,
+.dialog .container-form-incoming {
+  display: flex;
+}
+.dialog,
+.dialog .title,
+.dialog .container-form-incoming {
+  align-items: center;
+}
 .dialog {
   height: 100%;
   flex-direction: column;
-  align-items: center;
   justify-content: space-between;
-  display: flex;
+  padding: 10%;
+  position: relative;
   .header {
     width: 100%;
-    display: flex;
-    padding: 16px;
+    .max-window {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
     .max-window span {
       cursor: pointer;
     }
@@ -17,16 +31,11 @@
   .title {
     flex: 1;
     text-align: center;
-    display: flex;
-    align-items: center;
     justify-content: center;
   }
   .container-form-incoming {
-    padding: 15px;
     height: inherit;
-    align-items: center;
     justify-content: space-between;
-    display: flex;
   }
 }
 @media (max-width: 768px) {

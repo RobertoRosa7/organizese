@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { RESET_ERRORS } from 'src/app/actions/errors.actions';
 import { actionsTypes, SIGNIN } from '../../../actions/login.actions';
 
@@ -37,7 +37,7 @@ export class SignInComponent implements OnInit {
     private fb: FormBuilder,
     private store: Store,
     private snackbar: MatSnackBar,
-    private as?: ActionsSubject
+    private as: ActionsSubject
   ) {}
 
   public ngOnInit(): void {}

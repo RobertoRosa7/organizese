@@ -2,8 +2,10 @@ import { Component, DoCheck, KeyValueDiffers, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { delay } from 'rxjs/operators';
+import { ActionsSubject, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { RESET_ERRORS } from 'src/app/actions/errors.actions';
 import { Signup } from 'src/app/models/models';
 import * as actionsLogin from '../../../actions/login.actions';
 
@@ -22,7 +24,8 @@ export class SignUpComponent implements OnInit, DoCheck {
   public isPasswordSame = false;
   public differ: any;
   public createdUser = false;
-
+  public changeTexts = true;
+  public errors$: Observable<any>;
   public formSignup: FormGroup = this.fb.group(
     {
       email: ['', [Validators.required, Validators.email]],
@@ -52,7 +55,8 @@ export class SignUpComponent implements OnInit, DoCheck {
     private store: Store,
     private snackbar: MatSnackBar,
     private router: Router,
-    private diff: KeyValueDiffers
+    private diff: KeyValueDiffers,
+    private as: ActionsSubject
   ) {
     this.differ = this.diff.find({}).create();
   }
@@ -73,18 +77,10 @@ export class SignUpComponent implements OnInit, DoCheck {
 
   public ngOnInit(): void {
     this.store
-      .select(({ login, http_error }: any) => ({
-        errors: http_error.error,
+      .select(({ login }: any) => ({
         createdUser: login.createdUser,
       }))
-      .pipe(delay(3000))
-      .subscribe((state) => {
-        // if (state.errors.length > 0) {
-        //   this.isLoading = false;
-        //   this.snackbar.open(state.errors[0].error.message, 'ok');
-        // }
-        this.createdUser = state.createdUser;
-      });
+      .subscribe((state) => (this.createdUser = state.createdUser));
   }
 
   public checkPassword(controlName: string, matchingControlName: string): any {
@@ -106,23 +102,46 @@ export class SignUpComponent implements OnInit, DoCheck {
     };
   }
 
-  public onSubmit(event: any): void {
+  public async onSubmit(event: any): Promise<any> {
     event.preventDefault();
     this.isLoading = true;
 
-    const user: Signup = {
+    const payload: Signup = {
       password: this.formSignup.value.password,
       email: this.formSignup.value.email,
       created_at: new Date().getTime() / 1000,
       verified: false,
     };
 
-    this.store.dispatch(actionsLogin.CREATE_USER({ payload: user }));
-  }
+    this.store.dispatch(actionsLogin.CREATE_USER({ payload }));
 
-  public changeVisibility(str: string): void {
-    this.textIcon = str === 'password' ? 'text' : 'password';
-    this.changeIcon = str === 'password' ? 'visibility' : 'visibility_off';
+    this.errors$ = this.store
+      .select(({ http_error }: any) => ({
+        error:
+          http_error.error.source === 'signup'
+            ? http_error.error.error
+            : undefined,
+      }))
+      .pipe(
+        map((states) => {
+          if (states.error?.message) {
+            this.isLoading = false;
+          }
+          return states;
+        })
+      );
+
+    this.formSignup.valueChanges.subscribe(() =>
+      this.store.dispatch(RESET_ERRORS())
+    );
+
+    const user = await this.onUser();
+
+    if (user) {
+      this.snackbar.open('Usuário cadastrado verifique seu e-mail!');
+      this.isLoading = false;
+      this.formSignup.reset();
+    }
   }
 
   public forgetPassword(event: any): void {
@@ -135,5 +154,13 @@ export class SignUpComponent implements OnInit, DoCheck {
     this.isLoading
       ? event.preventDefault()
       : this.router.navigateByUrl('/login');
+  }
+
+  private onUser(): Promise<any> {
+    return new Promise((resolve) => {
+      this.as
+        ?.pipe(filter((a) => a.type === actionsLogin.actionsTypes.CREATED_USER))
+        .subscribe((payload) => resolve(payload));
+    });
   }
 }

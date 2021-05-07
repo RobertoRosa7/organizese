@@ -1,12 +1,21 @@
 <section class="signup">
-  <mat-progress-bar *ngIf="isLoading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
   <div class="container-signup">
     <p class="title">Cadastro</p>
-    <form [formGroup]="formSignup" class="container-form" (ngSubmit)="onSubmit($event)">
+    <form
+      [formGroup]="formSignup"
+      class="container-form"
+      (ngSubmit)="onSubmit($event)"
+    >
       <div class="form-inline">
         <mat-form-field class="form" floatLabel="always" appearance="outline">
           <mat-label>Email</mat-label>
-          <input formControlName="email" type="email" matInput placeholder="E-mail" required>
+          <input
+            formControlName="email"
+            type="email"
+            matInput
+            placeholder="E-mail"
+            required
+          />
           <mat-error>Email é obrigatório</mat-error>
         </mat-form-field>
       </div>
@@ -14,8 +23,19 @@
       <div class="form-inline">
         <mat-form-field class="form" floatLabel="always" appearance="outline">
           <mat-label>Senha</mat-label>
-          <input formControlName="password" [type]="textIcon" matInput placeholder="Senha" required>
-          <mat-icon style="cursor: pointer;" (click)="changeVisibility(textIcon)" matSuffix>{{changeIcon}}</mat-icon>
+          <input
+            formControlName="password"
+            [type]="changeTexts ? 'password' : 'text'"
+            matInput
+            placeholder="Senha"
+            required
+          />
+          <mat-icon
+            style="cursor: pointer"
+            (click)="changeTexts = !changeTexts"
+            matSuffix
+            >{{ changeTexts ? 'visibility_off' : 'visibility' }}</mat-icon
+          >
           <mat-error *ngIf="formSignup.get('password')?.hasError('required')">
             Senha é obrigatória
           </mat-error>
@@ -31,22 +51,41 @@
       <div class="form-inline">
         <mat-form-field class="form" floatLabel="always" appearance="outline">
           <mat-label>Confirmar Senha</mat-label>
-          <input formControlName="confirm_password" [type]="textIcon" matInput placeholder="Confirmar senha" required>
-          <mat-icon style="cursor: pointer;" (click)="changeVisibility(textIcon)" matSuffix>{{changeIcon}}</mat-icon>
-          <mat-error *ngIf="formSignup.get('confirm_password')?.hasError('required')">
+          <input
+            formControlName="confirm_password"
+            [type]="changeTexts ? 'password' : 'text'"
+            matInput
+            placeholder="Confirmar senha"
+            required
+          />
+          <mat-icon
+            style="cursor: pointer"
+            (click)="changeTexts = !changeTexts"
+            matSuffix
+            >{{ changeTexts ? 'visibility_off' : 'visibility' }}</mat-icon
+          >
+          <mat-error
+            *ngIf="formSignup.get('confirm_password')?.hasError('required')"
+          >
             Confirmar é obrigatório
           </mat-error>
-          <mat-error *ngIf="formSignup.get('confirm_password')?.hasError('minlength')">
+          <mat-error
+            *ngIf="formSignup.get('confirm_password')?.hasError('minlength')"
+          >
             Mínimo de 6 caracteres
           </mat-error>
-          <mat-error *ngIf="formSignup.get('confirm_password')?.hasError('maxlength')">
+          <mat-error
+            *ngIf="formSignup.get('confirm_password')?.hasError('maxlength')"
+          >
             Máximo de 24 caracteres
           </mat-error>
-          <mat-error *ngIf="!isPasswordSame">
-            Senhas não são iguais
-          </mat-error>
+          <mat-error *ngIf="!isPasswordSame"> Senhas não são iguais </mat-error>
         </mat-form-field>
       </div>
+
+      <small class="hint-error" *ngIf="errors$ | async as states">{{
+        states.error?.message
+      }}</small>
 
       <div class="container-forget">
         <p (click)="forgetPassword($event)" class="forget-password">
@@ -58,8 +97,17 @@
       </div>
 
       <div class="container-buttons">
-        <button [disabled]="isLoading" routerLink="/" type="button" color="accent" mat-raised-button>Voltar</button>
-        <button [disabled]="!formSignup.valid || isLoading" type="submit" mat-raised-button>Cadastrar</button>
+        <button routerLink="/" type="button" color="accent" mat-raised-button>
+          Voltar
+        </button>
+        <button
+          [disabled]="!formSignup.valid || isLoading"
+          type="submit"
+          mat-raised-button
+        >
+          <span *ngIf="!isLoading">Cadastrar</span>
+          <mat-spinner diameter="16" *ngIf="isLoading"></mat-spinner>
+        </button>
       </div>
     </form>
   </div>

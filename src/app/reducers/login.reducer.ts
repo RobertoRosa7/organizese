@@ -5,7 +5,7 @@ import * as actions from '../actions/login.actions';
 const INITIAL_STATES = {
   token: '',
   cadastro: false,
-  created_user: false,
+  created_user: {},
   logged_user: false,
 };
 

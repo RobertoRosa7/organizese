@@ -1,8 +1,14 @@
 <section class="verify">
   <div class="container-verify">
-    <h1 [ngClass]="{'not-verified': !isVerified, 'verified': isVerified}">{{text}}</h1>
-    <p *ngIf="isVerified">Seu e-mail foi verificado - fazer login</p>
-    <p *ngIf="!isVerified">Seu e-mail não foi verificado!</p>
+    <ng-container *ngIf="isVerified$ | async as verified; else notVerified">
+      <h1>Seu e-mail foi verificado - fazer login</h1>
+    </ng-container>
+
+    <ng-template #notVerified>
+      <h1 class="not-verified">Seu e-mail não foi verificado!</h1>
+      <small>{{ text }}</small>
+    </ng-template>
+
     <button mat-raised-button routerLink="/">voltar</button>
   </div>
 </section>

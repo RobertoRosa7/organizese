@@ -9,14 +9,13 @@
 .verify {
   width: 100%;
   height: 100%;
-
   .container-verify {
     max-width: 1280px;
     width: inherit;
     height: inherit;
     flex-direction: column;
     h1 {
-      font-family: "Kanit" serif;
+      font-family: 'Kanit' serif;
       font-size: 2.5em;
       letter-spacing: 0.05em;
     }
@@ -24,13 +23,11 @@
       color: var(--text-accent);
     }
     .verified {
-      color: #009688;
-    }
-    p{
-      margin: 16px 0;
+      color: var(--green-microsoft);
     }
     button {
       @include custom-button-icon-width-text;
+      margin: 16px 0;
     }
   }
 }

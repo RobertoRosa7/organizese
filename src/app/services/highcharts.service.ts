@@ -25,9 +25,12 @@ export class ChartService {
       },
     },
     yAxis: {
-      gridLineDashStyle: 'longdash',
+      // gridLineDashStyle: 0
+      gridLineWidth: 0,
       title: { text: '' },
       opposite: false,
+      tickWidth: 1,
+      lineWidth: 1,
       labels: {
         formatter(): any {
           const self: any = this;

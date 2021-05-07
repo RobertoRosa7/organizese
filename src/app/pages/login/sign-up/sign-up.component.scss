@@ -1,4 +1,4 @@
-@import "../../../../styles.scss";
+@import '../../../../themes/mixins';
 
 .signup {
   width: 100%;
@@ -48,6 +48,9 @@
     &:hover {
       opacity: 0.5;
     }
+  }
+  .hint-error {
+    @include hint-error;
   }
   .container-buttons button {
     @include custom-button-icon-width-text;

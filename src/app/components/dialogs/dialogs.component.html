@@ -1,11 +1,10 @@
 <div #contentDialog class="dialog" [ngSwitch]="type">
   <div *ngSwitchCase="'details'" class="dialog-container detail">
     <div class="header dialog-header-mode">
-      <small class="title">{{ detail.description }}</small>
       <div class="max-window">
-        <span (click)="close()">
+        <button mat-icon-button disableRipple="true" (click)="close()">
           <mat-icon>close</mat-icon>
-        </span>
+        </button>
       </div>
     </div>
 
@@ -72,24 +71,12 @@
     </div>
   </div>
 
-  <div
-    *ngSwitchCase="'login'"
-    class="dialog-container login"
-    [ngStyle]="{ opacity: showProgressbar ? '0.3' : '1' }"
-  >
-    <mat-progress-bar
-      class="progress-bar"
-      *ngIf="showProgressbar"
-      mode="indeterminate"
-    ></mat-progress-bar>
+  <div *ngSwitchCase="'login'" class="dialog-container login">
     <div class="header dialog-header-mode">
-      <div class="title">
-        <small>Acesse sua conta</small>
-      </div>
       <div class="max-window">
-        <span (click)="close()">
+        <button mat-icon-button disableRipple="true" (click)="close()">
           <mat-icon>close</mat-icon>
-        </span>
+        </button>
       </div>
     </div>
     <app-login
@@ -100,32 +87,8 @@
   </div>
 
   <div *ngSwitchCase="'search'" class="dialog-container search">
-    <div class="header dialog-header-mode">
-      <small class="title">Procurar por registros</small>
-      <div class="max-window">
-        <span (click)="close()">
-          <mat-icon>close</mat-icon>
-        </span>
-      </div>
-    </div>
-
     <div mat-dialog-content class="content-dialog">
       <app-search (send)="onListening($event)" [isDark]="isDark"></app-search>
-    </div>
-
-    <div class="container-footer">
-      <button
-        color="accent"
-        (click)="close()"
-        disableRipple="true"
-        mat-raised-button
-        type="button"
-      >
-        cancelar
-      </button>
-      <button disableRipple="true" mat-stroked-button type="button">
-        buscar
-      </button>
     </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { LoginService } from 'src/app/services/login.service';
 
@@ -12,7 +12,7 @@ import { LoginService } from 'src/app/services/login.service';
 export class VerifyComponent implements OnInit {
   public token: string | null = null;
   public text = 'E-mail não verificado!';
-  public isVerified = false;
+  public isVerified$: Observable<any>;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -20,27 +20,32 @@ export class VerifyComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.activatedRoute.queryParams
-      .pipe(
-        switchMap((params: any) => {
-          if (params) {
-            return this.loginService.loginVerified({ token: params.token });
-          } else {
-            return of(null);
-          }
-        })
-      )
-      .subscribe(
-        (res) => {
-          if (res) {
-            this.text = 'E-mail verificado!';
-            this.isVerified = true;
-          }
-        },
-        (err) => {
-          this.text = 'E-mail não verificado, token inválido ou expirado!';
-          this.isVerified = false;
+    this.isVerified$ = this.activatedRoute.queryParams.pipe(
+      switchMap((params: any) => {
+        if (params) {
+          return this.loginService.loginVerified({ token: params.token });
+        } else {
+          return of(null);
         }
-      );
+      }),
+      catchError((e) => {
+        console.log(e);
+        this.text =
+          'Crie uma nova senha de acesso. (login > esqueci a senha > digite seu e-mail)';
+        return e;
+      })
+    );
+    // .subscribe(
+    //   (res) => {
+    //     if (res) {
+    //       this.text = 'E-mail verificado!';
+    //       this.isVerified = true;
+    //     }
+    //   },
+    //   () => {
+    //     this.text = 'E-mail não verificado, token inválido ou expirado!';
+    //     this.isVerified = false;
+    //   }
+    // );
   }
 }

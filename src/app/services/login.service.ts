@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { User } from '../models/models';
 import { Constants } from './constants';
-
+import { IndexdbService } from '../services/indexedbs.service';
 @Injectable({
   providedIn: 'root',
 })
@@ -12,7 +12,11 @@ export class LoginService {
   private user$: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   private loggedIn$: BehaviorSubject<any> = new BehaviorSubject<any>(false);
 
-  constructor(private http: HttpClient, private constants: Constants) {}
+  constructor(
+    private http: HttpClient,
+    private constants: Constants,
+    private indexedb: IndexdbService
+  ) {}
 
   public signup(payload: User): Observable<User> {
     return this.http.post<User>(this.constants.get('signup'), payload);
@@ -81,6 +85,8 @@ export class LoginService {
 
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('user');
+
+    this.indexedb.clearStore();
 
     this.user$.next(null);
     this.loggedIn$.next(false);

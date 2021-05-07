@@ -12,7 +12,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
+import { RESET_ERRORS } from 'src/app/actions/errors.actions';
 import * as actionsLogin from '../../actions/login.actions';
 
 @Component({
@@ -66,12 +67,28 @@ export class LoginComponent implements OnInit, DoCheck {
 
   public async onSubmit(event: any): Promise<any> {
     event.preventDefault();
-    // this.isLoading = true;
+    this.isLoading = true;
     this.store.dispatch(actionsLogin.SIGNIN({ payload: this.formLogin.value }));
 
-    this.errors$ = this.store.select(({ http_error }: any) => ({
-      error: http_error.error.error,
-    }));
+    this.errors$ = this.store
+      .select(({ http_error }: any) => ({
+        error:
+          http_error.error.source === 'signin'
+            ? http_error.error.error
+            : undefined,
+      }))
+      .pipe(
+        map((states) => {
+          if (states.error?.message) {
+            this.isLoading = false;
+          }
+          return states;
+        })
+      );
+
+    this.formLogin.valueChanges.subscribe(() =>
+      this.store.dispatch(RESET_ERRORS())
+    );
 
     const payload = await this.onToken();
 

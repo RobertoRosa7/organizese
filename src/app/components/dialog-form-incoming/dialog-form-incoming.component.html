@@ -1,14 +1,5 @@
 <section class="dialog">
   <div class="header dialog-header-mode">
-    <div class="title">
-      <p>
-        <span>{{ type === 'incoming' ? 'Receita' : 'Despesa' }}</span>
-        &nbsp;
-        <small>{{
-          type === 'incoming' ? data.description || '' : data.description || ''
-        }}</small>
-      </p>
-    </div>
     <div class="max-window">
       <span (click)="close()"><mat-icon>close</mat-icon></span>
     </div>
