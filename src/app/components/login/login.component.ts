@@ -54,9 +54,6 @@ export class LoginComponent implements OnInit, DoCheck {
   }
 
   public ngOnInit(): void {
-    this.errors$ = this.store.select(({ http_error }: any) => ({
-      errors: http_error.error.error,
-    }));
     this.isLoginText = this.dialog === 'page-login' ? 'voltar' : 'fechar';
   }
 
@@ -71,6 +68,11 @@ export class LoginComponent implements OnInit, DoCheck {
     event.preventDefault();
     // this.isLoading = true;
     this.store.dispatch(actionsLogin.SIGNIN({ payload: this.formLogin.value }));
+
+    this.errors$ = this.store.select(({ http_error }: any) => ({
+      error: http_error.error.error,
+    }));
+
     const payload = await this.onToken();
 
     if (payload) {

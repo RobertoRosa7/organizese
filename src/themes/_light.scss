@@ -104,6 +104,7 @@ $border-width: 15%;
   .app-menu-list li {
     &:hover {
       color: var(--white-one);
+      border-left: 1px solid var(--white-one);
     }
   }
   .side-panel {

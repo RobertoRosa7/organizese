@@ -49,15 +49,6 @@ export class DashboardInterceptor implements HttpInterceptor {
           return event;
         }
         return event;
-      }),
-      catchError((e: HttpErrorResponse) => {
-        switch (e.status) {
-          case 401:
-            this.store.dispatch(actionsLogin.LOGOUT());
-            this.router.navigateByUrl('/');
-            break;
-        }
-        return throwError(e);
       })
     );
   }

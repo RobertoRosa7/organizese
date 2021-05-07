@@ -151,8 +151,9 @@ h2.welcome-subtitle {
   display: inline-block;
 }
 .dialog-default {
-  width: 600px;
-  height: 600px;
+  max-width: 600px !important;
+  max-height: 600px;
+  width: 100%;
 }
 .mat-menu-panel.profile {
   width: 300px;

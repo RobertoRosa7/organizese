@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import {
   AfterViewInit,
   Component,
@@ -56,9 +55,6 @@ export class AppComponent implements OnInit, AfterViewInit {
         online: app.online,
       }))
       .subscribe((state) => {
-        if (state.errors) {
-          this.handlerError(state.errors);
-        }
         if (state.errors && state.online) {
           setTimeout(() => {
             this.isOnline = true;
@@ -66,13 +62,13 @@ export class AppComponent implements OnInit, AfterViewInit {
             this.loading = false;
           }, 1000);
         }
-        this.ipcService?.send('reload', 'from angular to electron');
-        this.ipcService?.on(
-          'reloaded',
-          (_: Electron.IpcMessageEvent, message: any) => {
-            console.log(message);
-          }
-        );
+        // this.ipcService?.send('reload', 'from angular to electron');
+        // this.ipcService?.on(
+        //   'reloaded',
+        //   (_: Electron.IpcMessageEvent, message: any) => {
+        //     console.log(message);
+        //   }
+        // );
       });
   }
 
@@ -114,11 +110,11 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public handlerError(error: HttpErrorResponse): void {
-    setTimeout(() => {
-      this.isError = true;
-    }, 5000);
-  }
+  // public handlerError(error: HttpErrorResponse): void {
+  //   setTimeout(() => {
+  //     this.isError = true;
+  //   }, 5000);
+  // }
 
   public reloading(): void {
     // this.store.dispatch(actionsApp.ONLINE())

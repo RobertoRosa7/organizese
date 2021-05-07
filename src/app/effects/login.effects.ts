@@ -1,11 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Actions, Effect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import * as actionsApp from '../actions/app.actions';
-import { SET_ERRORS, SET_SUCCESS } from '../actions/errors.actions';
+import { SET_ERRORS } from '../actions/errors.actions';
 import * as actionsLogin from '../actions/login.actions';
 import { LoginService } from '../services/login.service';
 
@@ -34,21 +34,22 @@ export class LoginEffect {
     catchError((err) => of(err))
   );
 
-  @Effect()
-  public signin$: Observable<Actions> = this.action.pipe(
-    ofType(actionsLogin.SIGNIN),
-    mergeMap(({ payload }) =>
-      this.loginService.signin(payload).pipe(catchError((e) => of(e)))
-    ),
-    map((payload) => {
-      if (payload instanceof HttpErrorResponse) {
-        const source = { ...payload, source: 'signin' };
-        return SET_ERRORS({ payload: source });
-      } else {
-        return actionsLogin.SET_TOKEN({ payload });
-      }
-    }),
-    catchError((err) => of(err))
+  public signin$ = createEffect(() =>
+    this.action.pipe(
+      ofType(actionsLogin.SIGNIN),
+      mergeMap(({ payload }) =>
+        this.loginService.signin(payload).pipe(catchError((e) => of(e)))
+      ),
+      map((payload) => {
+        if (payload instanceof HttpErrorResponse) {
+          const source = { ...payload, source: 'signin' };
+          return SET_ERRORS({ payload: source });
+        } else {
+          return actionsLogin.SET_TOKEN({ payload });
+        }
+      }),
+      catchError((err) => of(err))
+    )
   );
 
   @Effect()

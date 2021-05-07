@@ -14,16 +14,11 @@ const errorsReducers = createReducer(
     ...states,
     error: payload,
   })),
-  on(actions.SET_STATUS_CODE, (states, { payload }) => ({
-    ...states,
-    status_code: payload,
-  })),
   on(actions.SET_SUCCESS, (states, { payload }) => ({
     ...states,
     success: payload,
   })),
   on(actions.RESET_ERRORS, (states) => ({ ...states, error: {} })),
-
   on(actionsApp.RESET_ALL, (states) => ({
     ...states,
     error: {},
@@ -32,6 +27,5 @@ const errorsReducers = createReducer(
   }))
 );
 
-export function reducerErrors(state: any, action: any): any {
-  return errorsReducers(state, action);
-}
+export const reducerErrors = (state: any, action: any): any =>
+  errorsReducers(state, action);
