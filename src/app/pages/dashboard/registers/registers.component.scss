@@ -1,11 +1,9 @@
-@import '../../../../styles.scss';
 @import '../../../../themes/mixins';
 
 .registers {
   @include padding-page;
   .container {
     border-radius: 8px;
-    padding: 40px;
   }
   .app-tabs,
   .tab-menu,

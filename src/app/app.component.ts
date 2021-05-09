@@ -75,14 +75,23 @@ export class AppComponent implements OnInit, AfterViewInit {
   public ngAfterViewInit(): void {
     this.addSvgIcon('excel-icon')
       .addSvgIcon('icon-default-white-512x512')
-      .addSvgIcon('account_circle_black_24dp')
-      .addSvgIcon('account_circle_white_24dp')
       .addSvgIcon('menu_black_24dp')
-      .addSvgIcon('menu_white_24dp')
       .addSvgIcon('search_black_24dp')
-      .addSvgIcon('search_white_24dp')
       .addSvgIcon('close_black_24dp')
-      .addSvgIcon('close_white_24dp');
+      .addSvgIcon('notifications_none_black_24dp')
+      .addSvgIcon('notifications_black_24dp')
+      .addSvgIcon('upgrade_black_24dp')
+      .addSvgIcon('account_circle_black_24dp')
+
+      .addSvgIcon('add_white_24dp')
+      .addSvgIcon('upgrade_white_24dp')
+      .addSvgIcon('notifications_none_white_24dp')
+      .addSvgIcon('notifications_white_24dp')
+      .addSvgIcon('close_white_24dp')
+      .addSvgIcon('search_white_24dp')
+      .addSvgIcon('menu_white_24dp')
+      .addSvgIcon('account_circle_white_24dp')
+      .addSvgIcon('add_black_24dp');
   }
 
   public initTheme(): void {

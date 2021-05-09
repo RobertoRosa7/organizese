@@ -12,8 +12,6 @@ import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
 import { fromEvent } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
-import { Register } from 'src/app/models/models';
 import { IpcService } from 'src/app/services/ipc.service';
 import { LoadService } from 'src/app/services/load.service';
 import { ScrollService } from 'src/app/services/scroll.service';
@@ -31,28 +29,6 @@ import * as actionsRegister from '../../actions/registers.actions';
   styleUrls: ['./dashboard.component.scss'],
 })
 export class DashboardComponent implements OnInit, DoCheck {
-  public menuList: any[] = [
-    {
-      link: '/',
-      name: 'Home',
-      icon: 'home',
-    },
-    {
-      link: '/dashboard',
-      name: 'Dashboard',
-      icon: 'dashboard',
-    },
-    {
-      link: '/dashboard/registers',
-      name: 'Registros',
-      icon: 'create',
-    },
-    {
-      link: '/dashboard/settings',
-      name: 'Configurações',
-      icon: 'settings',
-    },
-  ];
   public logo = './assets/icon-default-transparent-512x512.svg';
   public consolidado = 0;
   public isMobile = false;
@@ -87,7 +63,7 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.renderer = this.rendereFactory?.createRenderer(null, null);
     this.router?.events.subscribe((u: any) => (this.isActive = u.url));
     this.breakpoint
-      ?.observe([Breakpoints.XSmall])
+      ?.observe([Breakpoints.XSmall, Breakpoints.Small])
       .subscribe((result) => (this.isMobile = !!result.matches));
     this.store?.dispatch(actionsRegister.GET_TAB({ payload: 'read' }));
     this.differ = this.differs?.find({}).create();
@@ -95,35 +71,10 @@ export class DashboardComponent implements OnInit, DoCheck {
 
   public ngOnInit(): void {
     this.initialize();
-    // this.scrollService?.getScrollAsStream().subscribe((scroll) => {});
-    fromEvent(window, 'keypress').subscribe((ev: any) => {
-      if (ev.ctrlKey && ev.code === 'KeyB') {
-        this.hide = !this.hide;
-      }
-    });
-
-    this.store
-      ?.select(({ http_error, dashboard, profile }: any) => ({
-        http_error,
-        theme: dashboard.dark_mode,
-        profile: profile.user,
-      }))
-      .subscribe(async (state) => {
-        this.logo = './assets/' + this.getTheme(state.theme);
-        this.isDark = state.theme !== 'dark-mode';
-        this.user = state.profile;
-
-        // if (state.http_error.errors.length > 0) {
-        //   this.handleError(state.http_error.errors[0]);
-        // }
-      });
-
-    this.as
-      ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
-      .subscribe(({ payload }: any) => {
-        const name: string = this.fetchNames(payload);
-        this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
-      });
+    this.toggleSidebar();
+    this.hideBackdrop();
+    this.onStore();
+    this.onSuccess();
   }
 
   public ngDoCheck(): void {
@@ -143,6 +94,29 @@ export class DashboardComponent implements OnInit, DoCheck {
         resolve(payload);
       }
     });
+  }
+
+  private onSuccess(): void {
+    this.as
+      ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
+      .subscribe(({ payload }: any) => {
+        const name: string = this.fetchNames(payload);
+        this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
+      });
+  }
+
+  private onStore(): void {
+    this.store
+      ?.select(({ http_error, dashboard, profile }: any) => ({
+        http_error,
+        theme: dashboard.dark_mode,
+        profile: profile.user,
+      }))
+      .subscribe(async (state) => {
+        this.logo = './assets/' + this.getTheme(state.theme);
+        this.isDark = state.theme !== 'dark-mode';
+        this.user = state.profile;
+      });
   }
 
   private async initialize(): Promise<any> {
@@ -256,41 +230,24 @@ export class DashboardComponent implements OnInit, DoCheck {
     }
   }
 
-  public add(type: string): void {
-    this.dialog
-      ?.open(DialogFormIncomingComponent, {
-        data: { type },
-        panelClass: 'dialog-default',
-      })
-      .afterClosed()
-      .subscribe((res) => {
-        if (res) {
-          const payload: Register = {
-            category: res.category || 'Outros',
-            created_at: res.created_at,
-            updated_at: res.created_at,
-            type: res.type,
-            value: res.value,
-            status: 'pending',
-            brand: res.brand || '',
-            edit: false,
-            user: this.user,
-            description: res.description?.trim() || 'Sem descrição',
-          };
-          this.store?.dispatch(actionsRegister.ADD_REGISTERS({ payload }));
-        }
-      });
-  }
-
   public hideMenu(_: any): void {
     this.hide = !this.hide;
   }
 
-  public returnSizePanel(): string {
-    if (this.isMobile) {
-      return this.hide ? '0' : '250px';
-    } else {
-      return this.hide ? '70px' : '250px';
-    }
+  private hideBackdrop(): void {
+    fromEvent(document, 'click').subscribe((ev) => {
+      const backdrop = document.querySelector('.dashboard-container.backdrop');
+      if (backdrop === ev.target) {
+        this.hide = !this.hide;
+      }
+    });
+  }
+
+  private toggleSidebar(): void {
+    fromEvent(window, 'keypress').subscribe((ev: any) => {
+      if (ev.ctrlKey && ev.code === 'KeyB') {
+        this.hide = !this.hide;
+      }
+    });
   }
 }

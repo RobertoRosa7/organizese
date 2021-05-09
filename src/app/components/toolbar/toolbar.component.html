@@ -6,50 +6,51 @@
     mat-icon-button
     type="button"
   >
-    <mat-icon>menu</mat-icon>
+    <mat-icon
+      [svgIcon]="isDark ? 'menu_black_24dp' : 'menu_white_24dp'"
+    ></mat-icon>
   </button>
+
   <div class="container-toolbar">
-    <!-- <form (ngSubmit)="onSubmit()" class="form">
-      <mat-form-field class="field" appearance="outline">
-        <input
-          type="text"
-          [formControl]="searchTerms"
-          [matAutocomplete]="auto"
-          autocomplete="off"
-          name="searchTerms"
-          matInput
-          placeholder="Procurar"
-        />
-        <mat-autocomplete
-          #auto="matAutocomplete"
-          (optionSelected)="setSearch($event)"
-        >
-          <mat-option
-            *ngFor="let option of autocomplete$ | async"
-            [value]="option"
-            >{{ option }}</mat-option
-          >
-        </mat-autocomplete>
-        <mat-icon
-          (click)="$event.stopPropagation()"
-          [matMenuTriggerFor]="perfil"
-          style="cursor: pointer"
-          *ngIf="!searchTerms.value"
-          [svgIcon]="
-            isDark ? 'account_circle_black_24dp' : 'account_circle_white_24dp'
-          "
-          matSuffix
-        ></mat-icon>
-        <mat-icon
-          [svgIcon]="isDark ? 'close_black_24dp' : 'close_white_24dp'"
-          *ngIf="searchTerms.value"
-          (click)="searchTerms.reset()"
-          style="cursor: pointer"
-          matSuffix
-        ></mat-icon>
-      </mat-form-field>
-    </form> -->
     <div class="perfil">
+      <button
+        matTooltip="Atualizar registros"
+        disableRipple="true"
+        mat-icon-button
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon
+          [svgIcon]="isDark ? 'upgrade_black_24dp' : 'upgrade_white_24dp'"
+        ></mat-icon>
+      </button>
+
+      <button
+        matTooltip="Notificações"
+        disableRipple="true"
+        mat-icon-button
+        (click)="$event.stopPropagation()"
+      >
+        <mat-icon
+          [svgIcon]="
+            isDark
+              ? 'notifications_none_black_24dp'
+              : 'notifications_none_white_24dp'
+          "
+        ></mat-icon>
+      </button>
+
+      <button
+        matTooltip="Adicionar despesa/receita"
+        disableRipple="true"
+        mat-icon-button
+        (click)="$event.stopPropagation()"
+        [matMenuTriggerFor]="menu"
+      >
+        <mat-icon
+          [svgIcon]="isDark ? 'add_black_24dp' : 'add_white_24dp'"
+        ></mat-icon>
+      </button>
+
       <button
         matTooltip="Abrir perfil"
         disableRipple="true"
@@ -99,6 +100,17 @@
             <span>Sair</span>
           </li>
         </ul>
+      </mat-menu>
+
+      <mat-menu #menu="matMenu" overlapTrigger="true">
+        <button (click)="add('incoming')" mat-menu-item>
+          <mat-icon>add_circle_outline</mat-icon>
+          <span style="font-weight: 500">RECEITA</span>
+        </button>
+        <button (click)="add('outcoming')" mat-menu-item>
+          <mat-icon>add_circle_outline</mat-icon>
+          <span style="font-weight: 500">DESPESAS</span>
+        </button>
       </mat-menu>
     </div>
   </div>

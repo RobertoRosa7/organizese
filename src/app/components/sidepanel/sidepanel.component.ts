@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 import * as actionsApp from '../../actions/app.actions';
 import * as actionsDashboard from '../../actions/dashboard.actions';
 import * as actionsLogin from '../../actions/login.actions';
@@ -74,7 +73,7 @@ export class SidepanelComponent implements OnInit {
     private breakpoint: BreakpointObserver
   ) {
     this.breakpoint
-      ?.observe([Breakpoints.XSmall])
+      ?.observe([Breakpoints.Small, Breakpoints.XSmall])
       .subscribe((result) => (this.isMobile = !!result.matches));
   }
 
@@ -91,6 +90,8 @@ export class SidepanelComponent implements OnInit {
       this.store.dispatch(actionsApp.RESET_ALL());
     }
     if (this.router.url === payload.link) {
+      this.send.emit('hide');
+    } else if (this.isMobile) {
       this.send.emit('hide');
     }
     this.router.navigateByUrl(payload.link);

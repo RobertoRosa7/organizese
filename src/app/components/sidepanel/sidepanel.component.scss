@@ -2,6 +2,7 @@
 
 .side-panel {
   height: 100%;
+  position: relative;
   span {
     @include text-span;
   }
@@ -52,5 +53,9 @@
   }
   .item-menu button[focus] {
     background: inherit;
+  }
+  li.btn-logout {
+    position: absolute;
+    bottom: 10px;
   }
 }

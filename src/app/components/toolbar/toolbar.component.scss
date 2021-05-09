@@ -1,16 +1,18 @@
+@import '../../../themes/mixins';
+
 .search-toolbar,
 .container-toolbar {
   display: flex;
   align-items: center;
 }
 .search-toolbar {
+  @include padding-page;
   height: 64px;
   border-bottom: 1px solid var(--green-microsoft);
+
   .container-toolbar {
     height: inherit;
     width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
     .perfil {
       margin-left: auto;
     }

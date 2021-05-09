@@ -2,9 +2,7 @@
 
 .main {
   @include padding-page;
-  .container {
-    @include container;
-  }
+
   ::ng-deep .mat-tab-labels {
     justify-content: space-between;
   }

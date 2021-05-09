@@ -45,12 +45,12 @@
   max-width: 200px;
 }
 @mixin padding-page {
-  padding-left: 40px;
-  padding-right: 40px;
+  padding-left: 25px;
+  padding-right: 25px;
 
   @media (max-width: 599.99px) {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
   }
 }
 @mixin container {

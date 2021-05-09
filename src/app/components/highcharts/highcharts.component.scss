@@ -1,23 +1,25 @@
-@import '../../../styles.scss';
+@import '../../../themes/mixins';
 
 .highcharts {
-  .date {
-    display: flex;
+  .date,
+  .date .form-inline {
+    flex-wrap: wrap;
     justify-content: space-between;
+    display: flex;
+  }
+  .date {
     max-width: 480px;
     margin-left: auto;
     align-items: center;
     margin-top: 8px;
     margin-bottom: 8px;
-    flex-wrap: wrap;
-    .form-inline {
-      display: flex;
+    .form-inline,
+    .form {
       width: 100%;
-      justify-content: space-between;
-      flex-wrap: wrap;
+    }
+    .form-inline {
       max-width: 320px;
       .form {
-        width: 100%;
         max-width: 130px;
       }
     }
