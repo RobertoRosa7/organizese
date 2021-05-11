@@ -85,6 +85,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       .addSvgIcon('trending_down_black_24dp')
       .addSvgIcon('add_black_24dp')
       .addSvgIcon('trending_up_black_24dp')
+      .addSvgIcon('sync_black_24dp')
 
       .addSvgIcon('trending_up_white_24dp')
       .addSvgIcon('add_white_24dp')
@@ -95,7 +96,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       .addSvgIcon('search_white_24dp')
       .addSvgIcon('menu_white_24dp')
       .addSvgIcon('account_circle_white_24dp')
-      .addSvgIcon('trending_down_white_24dp');
+      .addSvgIcon('trending_down_white_24dp')
+      .addSvgIcon('sync_white_24dp');
   }
 
   public initTheme(): void {
