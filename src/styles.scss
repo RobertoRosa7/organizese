@@ -199,6 +199,69 @@ h2.welcome-subtitle {
     }
   }
 }
+.notification {
+  width: 280px;
+  max-height: 600px;
+  .mat-menu-content:not(:empty) {
+    padding: 0;
+  }
+  .card,
+  .card p,
+  .card .icons {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .card {
+    padding: 8px 0;
+    margin-bottom: 4px;
+    .icons,
+    .content,
+    .card p {
+      flex: 1;
+    }
+    .icons {
+      max-width: 48px;
+      align-items: center;
+      justify-content: center;
+    }
+    strong,
+    span {
+      font-weight: 400;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    p {
+      min-width: 120px;
+      font-weight: bold;
+    }
+    .content .value span {
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .content .date span {
+      font-size: 12px;
+      opacity: 0.5;
+    }
+    .icons.trending-up mat-icon svg {
+      fill: var(--green-microsoft);
+    }
+    .icons.trending-down mat-icon svg {
+      fill: var(--text-accent);
+    }
+  }
+  .card:last-of-type {
+    margin-bottom: 0;
+  }
+}
+.notification-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  h1 {
+    font-weight: 200;
+  }
+}
 .cdk-program-focused .mat-button-focus-overlay {
   opacity: 0 !important;
   background-color: transparent !important;

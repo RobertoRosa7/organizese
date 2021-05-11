@@ -25,7 +25,6 @@ export class ChartService {
       },
     },
     yAxis: {
-      // gridLineDashStyle: 0
       gridLineWidth: 0,
       title: { text: '' },
       opposite: false,
@@ -49,6 +48,7 @@ export class ChartService {
       },
     },
     xAxis: {
+      tickInterval: 1,
       categories: [],
       tickWidth: 1,
       labels: {

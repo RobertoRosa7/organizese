@@ -25,6 +25,7 @@ const BASE = {
   graph_category: [],
   outcome_income: {},
   lastdate_outcome: {},
+  notification_list: [],
   graph_dates: {
     dt_start: moment().subtract(31, 'days'),
     dt_end: moment(new Date()),
@@ -76,23 +77,18 @@ const dashboardReducers = createReducer(
     outcome_income: utils.formatterOutcomeIncome(payload),
   })),
   on(actions.SET_DASHBOARD, (states, { payload }) => {
-    const totals: any = utils.total(payload.data.results);
     return {
       ...states,
       registers:
         payload.data.results.length > 0
           ? utils.updateAll(payload.data.results)
           : [],
-      // consolidado: payload.data.consolidado,
-      // total: payload.data.total,
-      // total_geral: payload.data.total_geral,
-      // total_despesas: totals.despesa,
-      // total_receita: totals.receita,
-      // a_pagar: payload.data.consolidado.a_pagar,
-      // a_receber: payload.data.consolidado.a_receber,
-      // all_days_period: payload.data.days <= 0 ? 1 : payload.data.days,
     };
   }),
+  on(actions.SET_NOTIFICATION_LIST, (states, { payload }) => ({
+    ...states,
+    notification_list: payload,
+  })),
   on(actions.SET_GRAPH_CATEGORY, (states, { payload }) => {
     const payloadFormated: any = utils.formatDataToGraphCategory({
       ...payload,
@@ -105,6 +101,5 @@ const dashboardReducers = createReducer(
   on(actionsApp.RESET_ALL, (states) => ({ ...states, BASE }))
 );
 
-export function reducerDashboard(state: any, action: any): any {
-  return dashboardReducers(state, action);
-}
+export const reducerDashboard = (state = INITIAL_STATES, action: any) =>
+  dashboardReducers(state, action);

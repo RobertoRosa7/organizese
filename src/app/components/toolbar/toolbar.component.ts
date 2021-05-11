@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
 import { Register } from 'src/app/models/models';
 import * as actionsDashboard from '../../actions/dashboard.actions';
@@ -18,10 +19,12 @@ import * as actionsRegister from '../../actions/registers.actions';
 })
 export class ToolbarComponent implements OnInit {
   @Output() send = new EventEmitter();
+  @Output() updateRegisters = new EventEmitter();
+
+  public autocomplete$: Observable<string[]>;
+  public notifications$: Observable<any[]>;
 
   public searchTerms: FormControl = new FormControl();
-  private timeDelay = 1500;
-  public autocomplete$: Observable<string[]>;
   public user: any;
   public isDark: boolean;
 
@@ -41,6 +44,12 @@ export class ToolbarComponent implements OnInit {
         this.isDark = !(state.theme === 'dark-mode');
         this.user = state.profile;
       });
+
+    this.notifications$ = this.store
+      .select(({ dashboard }: any) => ({
+        notification: dashboard.notification_list,
+      }))
+      .pipe(map((states) => states.notification));
   }
 
   public onSubmit(): void {
@@ -57,16 +66,6 @@ export class ToolbarComponent implements OnInit {
       { s: event.option.value },
     ]);
     this.searchTerms.reset();
-  }
-
-  private async fetchAutocomplete(): Promise<any> {
-    return new Promise((resolve) =>
-      setTimeout(
-        () =>
-          resolve(this.store.dispatch(actionsDashboard.FETCH_AUTOCOMPLETE())),
-        this.timeDelay
-      )
-    );
   }
 
   public hideMenu(): void {
@@ -102,5 +101,17 @@ export class ToolbarComponent implements OnInit {
           this.store?.dispatch(actionsRegister.ADD_REGISTERS({ payload }));
         }
       });
+  }
+
+  public updateAllRegisters(event: Event): void {
+    event.stopPropagation();
+    this.updateRegisters.emit('update');
+  }
+
+  public formatarValor(valor: number): string {
+    return new Intl.NumberFormat('pt-BR', {
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+    }).format(valor);
   }
 }

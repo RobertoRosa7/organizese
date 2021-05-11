@@ -157,4 +157,7 @@ $border-width: 15%;
   .mat-expansion-panel:not([class*='mat-elevation-z']) {
     box-shadow: none;
   }
+  .notification .card {
+    border-bottom: 1px solid var(--color-default-dark);
+  }
 }

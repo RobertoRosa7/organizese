@@ -17,7 +17,7 @@
         matTooltip="Atualizar registros"
         disableRipple="true"
         mat-icon-button
-        (click)="$event.stopPropagation()"
+        (click)="updateAllRegisters($event)"
       >
         <mat-icon
           [svgIcon]="isDark ? 'upgrade_black_24dp' : 'upgrade_white_24dp'"
@@ -28,15 +28,31 @@
         matTooltip="Notificações"
         disableRipple="true"
         mat-icon-button
+        [matMenuTriggerFor]="notification"
         (click)="$event.stopPropagation()"
       >
-        <mat-icon
-          [svgIcon]="
-            isDark
-              ? 'notifications_none_black_24dp'
-              : 'notifications_none_white_24dp'
-          "
-        ></mat-icon>
+        <ng-container
+          *ngIf="notifications$ | async as states; else notifyEmpty"
+        >
+          <ng-container *ngIf="states.length > 0; else notifyEmpty">
+            <mat-icon
+              [matBadge]="states.length"
+              matBadgeColor="accent"
+              [svgIcon]="
+                isDark ? 'notifications_black_24dp' : 'notifications_white_24dp'
+              "
+            ></mat-icon>
+          </ng-container>
+        </ng-container>
+        <ng-template #notifyEmpty>
+          <mat-icon
+            [svgIcon]="
+              isDark
+                ? 'notifications_none_black_24dp'
+                : 'notifications_none_white_24dp'
+            "
+          ></mat-icon>
+        </ng-template>
       </button>
 
       <button
@@ -111,6 +127,70 @@
           <mat-icon>add_circle_outline</mat-icon>
           <span style="font-weight: 500">DESPESAS</span>
         </button>
+      </mat-menu>
+
+      <mat-menu
+        yPosition="above"
+        #notification="matMenu"
+        overlapTrigger="true"
+        class="notification"
+      >
+        <ng-container
+          *ngIf="notifications$ | async as states; else matMenuEmpty"
+        >
+          <div *ngIf="states.length > 0; else matMenuEmpty">
+            <div class="card" *ngFor="let item of states">
+              <div
+                class="icons"
+                [ngClass]="{
+                  'trending-down': item.type === 'outcoming',
+                  'trending-up': item.type === 'incoming'
+                }"
+              >
+                <mat-icon
+                  *ngIf="item.type === 'outcoming'"
+                  [svgIcon]="
+                    isDark
+                      ? 'trending_down_black_24dp'
+                      : 'trending_down_white_24dp'
+                  "
+                ></mat-icon>
+
+                <mat-icon
+                  *ngIf="item.type === 'incoming'"
+                  [svgIcon]="
+                    isDark ? 'trending_up_black_24dp' : 'trending_up_white_24dp'
+                  "
+                ></mat-icon>
+              </div>
+              <div class="content">
+                <p class="value">
+                  <span
+                    [ngStyle]="{
+                      color:
+                        item.type === 'outcoming'
+                          ? 'var(--text-accent)'
+                          : isDark
+                          ? 'var(--green-microsoft)'
+                          : 'var(--text-green)'
+                    }"
+                  >
+                    <span *ngIf="item.type === 'outcoming'">-</span>
+                    R$ {{ formatarValor(item.value) }}
+                  </span>
+                </p>
+                <p class="date">
+                  <span>{{ item.created_at * 1000 | date: 'medium' }}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+        <ng-template #matMenuEmpty>
+          <div class="notification-empty">
+            <h1>Vazio</h1>
+          </div>
+        </ng-template>
       </mat-menu>
     </div>
   </div>

@@ -8,10 +8,10 @@ import {
 import { Inject, Injectable } from '@angular/core';
 import { StatusCode } from 'aws-sdk/clients/apigateway';
 import { Observable } from 'rxjs';
+import { distinctUntilChanged, scan } from 'rxjs/operators';
 import { Consolidado, Download, Register } from '../models/models';
-import { Constants } from './constants';
-import { distinctUntilChanged, scan, map, tap } from 'rxjs/operators';
 import { SAVER, Saver } from '../providers/save.provider';
+import { Constants } from './constants';
 
 function isHttpResponse<T>(event: HttpEvent<T>): event is HttpResponse<T> {
   return event.type === HttpEventType.Response;
@@ -76,25 +76,6 @@ export class DashboardService {
     private constants: Constants,
     @Inject(SAVER) private save: Saver
   ) {}
-
-  private convertJsonToUrl(payload: any): string {
-    if (!payload) {
-      return '';
-    }
-    return (
-      '?' +
-      Object.entries(payload)
-        .map((e) => e.join('='))
-        .join('&')
-    );
-  }
-
-  private convertDates(dates: any): object {
-    return {
-      dt_start: new Date(dates.dt_start).getTime() / 1000,
-      dt_end: new Date(dates.dt_end).getTime() / 1000,
-    };
-  }
 
   public fetchRegisters(params?: any): Observable<Register[]> {
     return this.http.get<Register[]>(
@@ -221,6 +202,33 @@ export class DashboardService {
       `${this.constants.get(
         'fetch_graph_outcome_income'
       )}${this.convertJsonToUrl(params)}`
+    );
+  }
+
+  public fetchAllLastRegisters(payload: any): Observable<any> {
+    return this.http.get(
+      `${this.constants.get('fetch_all_last_registers')}${this.convertJsonToUrl(
+        payload
+      )}`
+    );
+  }
+
+  private convertDates(dates: any): object {
+    return {
+      dt_start: new Date(dates.dt_start).getTime() / 1000,
+      dt_end: new Date(dates.dt_end).getTime() / 1000,
+    };
+  }
+
+  private convertJsonToUrl(payload: any): string {
+    if (!payload) {
+      return '';
+    }
+    return (
+      '?' +
+      Object.entries(payload)
+        .map((e) => e.join('='))
+        .join('&')
     );
   }
 }

@@ -30,7 +30,10 @@
           'toolbar-mb': isMobile
         }"
       >
-        <app-toolbar (send)="hideMenu($event)"></app-toolbar>
+        <app-toolbar
+          (updateRegisters)="updateRegisters($event)"
+          (send)="hideMenu($event)"
+        ></app-toolbar>
       </div>
       <div class="pages">
         <router-outlet></router-outlet>

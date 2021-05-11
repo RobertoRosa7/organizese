@@ -10,8 +10,9 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { ActionsSubject, Store } from '@ngrx/store';
-import { fromEvent } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { fromEvent, Observable, of } from 'rxjs';
+import { filter, map, mergeMap } from 'rxjs/operators';
+import { DashboardService } from 'src/app/services/dashboard.service';
 import { IpcService } from 'src/app/services/ipc.service';
 import { LoadService } from 'src/app/services/load.service';
 import { ScrollService } from 'src/app/services/scroll.service';
@@ -58,7 +59,8 @@ export class DashboardComponent implements OnInit, DoCheck {
     protected dialog?: MatDialog,
     protected loadService?: LoadService,
     protected utilsService?: UtilsService,
-    protected rendereFactory?: RendererFactory2
+    protected rendereFactory?: RendererFactory2,
+    protected dashboardService?: DashboardService
   ) {
     this.renderer = this.rendereFactory?.createRenderer(null, null);
     this.router?.events.subscribe((u: any) => (this.isActive = u.url));
@@ -75,6 +77,10 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.hideBackdrop();
     this.onStore();
     this.onSuccess();
+
+    this.fetchLastRegister().subscribe(({ data: payload }) =>
+      this.store?.dispatch(actionsDashboard.SET_NOTIFICATION_LIST({ payload }))
+    );
   }
 
   public ngDoCheck(): void {
@@ -94,55 +100,6 @@ export class DashboardComponent implements OnInit, DoCheck {
         resolve(payload);
       }
     });
-  }
-
-  private onSuccess(): void {
-    this.as
-      ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
-      .subscribe(({ payload }: any) => {
-        const name: string = this.fetchNames(payload);
-        this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
-      });
-  }
-
-  private onStore(): void {
-    this.store
-      ?.select(({ http_error, dashboard, profile }: any) => ({
-        http_error,
-        theme: dashboard.dark_mode,
-        profile: profile.user,
-      }))
-      .subscribe(async (state) => {
-        this.logo = './assets/' + this.getTheme(state.theme);
-        this.isDark = state.theme !== 'dark-mode';
-        this.user = state.profile;
-      });
-  }
-
-  private async initialize(): Promise<any> {
-    await this.fetchUser();
-    await this.fetchRegisters();
-    await this.initDashboard();
-  }
-
-  private async fetchUser(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store?.dispatch(actionsProfile.GET_PROFILE()))
-    );
-  }
-
-  private async initDashboard(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store?.dispatch(actionsDashboard.INIT_DASHBOARD()))
-    );
-  }
-
-  private async fetchRegisters(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(
-        this.store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))
-      )
-    );
   }
 
   public handleError(error: any): void {
@@ -234,6 +191,10 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.hide = !this.hide;
   }
 
+  public updateRegisters(event: any): void {
+    this.dispatchActions();
+  }
+
   private hideBackdrop(): void {
     fromEvent(document, 'click').subscribe((ev) => {
       const backdrop = document.querySelector('.dashboard-container.backdrop');
@@ -249,5 +210,130 @@ export class DashboardComponent implements OnInit, DoCheck {
         this.hide = !this.hide;
       }
     });
+  }
+
+  private async initialize(): Promise<any> {
+    await this.fetchUser();
+    await this.fetchRegisters();
+    await this.initDashboard();
+  }
+
+  private getLastRegister(list: any[]): number {
+    if (list.length > 0) {
+      return list.sort((a: any, b: any) => {
+        if (a.created_at > b.created_at) {
+          return -1;
+        } else if (a.created_at < b.created_at) {
+          return 1;
+        }
+        return 0;
+      })[0].created_at;
+    } else {
+      return new Date().getTime();
+    }
+  }
+
+  private async fetchUser(): Promise<any> {
+    return new Promise((resolve) =>
+      resolve(this.store?.dispatch(actionsProfile.GET_PROFILE()))
+    );
+  }
+
+  private async initDashboard(): Promise<any> {
+    return new Promise((resolve) =>
+      resolve(this.store?.dispatch(actionsDashboard.INIT_DASHBOARD()))
+    );
+  }
+
+  private async fetchRegisters(): Promise<any> {
+    return new Promise((resolve) =>
+      resolve(
+        this.store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))
+      )
+    );
+  }
+
+  private onSuccess(): void {
+    this.as
+      ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
+      .subscribe(({ payload }: any) => {
+        const name: string = this.fetchNames(payload);
+        this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
+      });
+  }
+
+  private onStore(): void {
+    this.store
+      ?.select(({ dashboard, profile }: any) => ({
+        theme: dashboard.dark_mode,
+        profile: profile.user,
+        registers: [...dashboard.registers],
+      }))
+      .subscribe(async (state) => {
+        this.logo = './assets/' + this.getTheme(state.theme);
+        this.isDark = state.theme !== 'dark-mode';
+        this.user = state.profile;
+      });
+  }
+
+  private fetchLastRegister(): Observable<any> {
+    if (this.as) {
+      return this.as?.pipe(
+        filter((a) => a.type === actionsDashboard.actionsTypes.SET_DASHBOARD),
+        map(({ payload }: any) => (payload ? [...payload.data.results] : [])),
+        mergeMap((list) => {
+          if (this.dashboardService) {
+            return this.dashboardService?.fetchAllLastRegisters({
+              last_date: this.getLastRegister(list),
+            });
+          } else {
+            return of(null);
+          }
+        })
+      );
+    } else {
+      return of(null);
+    }
+  }
+
+  private async dispatchActions(payload?: any): Promise<any> {
+    await this.putDashboard();
+    await this.putConsolidado();
+    await this.putGraphOutcomeIncome();
+    await this.putLastDateOutcome();
+    await this.putAutocomplete();
+    this.snackbar?.open('Registros atualizados.', 'ok', {
+      duration: 3000,
+    });
+  }
+
+  private putDashboard(): Promise<any> {
+    return Promise.resolve(
+      this.store?.dispatch(actionsDashboard.PUT_DASHBOARD())
+    );
+  }
+
+  private putConsolidado(): Promise<any> {
+    return Promise.resolve(
+      this.store?.dispatch(actionsDashboard.PUT_CONSOLIDADO())
+    );
+  }
+
+  private putGraphOutcomeIncome(): Promise<any> {
+    return Promise.resolve(
+      this.store?.dispatch(actionsDashboard.PUT_GRAPH_OUTCOME_INCOME())
+    );
+  }
+
+  private putLastDateOutcome(): Promise<any> {
+    return Promise.resolve(
+      this.store?.dispatch(actionsDashboard.PUT_LASTDATE_OUTCOME())
+    );
+  }
+
+  private putAutocomplete(): Promise<any> {
+    return Promise.resolve(
+      this.store?.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
+    );
   }
 }

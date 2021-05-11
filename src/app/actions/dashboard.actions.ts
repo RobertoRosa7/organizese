@@ -26,6 +26,7 @@ export enum actionsTypes {
   SET_DATES = '[SET_DATES]',
   SET_DASHBOARD = '[SET_DASHBOARD]',
   SET_LASTDATE_OUTCOME = '[SET_LASTDATE_OUTCOME]',
+  SET_NOTIFICATION_LIST = '[SET_NOTIFICATION_LIST]',
 
   PUT_GRAPH_OUTCOME_INCOME = '[PUT_GRAPH_OUTCOME_INCOME]',
   PUT_LASTDATE_OUTCOME = '[PUT_LASTDATE_OUTCOME]',
@@ -39,7 +40,6 @@ export enum actionsTypes {
 export const INIT_DASHBOARD = createAction(actionsTypes.INIT_DASHBOARD);
 export const FETCH_DASHBOARD = createAction(actionsTypes.FETCH_DASHBOARD);
 export const FETCH_EVOLUCAO = createAction(actionsTypes.FETCH_EVOLUCAO);
-
 export const FETCH_EVOLUCAO_DESPESAS = createAction(
   actionsTypes.FETCH_EVOLUCAO_DESPESAS
 );
@@ -61,7 +61,6 @@ export const FETCH_DATES = createAction(
   actionsTypes.FETCH_DATES,
   props<{ payload: any }>()
 );
-
 export const GET_TOTALS = createAction(
   actionsTypes.GET_TOTALS,
   props<{ payload: any }>()
@@ -70,7 +69,6 @@ export const GET_DEV_MODE = createAction(
   actionsTypes.GET_DEV_MODE,
   props<{ payload: any }>()
 );
-
 export const SET_DEV_MODE = createAction(
   actionsTypes.SET_DEV_MODE,
   props<{ payload: any }>()
@@ -107,12 +105,14 @@ export const SET_LASTDATE_OUTCOME = createAction(
   actionsTypes.SET_LASTDATE_OUTCOME,
   props<{ payload: any }>()
 );
-
+export const SET_NOTIFICATION_LIST = createAction(
+  actionsTypes.SET_NOTIFICATION_LIST,
+  props<{ payload: any }>()
+);
 export const DARK_MODE = createAction(
   actionsTypes.DARK_MODE,
   props<{ payload: any }>()
 );
-
 export const PUT_CONSOLIDADO = createAction(actionsTypes.PUT_CONSOLIDADO);
 export const PUT_DASHBOARD = createAction(actionsTypes.PUT_DASHBOARD);
 export const PUT_GRAPH_OUTCOME_INCOME = createAction(
@@ -121,7 +121,6 @@ export const PUT_GRAPH_OUTCOME_INCOME = createAction(
 export const PUT_LASTDATE_OUTCOME = createAction(
   actionsTypes.PUT_LASTDATE_OUTCOME
 );
-
 export const UPDATE_AUTOCOMPLETE = createAction(
   actionsTypes.UPDATE_AUTOCOMPLETE
 );

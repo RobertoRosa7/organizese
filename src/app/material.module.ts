@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MomentDateModule } from '@angular/material-moment-adapter';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -28,7 +29,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CurrencyMaskModule } from 'ng2-currency-mask';
 import { NgxElectronModule } from 'ngx-electron';
-import { SearchComponent } from './components/search/search.component';
 import { WindowsHackerComponent } from './components/windows-hacker/windows-hacker.component';
 
 @NgModule({
@@ -68,6 +68,7 @@ import { WindowsHackerComponent } from './components/windows-hacker/windows-hack
     MatProgressSpinnerModule,
     MatTabsModule,
     MatTooltipModule,
+    MatBadgeModule,
     WindowsHackerComponent,
   ],
 })
