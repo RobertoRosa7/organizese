@@ -100,6 +100,12 @@ $border-width: 15%;
   .aside {
     background-color: var(--white-one);
   }
+  .search-toolbar {
+    border-bottom: 1px solid var(--green-microsoft);
+  }
+  .aside {
+    border-right: 1px solid var(--green-microsoft);
+  }
   .side-panel-top,
   .app-menu-list li {
     &:hover {
@@ -109,98 +115,6 @@ $border-width: 15%;
   }
   .side-panel {
     background-color: var(--green-microsoft);
-  }
-  .window {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    .window-body {
-      padding: 8px 16px;
-      border-left: 1px solid var(--white-one);
-      border-right: 1px solid var(--white-one);
-      border-collapse: collapse;
-      overflow-y: auto;
-      max-height: 768px;
-      background-color: var(--white-one);
-    }
-    .window-top,
-    .window-footer {
-      height: $border-height;
-      position: relative;
-      padding: 0 $border-width;
-      font-size: 0.9em;
-      font-weight: 400;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-collapse: collapse;
-    }
-    .window-top {
-      border-bottom: $border-height solid var(--white-one);
-      border-right: $border-length solid transparent;
-      border-left: $border-length solid transparent;
-      border-collapse: collapse;
-    }
-    .window-footer {
-      border-top: $border-height solid var(--white-one);
-      border-right: $border-length solid transparent;
-      border-left: $border-length solid transparent;
-      border-collapse: collapse;
-    }
-    .window-top::before {
-      content: '';
-      position: absolute;
-      height: 100%;
-      width: $border-width;
-      bottom: -$border-height;
-      left: -$border-height;
-      border-bottom: $border-length solid inherit;
-      border-left: $border-length solid transparent;
-      border-collapse: collapse;
-    }
-    .window-top::after {
-      content: '';
-      position: absolute;
-      bottom: -$border-height;
-      right: -$border-height;
-      height: 100%;
-      width: $border-width;
-      border-bottom: $border-length solid inherit;
-      border-right: $border-length solid transparent;
-      border-collapse: collapse;
-    }
-    .window-footer::before {
-      content: '';
-      position: absolute;
-      height: 100%;
-      width: $border-width;
-      top: -$border-height;
-      left: -$border-height;
-      border-top: $border-length solid inherit;
-      border-left: $border-length solid transparent;
-      border-collapse: collapse;
-    }
-    .window-footer::after {
-      content: '';
-      position: absolute;
-      top: -$border-height;
-      right: -$border-height;
-      height: 100%;
-      width: $border-width;
-      border-top: $border-length solid inherit;
-      border-right: $border-length solid transparent;
-      border-collapse: collapse;
-    }
-    .top-container,
-    .footer-container {
-      width: 100%;
-      height: inherit;
-    }
-    .top-container {
-      margin-top: $border-height;
-    }
-    .footer-container {
-      margin-bottom: $border-height;
-    }
   }
   .mat-expansion-panel:not([class*='mat-elevation-z']) {
     box-shadow: none;

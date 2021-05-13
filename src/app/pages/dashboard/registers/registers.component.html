@@ -14,12 +14,12 @@
           icon="add"
           target="create"
         ></app-tab-menu>
-        <app-tab-menu
+        <!-- <app-tab-menu
           class="btn-menu"
           label="Imprimir"
           icon="print"
           target="print"
-        ></app-tab-menu>
+        ></app-tab-menu> -->
       </div>
       <div *ngIf="!isMobile" class="control forms">
         <mat-form-field
@@ -155,165 +155,6 @@
     </div>
 
     <app-tabs class="app-tabs">
-      <!-- <div class="tab-float">
-      <app-tab-header class="tabs">
-        <app-windows-hacker>
-          <div class="control">
-            <app-tab-menu
-              class="btn-menu"
-              label="Listar"
-              icon="list"
-              target="read"
-            ></app-tab-menu>
-            <app-tab-menu
-              class="btn-menu"
-              label="Incluir"
-              icon="add"
-              target="create"
-            ></app-tab-menu>
-            <app-tab-menu
-              class="btn-menu"
-              label="Imprimir"
-              icon="print"
-              target="print"
-            ></app-tab-menu>
-          </div>
-        </app-windows-hacker>
-  
-        <app-windows-hacker>
-          <div style="width: 100%">
-            <div class="control forms">
-              <mat-form-field
-                class="form"
-                floatLabel="always"
-                appearance="outline"
-              >
-                <mat-select
-                  panelClass="custom-select"
-                  [(value)]="orderby"
-                  (selectionChange)="orderbyChange($event)"
-                  placeholder="Ordenar por"
-                >
-                  <mat-option
-                    [value]="option"
-                    *ngFor="let option of displayedColumns"
-                    >{{ option }}</mat-option
-                  >
-                </mat-select>
-              </mat-form-field>
-  
-              <mat-form-field
-                class="form"
-                floatLabel="always"
-                appearance="outline"
-              >
-                <mat-select
-                  panelClass="custom-select"
-                  [(value)]="filterByDays"
-                  placeholder="Ultimos 7 dias"
-                  (selectionChange)="filterByDaysChange($event)"
-                >
-                  <mat-option value="7">Ultimos 7 dias</mat-option>
-                  <mat-option value="15">Ultimos 15 dias</mat-option>
-                  <mat-option value="30">Ultimos 30 dias</mat-option>
-                  <mat-option value="60">Ultimos 60 dias</mat-option>
-                  <mat-option value="todos">Todos dias</mat-option>
-                </mat-select>
-              </mat-form-field>
-  
-              <mat-form-field
-                class="form"
-                floatLabel="always"
-                appearance="outline"
-              >
-                <mat-select
-                  panelClass="custom-select"
-                  [(value)]="inOutComing"
-                  (selectionChange)="inOutComingChange($event)"
-                  placeholder="Entradas/Saídas"
-                >
-                  <mat-option
-                    [value]="option.type"
-                    *ngFor="let option of categoriesList"
-                    >{{ option.label }}</mat-option
-                  >
-                </mat-select>
-              </mat-form-field>
-            </div>
-  
-            <div *ngIf="isMobile">
-              <button
-                class="btn-classificar"
-                type="button"
-                mat-raised-button
-                [matMenuTriggerFor]="menu"
-              >
-                <span>Classificar</span>
-              </button>
-              <mat-menu #menu="matMenu">
-                <div class="control mobile">
-                  <mat-form-field
-                    class="form"
-                    floatLabel="always"
-                    appearance="outline"
-                  >
-                    <mat-select
-                      panelClass="custom-select"
-                      [(value)]="orderby"
-                      (selectionChange)="orderbyChange($event)"
-                      placeholder="Ordenar por"
-                    >
-                      <mat-option
-                        [value]="option"
-                        *ngFor="let option of displayedColumns"
-                        >{{ option }}</mat-option
-                      >
-                    </mat-select>
-                  </mat-form-field>
-  
-                  <mat-form-field
-                    class="form"
-                    floatLabel="always"
-                    appearance="outline"
-                  >
-                    <mat-select
-                      panelClass="custom-select"
-                      [(value)]="filterByDays"
-                      placeholder="Ultimos 7 dias"
-                      (selectionChange)="filterByDaysChange($event)"
-                    >
-                      <mat-option value="7">Ultimos 7 dias</mat-option>
-                      <mat-option value="15">Ultimos 15 dias</mat-option>
-                      <mat-option value="30">Ultimos 30 dias</mat-option>
-                      <mat-option value="60">Ultimos 60 dias</mat-option>
-                      <mat-option value="todos">Todos dias</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-  
-                  <mat-form-field
-                    class="form"
-                    floatLabel="always"
-                    appearance="outline"
-                  >
-                    <mat-select
-                      panelClass="custom-select"
-                      [(value)]="inOutComing"
-                      (selectionChange)="inOutComingChange($event)"
-                      placeholder="Entradas/Saídas"
-                    >
-                      <mat-option value="incoming">Entradas</mat-option>
-                      <mat-option value="outcoming">Saídas</mat-option>
-                      <mat-option value="pending">Lançamento</mat-option>
-                      <mat-option value="all">Entrada/Saídas</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </div>
-              </mat-menu>
-            </div>
-          </div>
-        </app-windows-hacker>
-      </app-tab-header>
-    </div> -->
       <div class="content">
         <app-tab-content style="display: block">
           <div *ngIf="tab === 'read'" read #extrato id="extrato">
@@ -321,10 +162,6 @@
               <div *ngFor="let item of ELEMENT_DATA">
                 <span class="line-month">
                   {{ item.month | date: 'MMMM' }}
-                  <small
-                    [matTooltip]="registersThanTen(item.lista?.length || 0)"
-                    >{{ registersThanTen(item.lista?.length || 0) }}</small
-                  >
                 </span>
                 <app-list-registers
                   (send)="onDelete($event)"

@@ -6,7 +6,7 @@ import { ActionsSubject, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { RESET_ERRORS } from 'src/app/actions/errors.actions';
-import { actionsTypes, SIGNIN } from '../../../actions/login.actions';
+import { actionsTypes, SIGNIN, LOGOUT } from '../../../actions/login.actions';
 
 @Component({
   selector: 'app-sign-in',
@@ -47,7 +47,7 @@ export class SignInComponent implements OnInit {
   public async onSubmit(event: Event): Promise<any> {
     event.preventDefault();
     this.isLoading = true;
-
+    this.store.dispatch(LOGOUT());
     this.store.dispatch(SIGNIN({ payload: this.formLogin.value }));
 
     this.errors$ = this.store

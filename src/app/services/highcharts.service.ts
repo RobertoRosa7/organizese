@@ -48,7 +48,7 @@ export class ChartService {
       },
     },
     xAxis: {
-      tickInterval: 1,
+      tickInterval: 2,
       categories: [],
       tickWidth: 1,
       labels: {

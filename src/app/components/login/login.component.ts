@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit, DoCheck {
   public async onSubmit(event: any): Promise<any> {
     event.preventDefault();
     this.isLoading = true;
+    this.store.dispatch(actionsLogin.LOGOUT());
     this.store.dispatch(actionsLogin.SIGNIN({ payload: this.formLogin.value }));
 
     this.errors$ = this.store
