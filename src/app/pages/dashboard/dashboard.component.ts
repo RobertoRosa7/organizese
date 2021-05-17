@@ -220,7 +220,7 @@ export class DashboardComponent implements OnInit, DoCheck {
 
   private getLastRegister(list: any[]): number {
     if (list.length > 0) {
-      return list.sort((a: any, b: any) => {
+      return [...list].sort((a: any, b: any) => {
         if (a.created_at > b.created_at) {
           return -1;
         } else if (a.created_at < b.created_at) {
@@ -234,22 +234,18 @@ export class DashboardComponent implements OnInit, DoCheck {
   }
 
   private async fetchUser(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store?.dispatch(actionsProfile.GET_PROFILE()))
-    );
+    return Promise.resolve(this.store?.dispatch(actionsProfile.GET_PROFILE()));
   }
 
   private async initDashboard(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store?.dispatch(actionsDashboard.INIT_DASHBOARD()))
+    return Promise.resolve(
+      this.store?.dispatch(actionsDashboard.INIT_DASHBOARD())
     );
   }
 
   private async fetchRegisters(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(
-        this.store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))
-      )
+    return Promise.resolve(
+      this.store?.dispatch(actionsRegister.INIT({ payload: { days: 7 } }))
     );
   }
 

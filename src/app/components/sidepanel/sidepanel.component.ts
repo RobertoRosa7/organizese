@@ -133,6 +133,9 @@ export class SidepanelComponent implements OnInit {
       data: { type: 'search', data: {} },
       panelClass: 'dialog-default',
     });
+    if (this.isMobile) {
+      this.send.emit('hide');
+    }
   }
 
   public closeSidePanel(event: Event): void {
