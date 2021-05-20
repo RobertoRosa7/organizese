@@ -30,11 +30,24 @@
         required
       />
       <mat-icon
+        *ngIf="isDark$ | async; else isDarkThemeIcon"
         style="cursor: pointer"
         (click)="changeTexts = !changeTexts"
+        [svgIcon]="
+          changeTexts ? 'visibility_off_black_24dp' : 'visibility_black_24dp'
+        "
         matSuffix
-        >{{ changeTexts ? 'visibility_off' : 'visibility' }}</mat-icon
-      >
+      ></mat-icon>
+      <ng-template #isDarkThemeIcon>
+        <mat-icon
+          style="cursor: pointer"
+          (click)="changeTexts = !changeTexts"
+          [svgIcon]="
+            changeTexts ? 'visibility_off_white_24dp' : 'visibility_white_24dp'
+          "
+          matSuffix
+        ></mat-icon>
+      </ng-template>
       <mat-error *ngIf="formLogin.get('password')?.hasError('required')">
         Senha é obrigatória
       </mat-error>

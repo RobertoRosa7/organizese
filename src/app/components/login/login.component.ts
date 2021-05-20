@@ -33,7 +33,9 @@ export class LoginComponent implements OnInit, DoCheck {
   public isLoading = false;
   public differ: any;
   public errors$: Observable<any>;
+  public isDark$: Observable<boolean>;
   public changeTexts = true;
+
   public formLogin: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     keep_connect: [false],
@@ -56,6 +58,12 @@ export class LoginComponent implements OnInit, DoCheck {
 
   public ngOnInit(): void {
     this.isLoginText = this.dialog === 'page-login' ? 'voltar' : 'fechar';
+
+    this.isDark$ = this.store
+      .select(({ dashboard }: any) => ({
+        theme: dashboard.dark_mode,
+      }))
+      .pipe(map((state) => state.theme !== 'dark-mode'));
   }
 
   public ngDoCheck(): void {

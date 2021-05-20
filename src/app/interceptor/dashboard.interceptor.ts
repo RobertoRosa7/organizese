@@ -1,5 +1,4 @@
 import {
-  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -9,18 +8,13 @@ import {
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, throwError } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { LoginService } from 'src/app/services/login.service';
-import * as actionsLogin from '../actions/login.actions';
 
 @Injectable()
 export class DashboardInterceptor implements HttpInterceptor {
-  constructor(
-    private loginService: LoginService,
-    private router: Router,
-    private store: Store
-  ) {}
+  constructor(private loginService: LoginService) {}
 
   public intercept(
     request: HttpRequest<any>,
