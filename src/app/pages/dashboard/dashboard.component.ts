@@ -115,29 +115,6 @@ export class DashboardComponent implements OnInit, DoCheck {
     }).format(parseFloat(valor.toFixed(2)));
   }
 
-  private fetchNames(name: string): string {
-    switch (name) {
-      case 'fetch_registers':
-        return 'Registros carregados';
-      case 'update_register':
-        return 'Registro atualizado';
-      case 'delete_register':
-        return 'Registro excluído';
-      case 'new_register':
-        return 'Novo registro';
-      case 'status_code':
-        return 'Status code: ';
-      case 'fetch_evolucao_detail':
-        return 'ao carregar gráfico';
-      case 'signin':
-        return 'Login';
-      case 'login':
-        return 'Login sucesso';
-      default:
-        return '';
-    }
-  }
-
   public returnClass(): string {
     if (this.consolidado > 0) {
       return 'cards-money cards-money-on';
@@ -195,6 +172,29 @@ export class DashboardComponent implements OnInit, DoCheck {
     this.dispatchActions();
   }
 
+  private fetchNames(name: string): string {
+    switch (name) {
+      case 'fetch_registers':
+        return 'Registros carregados';
+      case 'update_register':
+        return 'Registro atualizado';
+      case 'delete_register':
+        return 'Registro excluído';
+      case 'new_register':
+        return 'Novo registro';
+      case 'status_code':
+        return 'Status code: ';
+      case 'fetch_evolucao_detail':
+        return 'ao carregar gráfico';
+      case 'signin':
+        return 'Login';
+      case 'login':
+        return 'Login sucesso';
+      default:
+        return '';
+    }
+  }
+
   private hideBackdrop(): void {
     fromEvent(document, 'click').subscribe((ev) => {
       const backdrop = document.querySelector('.dashboard-container.backdrop');
@@ -219,18 +219,16 @@ export class DashboardComponent implements OnInit, DoCheck {
   }
 
   private getLastRegister(list: any[]): number {
-    if (list.length > 0) {
-      return [...list].sort((a: any, b: any) => {
-        if (a.created_at > b.created_at) {
-          return -1;
-        } else if (a.created_at < b.created_at) {
-          return 1;
-        }
-        return 0;
-      })[0].created_at;
-    } else {
-      return new Date().getTime();
-    }
+    return list.length > 0
+      ? [...list].sort((a: any, b: any) => {
+          if (a.created_at > b.created_at) {
+            return -1;
+          } else if (a.created_at < b.created_at) {
+            return 1;
+          }
+          return 0;
+        })[0].created_at
+      : new Date().getTime();
   }
 
   private async fetchUser(): Promise<any> {
@@ -250,12 +248,12 @@ export class DashboardComponent implements OnInit, DoCheck {
   }
 
   private onSuccess(): void {
-    this.as
-      ?.pipe(filter((a) => a.type === actionsErrors.actionsTypes.SET_SUCCESS))
-      .subscribe(({ payload }: any) => {
+    this.onActionsTypes(actionsErrors.actionsTypes.SET_SUCCESS).subscribe(
+      ({ payload }: any) => {
         const name: string = this.fetchNames(payload);
         this.snackbar?.open(`${name}`, 'Ok', { duration: 3000 });
-      });
+      }
+    );
   }
 
   private onStore(): void {
@@ -273,23 +271,20 @@ export class DashboardComponent implements OnInit, DoCheck {
   }
 
   private fetchLastRegister(): Observable<any> {
-    if (this.as) {
-      return this.as?.pipe(
-        filter((a) => a.type === actionsDashboard.actionsTypes.SET_DASHBOARD),
-        map(({ payload }: any) => (payload ? [...payload.data.results] : [])),
-        mergeMap((list) => {
-          if (this.dashboardService) {
-            return this.dashboardService?.fetchAllLastRegisters({
-              last_date: this.getLastRegister(list),
-            });
-          } else {
-            return of(null);
-          }
-        })
-      );
-    } else {
-      return of(null);
-    }
+    return this.onActionsTypes(
+      actionsDashboard.actionsTypes.SET_DASHBOARD
+    ).pipe(
+      map(({ payload }) => (payload ? [...payload.data.results] : [])),
+      mergeMap((list) => {
+        if (this.dashboardService) {
+          return this.dashboardService?.fetchAllLastRegisters({
+            last_date: this.getLastRegister(list),
+          });
+        } else {
+          return of(null);
+        }
+      })
+    );
   }
 
   private async dispatchActions(payload?: any): Promise<any> {
@@ -331,5 +326,9 @@ export class DashboardComponent implements OnInit, DoCheck {
     return Promise.resolve(
       this.store?.dispatch(actionsDashboard.UPDATE_AUTOCOMPLETE())
     );
+  }
+
+  private onActionsTypes(type: string): Observable<any> {
+    return this.as ? this.as.pipe(filter((a) => a.type === type)) : of(null);
   }
 }

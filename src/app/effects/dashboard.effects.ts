@@ -135,85 +135,85 @@ export class DashboardEffect {
   );
 
   // deprecated
-  @Effect()
-  public fetchEvolucao$: Observable<Actions> = this.action.pipe(
-    ofType(actions.FETCH_EVOLUCAO),
-    switchMap(() => from(this.getDatesFromStore())),
-    mergeMap(({ dates }) =>
-      this.dashboardService.fetchEvocucao(dates).pipe(catchError((e) => of(e)))
-    ),
-    map((payload: any) => {
-      if (payload instanceof HttpErrorResponse) {
-        const source = { ...payload, source: 'fetch_evolucao' };
-        return SET_ERRORS({ payload: source });
-      } else {
-        return actions.SET_EVOLUCAO({ payload });
-      }
-    }),
-    catchError((e) => of(e))
-  );
+  // @Effect()
+  // public fetchEvolucao$: Observable<Actions> = this.action.pipe(
+  //   ofType(actions.FETCH_EVOLUCAO),
+  //   switchMap(() => from(this.getDatesFromStore())),
+  //   mergeMap(({ dates }) =>
+  //     this.dashboardService.fetchEvocucao(dates).pipe(catchError((e) => of(e)))
+  //   ),
+  //   map((payload: any) => {
+  //     if (payload instanceof HttpErrorResponse) {
+  //       const source = { ...payload, source: 'fetch_evolucao' };
+  //       return SET_ERRORS({ payload: source });
+  //     } else {
+  //       return actions.SET_EVOLUCAO({ payload });
+  //     }
+  //   }),
+  //   catchError((e) => of(e))
+  // );
 
   // deprecated
-  @Effect()
-  public fetchEvolucaoDespesas$: Observable<Actions> = this.action.pipe(
-    ofType(actions.FETCH_EVOLUCAO_DESPESAS),
-    switchMap(() => from(this.getDatesFromStore())),
-    mergeMap(({ dates }) =>
-      this.dashboardService
-        .fetchEvocucaoDespesas(dates)
-        .pipe(catchError((e) => of(e)))
-    ),
-    map((payload: any) => {
-      if (payload instanceof HttpErrorResponse) {
-        const source = { ...payload, source: 'fetch_evolucao_despesas' };
-        return SET_ERRORS({ payload: source });
-      } else {
-        return actions.SET_EVOLUCAO_DESPESAS({ payload });
-      }
-    }),
-    catchError((e) => of(e))
-  );
+  // @Effect()
+  // public fetchEvolucaoDespesas$: Observable<Actions> = this.action.pipe(
+  //   ofType(actions.FETCH_EVOLUCAO_DESPESAS),
+  //   switchMap(() => from(this.getDatesFromStore())),
+  //   mergeMap(({ dates }) =>
+  //     this.dashboardService
+  //       .fetchEvocucaoDespesas(dates)
+  //       .pipe(catchError((e) => of(e)))
+  //   ),
+  //   map((payload: any) => {
+  //     if (payload instanceof HttpErrorResponse) {
+  //       const source = { ...payload, source: 'fetch_evolucao_despesas' };
+  //       return SET_ERRORS({ payload: source });
+  //     } else {
+  //       return actions.SET_EVOLUCAO_DESPESAS({ payload });
+  //     }
+  //   }),
+  //   catchError((e) => of(e))
+  // );
 
   // deprecated
-  @Effect()
-  public fetchEvolucaoDetail$: Observable<Actions> = this.action.pipe(
-    ofType(actions.FETCH_EVOLUCAO_DETAIL),
-    mergeMap(({ payload }) =>
-      this.dashboardService
-        .fetchEvocucaoDetail(payload)
-        .pipe(catchError((e) => of(e)))
-    ),
-    map((payload: any) => {
-      if (payload instanceof HttpErrorResponse) {
-        const source = { ...payload, source: 'fetch_evolucao_detail' };
-        return SET_ERRORS({ payload: source });
-      } else {
-        return actions.SET_EVOLUCAO_DETAIL({ payload });
-      }
-    }),
-    catchError((e) => of(e))
-  );
+  // @Effect()
+  // public fetchEvolucaoDetail$: Observable<Actions> = this.action.pipe(
+  //   ofType(actions.FETCH_EVOLUCAO_DETAIL),
+  //   mergeMap(({ payload }) =>
+  //     this.dashboardService
+  //       .fetchEvocucaoDetail(payload)
+  //       .pipe(catchError((e) => of(e)))
+  //   ),
+  //   map((payload: any) => {
+  //     if (payload instanceof HttpErrorResponse) {
+  //       const source = { ...payload, source: 'fetch_evolucao_detail' };
+  //       return SET_ERRORS({ payload: source });
+  //     } else {
+  //       return actions.SET_EVOLUCAO_DETAIL({ payload });
+  //     }
+  //   }),
+  //   catchError((e) => of(e))
+  // );
 
   // deprecated
-  @Effect()
-  public graphCategory$: Observable<Actions> = this.action.pipe(
-    ofType(actions.actionsTypes.FETCH_GRAPH_CATEGORY),
-    switchMap(() => from(this.getDatesFromStore())),
-    mergeMap(({ dates }) =>
-      this.dashboardService
-        .fetchGraphCategory(dates)
-        .pipe(catchError((e) => of(e)))
-    ),
-    map((payload) => {
-      if (payload instanceof HttpErrorResponse) {
-        const source = { ...payload, source: 'graph_category' };
-        return SET_ERRORS({ payload: source });
-      } else {
-        return actions.SET_GRAPH_CATEGORY({ payload });
-      }
-    }),
-    catchError((err) => of(err))
-  );
+  // @Effect()
+  // public graphCategory$: Observable<Actions> = this.action.pipe(
+  //   ofType(actions.actionsTypes.FETCH_GRAPH_CATEGORY),
+  //   switchMap(() => from(this.getDatesFromStore())),
+  //   mergeMap(({ dates }) =>
+  //     this.dashboardService
+  //       .fetchGraphCategory(dates)
+  //       .pipe(catchError((e) => of(e)))
+  //   ),
+  //   map((payload) => {
+  //     if (payload instanceof HttpErrorResponse) {
+  //       const source = { ...payload, source: 'graph_category' };
+  //       return SET_ERRORS({ payload: source });
+  //     } else {
+  //       return actions.SET_GRAPH_CATEGORY({ payload });
+  //     }
+  //   }),
+  //   catchError((err) => of(err))
+  // );
 
   @Effect()
   public graphOutcomeIncome$: Observable<Actions> = this.action.pipe(
