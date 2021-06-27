@@ -114,10 +114,12 @@ export class RegistersEffect {
         of(payload),
       ])
     ),
-    map(([response, _]) => {
+    map(([response, payload]) => {
       if (response instanceof HttpErrorResponse) {
         const source = { ...response, source: this.props.update_register };
         return SET_ERRORS({ payload: source });
+      } else if (response.modified === 0) {
+        return actions.SET_UPDATE({ payload });
       } else {
         this.dispatchActions({ payload: this.props.update_register });
         return actions.SET_UPDATE({ payload: response.data });

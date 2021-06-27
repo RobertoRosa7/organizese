@@ -108,6 +108,7 @@ export class DashboardService {
   }
 
   public updateRegister(payload: Register): Observable<Register> {
+    console.log(payload);
     return this.http.post<Register>(
       this.constants.get('update_register'),
       payload
