@@ -1,28 +1,13 @@
-<div *ngIf="visible" class="tab-menu">
+<div class="tab-menu">
   <button
     [matTooltip]="label"
-    *ngIf="isButton; else isNotButton"
     class="btn-tab"
     (click)="selectedTab(target)"
     type="button"
     mat-stroked-button
-    [ngStyle]="{ opacity: tabActive ? '0.5' : '' }"
+    [ngClass]="{ 'is-active-button-tab': !tabActive }"
   >
     <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
     <span>{{ label }}</span>
   </button>
-
-  <ng-template #isNotButton>
-    <div
-      class="span-btn"
-      (click)="selectedTab(target)"
-      [ngStyle]="{ opacity: tabActive ? '0.5' : '' }"
-    >
-      <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
-      <p style="display: flex; flex-direction: column">
-        <span style="margin-left: 16px">{{ label }}</span>
-        <small style="margin-left: 16px" *ngIf="subtitle">{{ subtitle }}</small>
-      </p>
-    </div>
-  </ng-template>
 </div>

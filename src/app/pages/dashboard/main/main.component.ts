@@ -17,7 +17,8 @@ import { DashboardComponent } from '../dashboard.component';
 })
 export class MainComponent
   extends DashboardComponent
-  implements OnInit, DoCheck {
+  implements OnInit, DoCheck
+{
   public cards: any[] = [
     {
       title: 'Consolidado',
@@ -132,22 +133,20 @@ export class MainComponent
   }
 
   private initMain(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store.dispatch(actionsDashboard.FETCH_DASHBOARD()))
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.FETCH_DASHBOARD())
     );
   }
 
   private initGraphOutcomeIncome(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(
-        this.store.dispatch(actionsDashboard.FETCH_GRAPH_OUTCOME_INCOME())
-      )
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.FETCH_GRAPH_OUTCOME_INCOME())
     );
   }
 
   private initGraphLastOutcome(): Promise<any> {
-    return new Promise((resolve) =>
-      resolve(this.store.dispatch(actionsDashboard.FETCH_LASTDATE_OUTCOME()))
+    return Promise.resolve(
+      this.store.dispatch(actionsDashboard.FETCH_LASTDATE_OUTCOME())
     );
   }
 

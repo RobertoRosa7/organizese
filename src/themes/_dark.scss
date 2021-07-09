@@ -128,6 +128,12 @@ $border-width: 15%;
   .aside {
     background-color: var(--color-dark-secondary);
   }
+  .search-toolbar {
+    border-bottom: 1px solid var(--green-microsoft);
+  }
+  .aside {
+    border-right: 1px solid var(--green-microsoft);
+  }
   .mat-dialog-container,
   .mat-card,
   .mat-raised-button,

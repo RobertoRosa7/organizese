@@ -24,7 +24,7 @@ export class TabMenuComponent implements OnInit {
     private store: Store,
     private breakpointObserver: BreakpointObserver
   ) {
-    breakpointObserver
+    this.breakpointObserver
       .observe([Breakpoints.XSmall])
       .subscribe((result) => (this.isMobile = !!result.matches));
   }
@@ -47,12 +47,6 @@ export class TabMenuComponent implements OnInit {
 
   public selectedTab(target: string): void {
     this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
-    // if (!this.isMobile) {
-    //   this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
-    // } else {
-    //   this.store.dispatch(actionsRegisters.GET_SHOWTAB({ payload: ['back'] }));
-    //   this.store.dispatch(actionsRegisters.GET_TAB({ payload: target }));
-    // }
   }
 
   private setTabToShow(tabList: string[]): void {

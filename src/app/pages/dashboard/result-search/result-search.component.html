@@ -1,23 +1,21 @@
 <section class="result-search">
-  <app-windows-hacker>
-    <div class="container-search">
-      <div class="result-search-title">
-        <button routerLink="/dashboard" type="button" mat-icon-button>
-          <mat-icon>arrow_back</mat-icon>
-        </button>
-        <app-title
-          title="Resultado:"
-          [subtitle]="TOTAL_RESULT$ | async"
-        ></app-title>
-      </div>
-
-      <ng-container *ngIf="TOTAL_RESULT$ | async">
-        <app-list-registers
-          (send)="onEvent($event)"
-          *ngFor="let i of RESULT_DATA$ | async"
-          [item]="i"
-        ></app-list-registers>
-      </ng-container>
+  <div class="container-search">
+    <div class="result-search-title">
+      <button routerLink="/dashboard" type="button" mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <app-title
+        title="Resultado:"
+        [subtitle]="TOTAL_RESULT$ | async"
+      ></app-title>
     </div>
-  </app-windows-hacker>
+
+    <ng-container *ngIf="TOTAL_RESULT$ | async">
+      <app-list-registers
+        (send)="onEvent($event)"
+        *ngFor="let i of RESULT_DATA$ | async"
+        [item]="i"
+      ></app-list-registers>
+    </ng-container>
+  </div>
 </section>

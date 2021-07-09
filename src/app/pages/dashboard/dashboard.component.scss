@@ -1,3 +1,5 @@
+@import '../../../themes/mixins';
+
 $min-height: 80px;
 
 .dashboard,
@@ -62,6 +64,7 @@ $min-height: 80px;
     }
     .pages {
       margin-top: $min-height;
+      @include container;
     }
   }
   .dashboard-container.backdrop::before {

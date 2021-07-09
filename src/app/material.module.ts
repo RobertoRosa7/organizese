@@ -69,7 +69,6 @@ import { WindowsHackerComponent } from './components/windows-hacker/windows-hack
     MatTabsModule,
     MatTooltipModule,
     MatBadgeModule,
-    WindowsHackerComponent,
   ],
 })
 export class MaterialModule {}
