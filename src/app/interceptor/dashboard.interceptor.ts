@@ -1,15 +1,13 @@
 import {
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { LoginService } from 'src/app/services/login.service';
 
 @Injectable()
@@ -38,11 +36,14 @@ export class DashboardInterceptor implements HttpInterceptor {
     });
 
     return next.handle(request).pipe(
-      map((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
-          return event;
+      catchError((err) => {
+        if (err instanceof HttpErrorResponse) {
+          if (err.status === 401) {
+            this.loginService.sessionIsOver();
+          }
+          return of(err);
         }
-        return event;
+        return of(err);
       })
     );
   }

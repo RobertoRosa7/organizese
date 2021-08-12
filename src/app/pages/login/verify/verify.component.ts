@@ -21,31 +21,18 @@ export class VerifyComponent implements OnInit {
 
   public ngOnInit(): void {
     this.isVerified$ = this.activatedRoute.queryParams.pipe(
-      switchMap((params: any) => {
-        if (params) {
-          return this.loginService.loginVerified({ token: params.token });
-        } else {
-          return of(null);
-        }
-      }),
+      switchMap((params: any) => this.mapCheckIfToken(params)),
       catchError((e) => {
-        console.log(e);
         this.text =
           'Crie uma nova senha de acesso. (login > esqueci a senha > digite seu e-mail)';
         return e;
       })
     );
-    // .subscribe(
-    //   (res) => {
-    //     if (res) {
-    //       this.text = 'E-mail verificado!';
-    //       this.isVerified = true;
-    //     }
-    //   },
-    //   () => {
-    //     this.text = 'E-mail não verificado, token inválido ou expirado!';
-    //     this.isVerified = false;
-    //   }
-    // );
+  }
+
+  private mapCheckIfToken(params: any): Observable<any> {
+    return params
+      ? this.loginService.loginVerified({ token: params.token })
+      : of(null);
   }
 }

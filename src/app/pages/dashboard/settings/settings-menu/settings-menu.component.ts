@@ -2,12 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { delay } from 'rxjs/operators';
 import { DialogConfirmComponent } from 'src/app/components/dialog-confirm/dialog-confirm.component';
+import { LoginService } from 'src/app/services/login.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import * as actionsLogin from '../../../../actions/login.actions';
 
 @Component({
   selector: 'app-settings-menu',
@@ -24,7 +23,7 @@ export class SettingsMenuComponent implements OnInit {
     private snackbar: MatSnackBar,
     private profileService: ProfileService,
     private store: Store,
-    private router: Router
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -50,8 +49,7 @@ export class SettingsMenuComponent implements OnInit {
             .pipe(delay(3000))
             .subscribe(
               (res) => {
-                this.store.dispatch(actionsLogin.LOGOUT());
-                this.router.navigateByUrl('/');
+                this.loginService.sessionIsOver();
                 this.snackbar.open(res.message, 'ok');
               },
               (err) => {

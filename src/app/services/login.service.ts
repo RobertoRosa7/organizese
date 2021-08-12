@@ -5,6 +5,10 @@ import { tap } from 'rxjs/operators';
 import { User } from '../models/models';
 import { Constants } from './constants';
 import { IndexdbService } from '../services/indexedbs.service';
+import { Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+import * as actionsLogin from '../actions/login.actions';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -15,7 +19,9 @@ export class LoginService {
   constructor(
     private http: HttpClient,
     private constants: Constants,
-    private indexedb: IndexdbService
+    private indexedb: IndexdbService,
+    private store: Store,
+    private route: Router
   ) {}
 
   public signup(payload: User): Observable<User> {
@@ -109,5 +115,10 @@ export class LoginService {
 
   public mailToReset(payload: any): Observable<any> {
     return this.http.post<any>(this.constants.get('email_to_reset'), payload);
+  }
+
+  public sessionIsOver(): void {
+    this.store.dispatch(actionsLogin.LOGOUT());
+    this.route.navigateByUrl('/home');
   }
 }

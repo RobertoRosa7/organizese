@@ -6,6 +6,7 @@ import { map } from 'rxjs/operators';
 import { DialogsComponent } from 'src/app/components/dialogs/dialogs.component';
 import { AppService } from 'src/app/services/app.service';
 import { Constants } from 'src/app/services/constants';
+import { LoginService } from 'src/app/services/login.service';
 import * as actionsErrors from '../../actions/errors.actions';
 
 @Component({
@@ -91,13 +92,6 @@ export class HomeComponent implements OnInit {
       return 'icon-default-transparent-512x512';
     }
   }
-
-  // public download(): void {
-  //   this.dialog.open(DialogsComponent, {
-  //     data: { type: 'download', data: this.downloadList },
-  //     panelClass: 'dialog-default',
-  //   });
-  // }
 
   public isDark(): boolean {
     return localStorage.getItem('user-theme') === 'light-mode';

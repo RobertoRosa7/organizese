@@ -4,7 +4,12 @@ import { LoginGuards } from './guards/login-guards';
 import { HomeComponent } from './pages/home/home.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  {
+    path: '',
+    redirectTo: 'dashboard',
+    pathMatch: 'full',
+  },
+  { path: 'home', component: HomeComponent },
   {
     path: 'dashboard',
     loadChildren: () =>
@@ -18,7 +23,7 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/login/login.module').then((m) => m.LoginModule),
   },
-  { path: '**', redirectTo: '', pathMatch: 'prefix' },
+  { path: '**', redirectTo: 'home', pathMatch: 'prefix' },
 ];
 
 @NgModule({

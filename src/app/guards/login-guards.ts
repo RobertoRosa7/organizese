@@ -27,7 +27,7 @@ export class LoginGuards implements CanActivate {
     return this.loginService.isAuthenticated().pipe(
       tap((auth) => {
         if (!auth) {
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/home');
           this.snackbar.open('Você não fez seu login ainda!', 'ok', {
             duration: 5000,
           });
