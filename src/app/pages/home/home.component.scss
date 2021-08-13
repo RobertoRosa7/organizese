@@ -43,7 +43,6 @@
         justify-content: flex-end;
         padding: 0;
         .container-logo {
-          // width: 100%;
           flex: 1;
           img {
             width: 100%;
@@ -58,6 +57,10 @@
           flex: 1;
           button {
             @include custom-button-icon-width-text;
+          }
+          .login {
+            color: white;
+            background: var(--green-microsoft);
           }
           .btn-download {
             background: transparent;
