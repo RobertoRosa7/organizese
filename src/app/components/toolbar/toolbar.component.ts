@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { DialogFormIncomingComponent } from 'src/app/components/dialog-form-incoming/dialog-form-incoming.component';
 import { Register } from 'src/app/models/models';
+import { LoginService } from 'src/app/services/login.service';
 import * as actionsDashboard from '../../actions/dashboard.actions';
 import * as actionsLogin from '../../actions/login.actions';
 import * as actionsRegister from '../../actions/registers.actions';
@@ -31,7 +32,8 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private router: Router,
     private store: Store,
-    protected dialog?: MatDialog
+    private dialog: MatDialog,
+    private loginService: LoginService
   ) {}
 
   ngOnInit(): void {
@@ -73,8 +75,7 @@ export class ToolbarComponent implements OnInit {
   }
 
   public logout(): void {
-    this.router.navigateByUrl('/');
-    this.store.dispatch(actionsLogin.LOGOUT());
+    this.loginService.sessionIsOver('Sessão encerrada.');
   }
 
   public add(type: string): void {

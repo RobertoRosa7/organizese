@@ -8,6 +8,7 @@ import { IndexdbService } from '../services/indexedbs.service';
 import { Store } from '@ngrx/store';
 import { Router } from '@angular/router';
 import * as actionsLogin from '../actions/login.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,8 @@ export class LoginService {
     private constants: Constants,
     private indexedb: IndexdbService,
     private store: Store,
-    private route: Router
+    private route: Router,
+    private snackbar: MatSnackBar
   ) {}
 
   public signup(payload: User): Observable<User> {
@@ -117,8 +119,9 @@ export class LoginService {
     return this.http.post<any>(this.constants.get('email_to_reset'), payload);
   }
 
-  public sessionIsOver(): void {
+  public sessionIsOver(message: string): void {
     this.store.dispatch(actionsLogin.LOGOUT());
     this.route.navigateByUrl('/home');
+    this.snackbar.open(message, 'ok', { duration: 3000 });
   }
 }

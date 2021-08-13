@@ -49,7 +49,7 @@ export class SettingsMenuComponent implements OnInit {
             .pipe(delay(3000))
             .subscribe(
               (res) => {
-                this.loginService.sessionIsOver();
+                this.loginService.sessionIsOver('Sessão encerrada.');
                 this.snackbar.open(res.message, 'ok');
               },
               (err) => {

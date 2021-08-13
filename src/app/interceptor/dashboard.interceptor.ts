@@ -6,8 +6,8 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { LoginService } from 'src/app/services/login.service';
 
 @Injectable()
@@ -39,11 +39,11 @@ export class DashboardInterceptor implements HttpInterceptor {
       catchError((err) => {
         if (err instanceof HttpErrorResponse) {
           if (err.status === 401) {
-            this.loginService.sessionIsOver();
+            this.loginService.sessionIsOver('Acesso não autorizado.');
           }
-          return of(err);
+          return throwError(err);
         }
-        return of(err);
+        return throwError(err);
       })
     );
   }

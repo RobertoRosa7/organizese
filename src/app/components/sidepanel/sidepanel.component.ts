@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { LoginService } from 'src/app/services/login.service';
 import * as actionsApp from '../../actions/app.actions';
 import * as actionsDashboard from '../../actions/dashboard.actions';
 import * as actionsLogin from '../../actions/login.actions';
@@ -70,7 +71,8 @@ export class SidepanelComponent implements OnInit {
     private store: Store,
     private router: Router,
     private dialog: MatDialog,
-    private breakpoint: BreakpointObserver
+    private breakpoint: BreakpointObserver,
+    private loginService: LoginService
   ) {
     this.breakpoint
       ?.observe([Breakpoints.Small, Breakpoints.XSmall])
@@ -150,7 +152,6 @@ export class SidepanelComponent implements OnInit {
   }
 
   private resetSession() {
-    this.router.navigateByUrl('/');
-    this.store.dispatch(actionsLogin.LOGOUT());
+    this.loginService.sessionIsOver('Sessão encerrada.');
   }
 }

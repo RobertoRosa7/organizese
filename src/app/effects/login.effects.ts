@@ -44,8 +44,9 @@ export class LoginEffect {
       ),
       map((payload) => {
         if (payload instanceof HttpErrorResponse) {
-          const source = { ...payload, source: 'signin' };
-          return SET_ERRORS({ payload: source });
+          console.log(payload);
+
+          return SET_ERRORS({ payload: { ...payload, source: 'signin' } });
         } else {
           return actionsLogin.SET_TOKEN({ payload });
         }
