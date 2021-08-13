@@ -59,4 +59,8 @@ export class SettingsMenuComponent implements OnInit {
         }
       });
   }
+
+  public logout(): void {
+    console.log('sair');
+  }
 }

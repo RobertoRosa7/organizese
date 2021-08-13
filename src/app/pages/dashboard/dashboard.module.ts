@@ -34,6 +34,7 @@ import { SettingsMenuComponent } from './settings/settings-menu/settings-menu.co
 import { SettingsNewPasswordComponent } from './settings/settings-new-password/settings-new-password.component';
 import { SettingsProfileComponent } from './settings/settings-profile/settings-profile.component';
 import { SettingsComponent } from './settings/settings.component';
+import { DialogListDevicesComponent } from '../../components/dialog-list-devices/dialog-list-devices.component';
 
 const routes: Routes = [
   {
@@ -97,6 +98,7 @@ registerLocaleData(localePt, 'pt');
     SettingsNewPasswordComponent,
     SidepanelComponent,
     ToolbarComponent,
+    DialogListDevicesComponent,
   ],
   exports: [
     LoaderComponent,

@@ -101,6 +101,10 @@ export class AppComponent implements OnInit, AfterViewInit {
       .addSvgIcon('trending_down_white_24dp')
       .addSvgIcon('sync_white_24dp')
       .addSvgIcon('visibility_white_24dp')
+      .addSvgIcon('logout_black')
+      .addSvgIcon('delete_outline')
+      .addSvgIcon('person_outline')
+      .addSvgIcon('chevron_right_black')
       .addSvgIcon('visibility_off_white_24dp');
   }
 
@@ -142,7 +146,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   private addSvgIcon(name: string, alias?: string, namespace?: string): this {
     const path = this.sanitizer.bypassSecurityTrustResourceUrl(
-      'assets/' + name + '.svg'
+      'assets/icons/' + name + '.svg'
     );
     alias = alias ? alias : name;
     if (namespace) {

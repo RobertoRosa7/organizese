@@ -1,9 +1,44 @@
 .settings-menu {
+  ::ng-deep .mat-expansion-panel-header {
+    padding: 0 16px;
+  }
   .profile {
     .expansion-content {
-      // margin-top: 16px;
-      // margin-bottom: 16px;
       margin: 16px 8px;
+    }
+  }
+  .submenu {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    .submenu-item,
+    .submenu-desc {
+      display: flex;
+    }
+    .submenu-item {
+      flex-grow: 1;
+      align-items: center;
+      cursor: pointer;
+      margin-bottom: 16px;
+      &:hover {
+        opacity: 0.5;
+      }
+      .color-icons ::ng-deep svg {
+        fill: #888888;
+      }
+      .color-icons.delete ::ng-deep svg {
+        fill: var(--danger);
+      }
+      .submenu-desc {
+        flex-direction: column;
+        margin-left: 16px;
+        small {
+          font-size: 12px;
+        }
+      }
+    }
+    .submenu-item.delete {
+      color: var(--danger);
     }
   }
 }

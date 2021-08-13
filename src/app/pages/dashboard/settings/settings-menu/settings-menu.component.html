@@ -2,17 +2,27 @@
   <div class="profile">
     <mat-card style="background: transparent; box-shadow: none">Você</mat-card>
     <mat-accordion [multi]="true">
-      <mat-expansion-panel
-        #profile
-        (opened)="closePanel()"
-        routerLink="/dashboard/settings/profile"
-      >
+      <mat-expansion-panel #profile>
         <mat-expansion-panel-header>
           <mat-panel-title>
             <mat-icon mat-list-icon>person</mat-icon>
-            <span style="margin-left: 16px">Perfil</span>
+            <span style="margin-left: 16px">Informações pessoais</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
+        <ul class="submenu">
+          <li class="submenu-item" routerLink="/dashboard/settings/profile">
+            <mat-icon class="color-icons" svgIcon="person_outline"></mat-icon>
+            <p class="submenu-desc">
+              <span>Perfil</span>
+              <small>Configurar nome, email, telefone etc...</small>
+            </p>
+            <mat-icon
+              class="color-icons"
+              style="margin-left: auto"
+              svgIcon="chevron_right_black"
+            ></mat-icon>
+          </li>
+        </ul>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
@@ -31,31 +41,36 @@
         <mat-expansion-panel-header>
           <mat-panel-title>
             <mat-icon mat-list-icon>manage_accounts</mat-icon>
-            <span style="margin-left: 16px">Conta</span>
+            <span style="margin-left: 16px">Aplicação</span>
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="expansion-content">
-          <button (click)="deleteAccount()" mat-raised-button type="button">
-            excluir conta
-          </button>
-        </div>
+        <ul class="submenu">
+          <li (click)="logout()" class="submenu-item">
+            <mat-icon class="color-icons" svgIcon="logout_black"></mat-icon>
+            <p class="submenu-desc">
+              <span>Encerrar sessão</span>
+              <small
+                >Encerrar será desconectado de todos os dispositivos.</small
+              >
+            </p>
+          </li>
+          <li (click)="deleteAccount()" class="submenu-item delete">
+            <mat-icon
+              class="color-icons delete"
+              svgIcon="delete_outline"
+            ></mat-icon>
+            <p class="submenu-desc">
+              <span>Deletar conta</span>
+              <small>Excluir conta - irá excluir todos os registros.</small>
+            </p>
+          </li>
+        </ul>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
 
   <div class="about">
     <mat-card style="background: transparent; box-shadow: none">Sobre</mat-card>
-    <!-- <mat-card style="padding: 0;">
-      <mat-list>
-        <mat-list-item class="list" routerLink="/dashboard/settings/about">
-          <mat-icon mat-list-icon>info</mat-icon>
-          <h3 mat-line>Sobre</h3>
-          <p mat-line>informações sobre o app</p>
-          <mat-icon>keyboard_arrow_right</mat-icon>
-        </mat-list-item>
-      </mat-list>
-    </mat-card> -->
-
     <mat-accordion>
       <mat-expansion-panel
         #about

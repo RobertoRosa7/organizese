@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 import { LoginService } from 'src/app/services/login.service';
 import * as actionsApp from '../../actions/app.actions';
 import * as actionsDashboard from '../../actions/dashboard.actions';
-import * as actionsLogin from '../../actions/login.actions';
 import { DialogConfirmComponent } from '../dialog-confirm/dialog-confirm.component';
 import { DialogsComponent } from '../dialogs/dialogs.component';
 
@@ -43,11 +42,6 @@ export class SidepanelComponent implements OnInit {
     },
   ];
   public menuList: any[] = [
-    {
-      link: '/',
-      name: 'Home',
-      icon: 'home',
-    },
     {
       link: '/dashboard',
       name: 'Dashboard',
@@ -110,22 +104,6 @@ export class SidepanelComponent implements OnInit {
   }
 
   public returnColor(name: string): string {
-    // if (name === 'logout') {
-    //   // return '#FF4081';
-    //   return 'rgb(124, 181, 236)';
-    // } else if (name === 'Registros') {
-    //   // return 'rgb(247, 163, 92)';
-    //   return 'rgb(124, 181, 236)';
-    // } else if (name === 'Configurações') {
-    //   return 'rgb(124, 181, 236)';
-    // } else if (name === 'Home') {
-    //   // return '#EEE';
-    //   return 'rgb(124, 181, 236)';
-    // } else if (name === 'Dashboard') {
-    //   // return '#0ff5e6';
-    //   return 'rgb(124, 181, 236)';
-    // }
-    // return 'inset';
     return '#0ff5e6';
   }
 
