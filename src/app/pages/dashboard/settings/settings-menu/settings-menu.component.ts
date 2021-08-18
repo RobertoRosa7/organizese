@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Store } from '@ngrx/store';
 import { delay } from 'rxjs/operators';
 import { DialogConfirmComponent } from 'src/app/components/dialog-confirm/dialog-confirm.component';
+import { DialogListDevicesComponent } from 'src/app/components/dialog-list-devices/dialog-list-devices.component';
 import { LoginService } from 'src/app/services/login.service';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -61,6 +62,9 @@ export class SettingsMenuComponent implements OnInit {
   }
 
   public logout(): void {
-    console.log('sair');
+    this.dialog.open(DialogListDevicesComponent, {
+      data: this.user,
+      panelClass: 'dialog-default',
+    });
   }
 }

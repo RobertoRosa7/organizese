@@ -105,6 +105,14 @@ export class AppComponent implements OnInit, AfterViewInit {
       .addSvgIcon('delete_outline')
       .addSvgIcon('person_outline')
       .addSvgIcon('chevron_right_black')
+      .addSvgIcon('android')
+      .addSvgIcon('apple')
+      .addSvgIcon('chrome')
+      .addSvgIcon('firefox')
+      .addSvgIcon('linux_tux')
+      .addSvgIcon('microsoft_edge')
+      .addSvgIcon('microsoft_windows')
+      .addSvgIcon('opera')
       .addSvgIcon('visibility_off_white_24dp');
   }
 

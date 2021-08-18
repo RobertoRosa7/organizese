@@ -119,6 +119,7 @@ registerLocaleData(localePt, 'pt');
     DialogFormIncomingComponent,
     DialogConfirmComponent,
     DialogsComponent,
+    DialogListDevicesComponent,
   ],
   // exports: [],
   providers: [

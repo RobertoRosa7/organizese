@@ -1,1 +1,26 @@
-<p>dialog-list-devices works!</p>
+<section class="dialog-list">
+  <div class="container">
+    <ul class="list">
+      <li class="list-item" *ngFor="let device of devices">
+        <p>
+          <mat-icon [svgIcon]="device.icon_os"></mat-icon>
+          <strong>Sistema Operacional:</strong>
+          <span>{{ device.os }}</span>
+        </p>
+        <p>
+          <mat-icon [svgIcon]="device.icon_browser"></mat-icon>
+          <strong>Browser:</strong>
+          <span>{{ device.browser }}</span>
+        </p>
+        <p>
+          <strong>Status:</strong>
+          <span>{{ device.active_session ? 'Ativo' : 'Desativo' }}</span>
+        </p>
+        <p>
+          <strong>Sessão iniciada em:</strong>
+          <span>{{ device.start_session | date: 'medium' }}</span>
+        </p>
+      </li>
+    </ul>
+  </div>
+</section>
