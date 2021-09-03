@@ -1,17 +1,14 @@
-# Electron
+# Organizese
 
 ###### 12/01/2021
 
-### Novo projeto Angular Gerenciamento de despesas
-
-* [x] Projeto Begins - introdução ao Electron
+### Projeto Angular - Gerenciamento de despesas pessoais
 
 ###### 17/01/2021
 
 * [x] Instalação das dependências
-* [x] Preparação para o build em Linux platform
+* [x] Preparação para o build em Linux, Windows and Mac platform
 * [x] Criando os primeiros components - page home
-* [x] Configurando notificação com electron
 
 ###### 23/01/2021
 
